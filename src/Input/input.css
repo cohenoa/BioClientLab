@@ -1,0 +1,105 @@
+@import '~antd/dist/antd.css';
+.input{
+    overflow: scroll;
+    width: 100%;
+}
+.organizam-page{
+    margin-top: 2%;
+    margin-left: 10%;
+}
+.submit-button{
+    margin-top: 3%;
+
+    float: right;
+}
+.center-page{
+    /* overflow: scroll; */
+
+    border: 2px solid rgb(99, 117, 122);
+    border-radius: 5%;
+    width: 95%;
+    display: inline-block;
+    margin-bottom: 1%;
+    /* position: relative; */
+    padding: 2%;
+    background-color:#F0F0F0		;
+}
+.upload-file{
+    padding: 1%;
+    margin-left: 1%;
+    border-radius: 5%;
+    
+}
+.upload-file:hover , .input-text:hover , .select-from-list:hover {
+   background-color: lightblue;
+}
+
+.input-text{
+    padding: 2%;
+    margin-left: 1%;
+    display: flex;
+    margin-top:5%;
+    border-radius: 5%
+
+}
+
+.select-from-list{
+    border-radius: 5%;
+    padding: 1%;
+    margin-left: 1%;
+    margin-top:5%;
+}
+
+.features-selection{
+    /* margin-top: 2%; */
+}
+.cards {
+    /* width: 100%; */
+    padding: 30px;
+    background: #ececec;
+  }
+
+  .card{
+      height: 100%;
+  }
+.ant-checkbox-wrapper + .ant-checkbox-wrapper{
+    margin-left: 0%;
+}
+
+.card:hover{
+    background-color: rgb(214, 240, 248);
+    border: 2px solid rgb(99, 117, 122);
+
+}
+
+.checkbox-override{
+    margin-top:3%;
+}
+
+.override-spices:hover, .override-features:hover, .features-checkbox:hover{
+    font-weight: bold;
+}
+
+.next-button{
+    float: right;
+}
+
+.back-button{   
+    margin-top: 3%;
+    float: left;
+}
+.buttons{
+    width: 100%;
+    display: inline-block;
+    /* padding: 2%; */
+}
+
+.col-features-checkbox{
+    margin-top: 1%;
+}
+
+.chip-feature{
+    display: inline;
+    margin-left: 0.5%;
+}
+

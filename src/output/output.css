@@ -1,0 +1,38 @@
+.outputScreen{
+    overflow: scroll;
+    width: 100%;
+    height: 100%;
+}
+
+.menu{
+  margin-top: 5%;
+  float:left;
+}
+.featureComponent{
+    width: 70%;
+    height: 100%;
+    margin-left: 2%;
+    margin-top: 10%;
+    float: left;
+}
+.loading{
+  margin-top: 10%;
+  margin-left: 40%;
+}
+
+.download-bottom{
+  background-color:white;
+  padding: 1%;
+  margin-bottom:1%;
+  border-radius: 5ch;
+  width: 16ch;
+}
+.download-bottom:hover{
+  background-color:rgb(68, 90, 131);
+
+}
+
+
+.genome-row{
+  margin-bottom: 1%;
+}
