@@ -4,8 +4,9 @@ import "./input.css";
 import { UploadOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { setExistingFilesListFromServer } from "../store/actions/Input/OrganizamSelector";
-
+import AWS from "aws-sdk";
 import * as URL from '../store/actions/url'
+import axios from 'axios'
 
 function OrganizamSelector(props) {
   const dispatch = useDispatch();
@@ -35,6 +36,82 @@ function OrganizamSelector(props) {
     }
   };
 
+// bucket for upload files
+const awsBucket = {
+  // multiple: false,
+  // onStart(file) {
+  //   console.log("onStart", file, file.name);
+  // },
+  // onSuccess(ret, file) {
+  //   console.log("onSuccess", ret, file.name);
+  // },
+  // onError(err) {
+  //   console.log("onError", err);
+  // },
+  // onProgress({ percent }, file) {
+  //   console.log("onProgress", `${percent}%`, file.name);
+  // },
+  customRequest({
+    action,
+    data,
+    file,
+    filename,
+    headers,
+    onError,
+    onProgress,
+    onSuccess,
+    withCredentials
+  }) {
+    AWS.config.update({
+      accessKeyId: "AKIARDVFNR2ZY5JRSV7Z",
+      secretAccessKey: "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",
+      sessionToken: ""
+    });
+
+    const S3 = new AWS.S3();
+    console.log("DEBUG filename", file.name);
+    console.log("DEBUG file type", file.type);
+
+    const objParams = {
+      Bucket: "bio-upload-files",
+      Key:file.name,
+      Body: file,
+      ContentType: file.type // TODO: You should set content-type because AWS SDK will not automatically set file MIME
+    };
+
+    S3.putObject(objParams)
+      .on("httpUploadProgress", function({ loaded, total }) {
+        onProgress(
+          {
+            percent: Math.round((loaded / total) * 100)
+          },
+          file
+        );
+      })
+      .send(function(err, data) {
+        if (err) {
+          onError();
+          console.log("Something went wrong");
+          console.log(err.code);
+          console.log(err.message);
+        } else {
+          onSuccess(data.response, file);
+          console.log("SEND FINISHED");
+          console.log(data);
+          axios.post(URL.POST_UPLOAD_BUCKET_FILE,{
+            fileName:file.name
+          })
+          .then(response => response)
+        }
+      });
+  }
+};
+//POST_UPLOAD_BUCKET_FILE
+// END bucket for upload files
+
+
+
+
   const accessionNumberSelected = (e) => {
     props.saveAccessionNumber(e.target.value);
     if (!e.target.value) setIfOrganizamSelected(false);
@@ -60,13 +137,12 @@ function OrganizamSelector(props) {
       <h1>Organism Selection</h1>
       <h2>Choose one option:</h2>
       <div className="upload-file">
-        <Upload
-        action={URL.POST_UPLOAD_FILE}
+        <Upload {...awsBucket}
+        //action={URL.POST_UPLOAD_FILE}
           onRemove={() => {
             removeUploadFileSelected();
           }}
-          onChange={(e) => uploadFileSelected(e)}
-        >
+          onChange={(e) => uploadFileSelected(e)}>
           <h3>
             Upload a file:
             <Button icon={<UploadOutlined />}>Click to Upload</Button>
