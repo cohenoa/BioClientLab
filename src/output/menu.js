@@ -40,6 +40,7 @@ function MenuFiles (props) {
         </Button>
         <Menu
           defaultSelectedKeys={[props.filesMetaData[0].name]}
+          defaultOpenKeys={[props.filesMetaData[0].name]}
           mode="inline"
           inlineCollapsed={collapsed}
           onClick={(key)=>props.setFileTabClickByTheUser(key.key)}

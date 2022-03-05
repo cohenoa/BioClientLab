@@ -11,9 +11,12 @@ import axios from 'axios'
 function OrganizamSelector(props) {
   const dispatch = useDispatch();
   const { Option } = Select;
+  const existingFileListFromServer = useSelector((state) => state.organizamSelector.existingFilesList);
+
   const [existingFileList, setExistingFileList] = useState([]);
   const [ifOrganizamSelected, setIfOrganizamSelected] = useState(false);
-  const existingFileListFromServer = useSelector((state) => state.organizamSelector.existingFilesList);
+  const [disableNext, setDisableNext] = useState(true);
+
 
   useEffect(() => {
     dispatch(setExistingFilesListFromServer());
@@ -32,25 +35,13 @@ function OrganizamSelector(props) {
     // console.log(e);
     if (e.fileList.length) {
       props.saveFileMetaData(e.fileList);
+      console.log("ifOrganizamSelected",ifOrganizamSelected, disableNext)
       setIfOrganizamSelected(true);
     }
   };
 
 // bucket for upload files
 const awsBucket = {
-  // multiple: false,
-  // onStart(file) {
-  //   console.log("onStart", file, file.name);
-  // },
-  // onSuccess(ret, file) {
-  //   console.log("onSuccess", ret, file.name);
-  // },
-  // onError(err) {
-  //   console.log("onError", err);
-  // },
-  // onProgress({ percent }, file) {
-  //   console.log("onProgress", `${percent}%`, file.name);
-  // },
   customRequest({
     action,
     data,
@@ -67,11 +58,7 @@ const awsBucket = {
       secretAccessKey: "HgkvAFPGms/KfGVUW/YIyA4cq+TopM1uaxVj2ocx",
       sessionToken: ""
     });
-
     const S3 = new AWS.S3();
-    console.log("DEBUG filename", file.name);
-    console.log("DEBUG file type", file.type);
-
     const objParams = {
       Bucket: "bio-upload-files",
       Key:file.name,
@@ -101,7 +88,11 @@ const awsBucket = {
           axios.post(URL.POST_UPLOAD_BUCKET_FILE,{
             fileName:file.name
           })
-          .then(response => response)
+          .then(res => {
+           if(res.status  === 200)
+           setDisableNext(false)
+          }
+          )
         }
       });
   }
@@ -180,7 +171,7 @@ const awsBucket = {
       </div>
       <div className="next-button">
         <Button
-          disabled={!ifOrganizamSelected}
+          disabled={disableNext || !ifOrganizamSelected }
           onClick={() => {
             props.increaseOrDecreaseNumOfPage(2);
           }}

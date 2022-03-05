@@ -41,7 +41,7 @@ function Feature (props) {
     <div>
         {
         props.fileTabClickByTheUser && props.featureListResultFromServer&&
-    <Tabs defaultActiveKey="1" type="card" size="large">
+    <Tabs defaultActiveKey="Genome" type="card" size="large">
       {displayFeatureChosenByUserTabs()}
     </Tabs>
 }
