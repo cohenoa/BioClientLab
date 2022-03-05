@@ -110,8 +110,19 @@ const awsBucket = {
   };
 
   const selectOrganizamFromList = (value) => {
+    console.log(value);
     if (value === "Select organizam") setIfOrganizamSelected(false);
-    else setIfOrganizamSelected(true);
+    else{
+      setIfOrganizamSelected(true);
+      props.saveFileFromServer(value)
+      setDisableNext(false);
+    //   axios.post(URL.POST_FILE_FROM_SERVER,{
+    //     fileName:value
+    //   })
+    //   .then(response => response)
+     }
+
+    
   };
   const optionExistingFiles = () => {
     return existingFileListFromServer.map((file) => {

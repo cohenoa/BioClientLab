@@ -19,10 +19,14 @@ function Output (props) {
   const [accessionNumberList, setAccessionNumberList] = useState([]);
 
   useEffect(() => {
-   let accNumberAfterSplit = props.accessionNumber.split(',');
-   accNumberAfterSplit = accNumberAfterSplit.map(name => name +".gb");
-   setAccessionNumberList (accNumberAfterSplit);
-   console.log(accessionNumberList);
+    if( props.accessionNumber !== ''){
+      let accNumberAfterSplit = props.accessionNumber.split(',');
+      //console.log("aa", accNumberAfterSplit);
+      accNumberAfterSplit = accNumberAfterSplit.map(name => name +".gb");
+      setAccessionNumberList (accNumberAfterSplit);
+      //console.log(accessionNumberList);
+    }
+
   }, [])
 
   // useEffect(() => {
@@ -43,10 +47,11 @@ function Output (props) {
     
   }, [featureListResult])
   useEffect(() => {
-    if (featureChosenByUser.length !==0 && accessionNumberList.length !==0 ){
+    if (featureChosenByUser.length !== 0 && (accessionNumberList.length !== 0 || props.fileFromServer|| props.filesMetaData) ){
       setFeatureChosenByUserToChild(featureChosenByUser)
       console.log(accessionNumberList)
-      dispatch(setFeaturesOutput(featureChosenByUser, props.filesMetaData , accessionNumberList))
+      console.log("test", props.fileFromServer)
+      dispatch(setFeaturesOutput(featureChosenByUser, props.filesMetaData , accessionNumberList, props.fileFromServer))
     }
     
   }, [featureChosenByUser, accessionNumberList])
@@ -71,7 +76,7 @@ function Output (props) {
       <div className="loading"><Spin indicator={<LoadingOutlined style={{ fontSize: 100 }} spin />} /></div> :
       <div>
       <div className="menu">
-      <MenuFiles filesMetaData={props.filesMetaData} setFileTabClickByTheUser={setFileTabClickByTheUserFunction}></MenuFiles>
+      <MenuFiles filesMetaData={props.filesMetaData.length?props.filesMetaData:[props.fileFromServer]} setFileTabClickByTheUser={setFileTabClickByTheUserFunction}></MenuFiles>
       </div>
      <div className="featureComponent">
      <Feature featureChosenByUser={featureChosenByUser} featureListResultFromServer={featureListResultFromServer} fileTabClickByTheUser={fileTabClickByTheUser} ></Feature>

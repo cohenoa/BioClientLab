@@ -23,12 +23,11 @@ function MenuFiles (props) {
         setCollapsed(!collapsed)
     };
 
-
+// need to make geeric for accession and file from user
    const filesMetaDataMenuItem=()=>{
        return props.filesMetaData.map(file=>{
         // console.log(file.name);
-
-            return <Menu.Item key={file.name}  icon={<FileTextOutlined/>}>
+            return <Menu.Item key={file.name} icon={<FileTextOutlined/>}>
                 {file.name}
            </Menu.Item>
        })

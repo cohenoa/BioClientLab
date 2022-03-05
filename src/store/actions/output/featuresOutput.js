@@ -6,7 +6,7 @@ import * as URL from '../url'
 //params :{fileList:fileList,featureList:featureList}
 //return axios.get(URL.GET_FEATURES_RESULT, {params :{fileList:fileList_to_server}},{headers :{'Access-Control-Allow-Origin': '*'}})
 
-export const  setFeaturesOutput=(featureList, fileList, accessionNumberList)=>{
+export const  setFeaturesOutput=(featureList, fileList, accessionNumberList, fileFromServer)=>{
     const fileList_to_server =[];
     
     if (fileList.length !== 0){
@@ -14,11 +14,13 @@ export const  setFeaturesOutput=(featureList, fileList, accessionNumberList)=>{
             fileList_to_server.push(fileList[i].name)
         }
     }
-    console.log(accessionNumberList);
+    console.log("file",fileFromServer);
+ 
     const params = {
-        fileList:fileList_to_server.length !== 0 ? fileList_to_server :accessionNumberList,
+        fileList:fileList_to_server.length !== 0 ? fileList_to_server :accessionNumberList.length ? accessionNumberList: [fileFromServer],
         featureList:featureList
     }
+    console.log("params", params)
     const headers = {
         'Access-Control-Allow-Origin':"*"
     }
