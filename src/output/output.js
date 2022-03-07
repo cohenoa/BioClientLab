@@ -17,27 +17,17 @@ function Output (props) {
   const [featureChosenByUserToChild,setFeatureChosenByUserToChild]=useState([])
   const[isLoading, setIsLoading] = useState(false);
   const [accessionNumberList, setAccessionNumberList] = useState([]);
+  const [unionAllFiles,setUnionAllFiles]=useState([])
+
 
   useEffect(() => {
-    if( props.accessionNumber !== ''){
-      let accNumberAfterSplit = props.accessionNumber.split(',');
-      //console.log("aa", accNumberAfterSplit);
-      accNumberAfterSplit = accNumberAfterSplit.map(name => name +".gb");
-      setAccessionNumberList (accNumberAfterSplit);
-      //console.log(accessionNumberList);
-    }
-
+   let accNumberAfterSplit = props.accessionNumber.split(',');
+   accNumberAfterSplit = accNumberAfterSplit.map(name => name +".gb").filter(name=> name !== '.gb');
+   setAccessionNumberList (accNumberAfterSplit);
+   let extractNameFromFileMetaData = props.filesMetaData.map(file =>  file.name)
+   let unionFiles = [...extractNameFromFileMetaData, ...accNumberAfterSplit, ...[props.fileFromServer]].filter(element => element !== '' )
+   setUnionAllFiles(unionFiles)
   }, [])
-
-  // useEffect(() => {
-  //   console.log(accessionNumberList);
-  //  }, [accessionNumberList])
- 
-
-
-
-
-
 
   useEffect(() => {
     if(Object.keys(featureListResult).length)
@@ -46,15 +36,14 @@ function Output (props) {
        setIsLoading(false)
     
   }, [featureListResult])
+
   useEffect(() => {
-    if (featureChosenByUser.length !== 0 && (accessionNumberList.length !== 0 || props.fileFromServer|| props.filesMetaData) ){
+    if (featureChosenByUser.length !==0 && unionAllFiles.length !==0 ){
       setFeatureChosenByUserToChild(featureChosenByUser)
-      console.log(accessionNumberList)
-      console.log("test", props.fileFromServer)
-      dispatch(setFeaturesOutput(featureChosenByUser, props.filesMetaData , accessionNumberList, props.fileFromServer))
+      dispatch(setFeaturesOutput(featureChosenByUser, unionAllFiles))
     }
     
-  }, [featureChosenByUser, accessionNumberList])
+  }, [featureChosenByUser, unionAllFiles])
 
 
   useEffect(() => {
@@ -76,8 +65,8 @@ function Output (props) {
       <div className="loading"><Spin indicator={<LoadingOutlined style={{ fontSize: 100 }} spin />} /></div> :
       <div>
       <div className="menu">
-      <MenuFiles filesMetaData={props.filesMetaData.length?props.filesMetaData:[props.fileFromServer]} setFileTabClickByTheUser={setFileTabClickByTheUserFunction}></MenuFiles>
-      </div>
+      <MenuFiles unionAllFiles={unionAllFiles} setFileTabClickByTheUser={setFileTabClickByTheUserFunction}></MenuFiles>
+      </div>  
      <div className="featureComponent">
      <Feature featureChosenByUser={featureChosenByUser} featureListResultFromServer={featureListResultFromServer} fileTabClickByTheUser={fileTabClickByTheUser} ></Feature>
      </div></div>}

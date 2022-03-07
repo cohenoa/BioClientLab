@@ -21,23 +21,6 @@ export const  submitToServer=(fileMetaData, accessionNumber, featuresChooseByUse
             console.log(featuresChooseByUser);
             dispatch(setFeaturesChosenByUser(featuresChooseByUser))
         }
-
-        // if(fileMetaData !== undefined)
-        // {
-        //     const formData = new FormData();
-        //     formData.append("file",fileMetaData );
-        // return axios
-        //     .post(URL.POST_UPLOAD_FILE,formData, {'Content-Type': 'multipart/form-data'})
-        //     .then(res => 
-        //         {
-        //         if(res.status === 200)
-        //         {
-        //             dispatch(setDoneUploadFile(true))
-        //         }
-        //         }
-        //         )
-        //     .catch(err => console.warn(err));
-        //  }   
          
         if(accessionNumber !== '')
         {

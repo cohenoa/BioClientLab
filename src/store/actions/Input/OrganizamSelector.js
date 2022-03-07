@@ -4,6 +4,22 @@ import * as CONST from '../actionsTypes'
 import * as URL from '../url'
 
 
+export const  downloadAccessionNumber = ( accessionNumber)=>{
+    return async function(dispatch) {
+        console.log(accessionNumber);
+       
+        
+        return axios
+            
+            .post(URL.POST_UPLOAD_FILE,{accessionNumber:accessionNumber}, {'Content-Type': 'application/json'})
+            .then(res => console.log(res))
+            .catch(err => console.warn(err));
+        
+
+        
+    };
+}
+
 export const  setExistingFilesListFromServer=()=>{
     return async function(dispatch) {
         return axios.get(URL.GET_EXISTING_FILES_LIST, {headers :{'Access-Control-Allow-Origin': '*'}})

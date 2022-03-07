@@ -6,17 +6,8 @@ import './App.css';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
-// import {
-//   XYPlot,
-//   XAxis,
-//   YAxis,
-//   HorizontalGridLines,
-//   VerticalGridLines,
-//   LineSeries,
-// } from "react-vis";
 
 function App () {
-  // const dispatch= useDispatch()
   const doneUploadFile = useSelector((state) => state.featuresSelection.doneUploadFile)
 
   const [numOfPage,setNumOfPage]=useState(1)
@@ -38,26 +29,15 @@ function App () {
     setNumOfPage(value)
   }
   useEffect(() => {
-    // console.log(fileMetaData);
   }, [fileMetaData])
 
-  // useEffect(() => {
-  //   if(!displayOutput)
-  //     setIsLoading(true)
-  //   else
-  //   {
-  //     console.log("here");
-  //     setIsLoading(false)
-  //   }
-  // }, [doneUploadFile])
-  // const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   return (
-    // <div className="app">
      <div className="app" style={{ backgroundImage: "url(/organism3.jpg)",backgroundPosition: 'center', 
       backgroundSize: 'cover',
    backgroundRepeat: 'no-repeat', }}>
-      <Input fileMetaData={fileMetaData}accessionNumber ={accessionNumber} saveAccessionNumber = {saveAccessionNumber} setFileMetaData={setFileMetaData} fileFromServer = {fileFromServer} saveFileFromServer ={saveFileFromServer} displayInput={displayInput} setDisplayInput={setDisplayInput} setDisplayOutput={setDisplayOutput}></Input>
+  
+      <Input fileMetaData={fileMetaData} accessionNumber ={accessionNumber} saveAccessionNumber = {saveAccessionNumber} setFileMetaData={setFileMetaData} fileFromServer = {fileFromServer} saveFileFromServer ={saveFileFromServer} displayInput={displayInput} setDisplayInput={setDisplayInput} setDisplayOutput={setDisplayOutput}></Input>
       {isLoading && <Spin indicator={<LoadingOutlined style={{ fontSize: 100 }} spin />} /> }
       {!isLoading && displayOutput && <Output accessionNumber ={accessionNumber} setIsLoading={setIsLoading} filesMetaData={fileMetaData} fileFromServer = {fileFromServer} saveFileFromServer ={saveFileFromServer} displayOutput={displayOutput}></Output>}
     </div>

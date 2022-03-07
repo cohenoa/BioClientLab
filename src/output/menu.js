@@ -8,6 +8,7 @@ import {
   MenuFoldOutlined,
   PieChartOutlined,
 } from '@ant-design/icons';
+import { logDOM } from "@testing-library/dom";
 
 
 
@@ -19,16 +20,14 @@ function MenuFiles (props) {
     const [collapsed,setCollapsed]=useState(false)
 
 
-    const toggleCollapsed = () => {
-        setCollapsed(!collapsed)
-    };
+  const toggleCollapsed = () => {
+      setCollapsed(!collapsed)
+  };
 
-// need to make geeric for accession and file from user
    const filesMetaDataMenuItem=()=>{
-       return props.filesMetaData.map(file=>{
-        // console.log(file.name);
-            return <Menu.Item key={file.name} icon={<FileTextOutlined/>}>
-                {file.name}
+       return props.unionAllFiles.map(fileName=>{
+            return <Menu.Item key={fileName} icon={<FileTextOutlined/>}>
+                {fileName}
            </Menu.Item>
        })
    }
@@ -38,8 +37,8 @@ function MenuFiles (props) {
           {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}
         </Button>
         <Menu
-          defaultSelectedKeys={[props.filesMetaData[0].name]}
-          defaultOpenKeys={[props.filesMetaData[0].name]}
+          defaultSelectedKeys={[props.unionAllFiles[0]]}
+          defaultOpenKeys={[props.unionAllFiles[0]]}
           mode="inline"
           inlineCollapsed={collapsed}
           onClick={(key)=>props.setFileTabClickByTheUser(key.key)}

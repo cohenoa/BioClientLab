@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Input, Button, Upload, Select, Checkbox } from "antd";
 import "./input.css";
 import { UploadOutlined } from "@ant-design/icons";
+import { Card, Col, Row } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
-import { setExistingFilesListFromServer } from "../store/actions/Input/OrganizamSelector";
+import { setExistingFilesListFromServer,downloadAccessionNumber } from "../store/actions/Input/OrganizamSelector";
 import AWS from "aws-sdk";
 import * as URL from '../store/actions/url'
 import axios from 'axios'
@@ -32,10 +33,8 @@ function OrganizamSelector(props) {
     setIfOrganizamSelected(false);
   };
   const uploadFileSelected = (e) => {
-    // console.log(e);
     if (e.fileList.length) {
       props.saveFileMetaData(e.fileList);
-      console.log("ifOrganizamSelected",ifOrganizamSelected, disableNext)
       setIfOrganizamSelected(true);
     }
   };
@@ -110,16 +109,11 @@ const awsBucket = {
   };
 
   const selectOrganizamFromList = (value) => {
-    console.log(value);
     if (value === "Select organizam") setIfOrganizamSelected(false);
     else{
       setIfOrganizamSelected(true);
       props.saveFileFromServer(value)
       setDisableNext(false);
-    //   axios.post(URL.POST_FILE_FROM_SERVER,{
-    //     fileName:value
-    //   })
-    //   .then(response => response)
      }
 
     
@@ -134,6 +128,12 @@ const awsBucket = {
     });
   };
 
+  const onClickNext= () =>{
+    props.increaseOrDecreaseNumOfPage(2);
+    if(props.accessionNumber != '')
+      dispatch(downloadAccessionNumber(props.accessionNumber))
+
+  }
   return (
     <div className="center-page">
       <h1>Organism Selection</h1>
@@ -157,6 +157,11 @@ const awsBucket = {
           placeholder="Enter accession number"
           onChange={(e) => {
             accessionNumberSelected(e);
+            if(e === '')
+               setDisableNext(true)
+            else
+              setDisableNext(false)
+            
           }}
         />
       </div>
@@ -165,6 +170,7 @@ const awsBucket = {
         <Select
           onChange={(e) => {
             selectOrganizamFromList(e);
+            setDisableNext(false)
           }}
           placeholder="Select a file"
         >
@@ -172,20 +178,18 @@ const awsBucket = {
           {optionExistingFiles()}
         </Select>
       </div>
-      <div className="checkbox-override">
+      {/* <div className="checkbox-override">
         <Checkbox className="override-spices">
           Override species existing{" "}
         </Checkbox>
         <Checkbox className="override-features">
           Override features existing
         </Checkbox>
-      </div>
+      </div> */}
       <div className="next-button">
         <Button
           disabled={disableNext || !ifOrganizamSelected }
-          onClick={() => {
-            props.increaseOrDecreaseNumOfPage(2);
-          }}
+          onClick={onClickNext}
         >
           Next
         </Button>
@@ -193,5 +197,70 @@ const awsBucket = {
     </div>
   );
 }
+
+// return (
+//   <div className="center-page">
+//     <Row gutter={16}>
+//       <Col span={8}>
+//         <Card classNAme="card" title="Upload a file" bordered={false}>
+//         <div className="upload-file">
+//          <Upload {...awsBucket}
+//         //action={URL.POST_UPLOAD_FILE}
+//           onRemove={() => {
+//             removeUploadFileSelected();
+//           }}
+//           onChange={(e) => uploadFileSelected(e)}>
+//           <h3>
+//             <Button icon={<UploadOutlined />}>Click to Upload</Button>
+//           </h3>
+//         </Upload>
+//       </div>        
+//       </Card>
+//       </Col>
+//       <Col span={8}>
+//         <Card classNAme="card" title="Enter accession number" bordered={false}>
+//         <div className="input-text">
+//          <Input
+//           placeholder="Enter accession number"
+//           onChange={(e) => {
+//             accessionNumberSelected(e);
+//             if(e === '')
+//                setDisableNext(true)
+//             else
+//               setDisableNext(false)
+            
+//           }}
+//         />
+//       </div>
+//         </Card>
+//       </Col>
+//       <Col span={8}>
+//         <Card classNAme="card" title="Select file from the list" bordered={false}>
+//         <div className="select-from-list">
+//          <Select
+//           onChange={(e) => {
+//             selectOrganizamFromList(e);
+//             setDisableNext(false)
+//           }}
+//           placeholder="Select a file"
+//         >
+//           <Option value="Select file">Select file</Option>
+//           {optionExistingFiles()}
+//         </Select>
+//       </div>  
+//             </Card>
+//       </Col>
+//     </Row>
+//     <div className="next-button">
+//          <Button
+//           disabled={disableNext || !ifOrganizamSelected }
+//           onClick={onClickNext}
+//         >
+//           Next
+//         </Button>
+//       </div>
+//   </div>
+// );
+// }
 
 export default OrganizamSelector;

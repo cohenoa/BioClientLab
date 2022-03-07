@@ -28,7 +28,7 @@ function Input (props) {
   return (
     <div>
      {props.displayInput && <div className='input'>
-       {numOfPage === 1 && <div className='organizam-page'><OrganizamSelector fileMetaData={props.fileMetaData} saveAccessionNumber={props.saveAccessionNumber}  increaseOrDecreaseNumOfPage={increaseOrDecreaseNumOfPage} saveFileMetaData={saveFileMetaData} fileFromServer = {props.fileFromServer} saveFileFromServer ={props.saveFileFromServer}></OrganizamSelector></div>}
+       {numOfPage === 1 && <div className='organizam-page'><OrganizamSelector accessionNumber={props.accessionNumber} fileMetaData={props.fileMetaData} saveAccessionNumber={props.saveAccessionNumber}  increaseOrDecreaseNumOfPage={increaseOrDecreaseNumOfPage} saveFileMetaData={saveFileMetaData} fileFromServer = {props.fileFromServer} saveFileFromServer ={props.saveFileFromServer}></OrganizamSelector></div>}
        {numOfPage === 2 && 
               <div  className='features-selection'>
 

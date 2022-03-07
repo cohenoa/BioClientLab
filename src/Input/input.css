@@ -1,9 +1,12 @@
 @import '~antd/dist/antd.css';
 .input{
     overflow: scroll;
+    position: absolute;
     width: 100%;
+    height: 100%;
 }
 .organizam-page{
+    height: 75%;
     margin-top: 2%;
     margin-left: 10%;
 }
@@ -18,11 +21,13 @@
     border: 2px solid rgb(99, 117, 122);
     border-radius: 5%;
     width: 95%;
+    height: 100%;
     display: inline-block;
     margin-bottom: 1%;
     /* position: relative; */
     padding: 2%;
-    background-color:#F0F0F0		;
+    /* padding-top: 25%; */
+    background-color:#faebeb		;
 }
 .upload-file{
     padding: 1%;
@@ -62,6 +67,8 @@
   .card{
       height: 100%;
   }
+
+  
 .ant-checkbox-wrapper + .ant-checkbox-wrapper{
     margin-left: 0%;
 }
