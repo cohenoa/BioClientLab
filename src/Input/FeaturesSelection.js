@@ -11,6 +11,8 @@ import {setFeaturesListFromServer, submitToServer} from '../store/actions/Input/
 function FeaturesSelection (props) {
   const dispatch= useDispatch()
   const featureList = useSelector((state) => state.featuresSelection.featuresList)
+  const featureChosenByUser = useSelector((state) => state.featuresSelection.featuresChosenByUser);
+
   const [featuresChooseByUser,setFeaturesChooseByUser]=useState([])
   const [featureListToDisplay,setFeatureListToDisplay]=useState({})
   
@@ -18,6 +20,8 @@ function FeaturesSelection (props) {
     dispatch(setFeaturesListFromServer())
    
   }, [])
+
+
   
   useEffect(() => {
     if(featureList)
@@ -26,13 +30,16 @@ function FeaturesSelection (props) {
       Object.keys(featureList).map(type=>{
         checkboxFeature[type] = []
         featureList[type].map(nameFeature=>{
-          checkboxFeature[type].push({name:nameFeature, checked: type !='Genome_Features'? false: true })
+          checkboxFeature[type].push({name:nameFeature, checked:  featureChosenByUser.includes(nameFeature) ? true: type !== 'Genome_Features'? false: true })
         })
       })
-      console.log(checkboxFeature);
       setFeatureListToDisplay(checkboxFeature)
-      setFeaturesChooseByUser(featureList['Genome_Features'])
-    }
+      if(featureChosenByUser.length !== 0)
+        setFeaturesChooseByUser([...featureList['Genome_Features'],...featureChosenByUser])
+    else        
+    setFeaturesChooseByUser(featureList['Genome_Features'])
+
+      }
 
   }, [featureList])
 
@@ -41,6 +48,8 @@ function FeaturesSelection (props) {
 
 
   const submit=()=>{
+    props.setDisableTabsHeader({...props.disableTabsHeader , 3: false, 1:true})
+    props.increaseOrDecreaseNumOfPage(3)
     props.setDisplayInput(false)
     props.setDisplayOutput(true)
     dispatch(submitToServer(props.fileMetaData, props.accessionNumber,featuresChooseByUser ))
@@ -75,7 +84,7 @@ function FeaturesSelection (props) {
     return Object.keys(featureListToDisplay).map((key, index)=> {
       return (
       <Col span={8}  key={key} className="col-features-checkbox">
-      <Card title={key.replace('_',' ')} bordered={false}  className='card'>
+      <Card title={key.replace('_',' ')} bordered={true}  className='card'>
       <Row gutter={[8, 8]}>
       <Col span={10}>
       {featureListToDisplay[key].map(oneFeature=>{
@@ -122,7 +131,7 @@ function FeaturesSelection (props) {
   return (
     <div className='center-page'>
    <div className='cards'> 
-    <h1>Features Selection</h1>
+   <div className="title">Features Selection</div>
     {featuresChooseByUser && buildChipsOnfeaturesDelected()}
     <Row gutter={16} type='flex'>
     {featuresCards()}

@@ -10,7 +10,6 @@ export const  setFeaturesOutput=(featureList, fileList)=>{
         fileList: fileList,
         featureList:featureList
     }
-    console.log("params", params)
     const headers = {
         'Access-Control-Allow-Origin':"*"
     }
@@ -32,7 +31,6 @@ export const  setDataGcContent=(fileName)=>{
     return async function(dispatch) {
         return axios.get(URL.GET_DATA_GC_CONTENT,{params,headers})
           .then(({ data }) => {
-            console.log(data);
           dispatch(setDataGcContentFromServer(data))
         });
       };

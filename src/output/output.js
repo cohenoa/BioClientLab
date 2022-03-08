@@ -12,6 +12,7 @@ function Output (props) {
   const dispatch= useDispatch()
   const featureListResult = useSelector((state) => state.featureOutput.featuresList);
   const featureChosenByUser = useSelector((state) => state.featuresSelection.featuresChosenByUser);
+  
   const [featureListResultFromServer,setFeatureListResultFromServer]=useState()
   const [fileTabClickByTheUser,setFileTabClickByTheUser]=useState()
   const [featureChosenByUserToChild,setFeatureChosenByUserToChild]=useState([])
@@ -21,6 +22,8 @@ function Output (props) {
 
 
   useEffect(() => {
+    props.setDisableTabsHeader({...props.disableTabsHeader , 1: true})
+
    let accNumberAfterSplit = props.accessionNumber.split(',');
    accNumberAfterSplit = accNumberAfterSplit.map(name => name +".gb").filter(name=> name !== '.gb');
    setAccessionNumberList (accNumberAfterSplit);

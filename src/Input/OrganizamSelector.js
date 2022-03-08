@@ -129,6 +129,7 @@ const awsBucket = {
   };
 
   const onClickNext= () =>{
+    props.setDisableTabsHeader({...props.disableTabsHeader , 2: false})
     props.increaseOrDecreaseNumOfPage(2);
     if(props.accessionNumber != '')
       dispatch(downloadAccessionNumber(props.accessionNumber))
@@ -136,24 +137,23 @@ const awsBucket = {
   }
   return (
     <div className="center-page">
-      <h1>Organism Selection</h1>
+      <div className="title">Organism Selection</div>
       <h2>Choose one option:</h2>
       <div className="upload-file">
+      <h3  className="element" >Upload a file:</h3>
         <Upload {...awsBucket}
         //action={URL.POST_UPLOAD_FILE}
           onRemove={() => {
             removeUploadFileSelected();
           }}
           onChange={(e) => uploadFileSelected(e)}>
-          <h3>
-            Upload a file:
-            <Button icon={<UploadOutlined />}>Click to Upload</Button>
-          </h3>
+            <Button className="element" icon={<UploadOutlined />}>Click to Upload</Button>
         </Upload>
       </div>
       <div className="input-text">
-        <h3>Enter accession number:</h3>
-        <Input
+        <h3 className="element">Enter accession number:</h3>
+        <Input 
+          className="input-field element-button"
           placeholder="Enter accession number"
           onChange={(e) => {
             accessionNumberSelected(e);
@@ -166,8 +166,9 @@ const awsBucket = {
         />
       </div>
       <div className="select-from-list">
-        <h3>Select file from the list</h3>
-        <Select
+        <h3 className="element">Select file from the list</h3>
+        <Select 
+        className="select-field element"
           onChange={(e) => {
             selectOrganizamFromList(e);
             setDisableNext(false)
@@ -186,8 +187,8 @@ const awsBucket = {
           Override features existing
         </Checkbox>
       </div> */}
-      <div className="next-button">
-        <Button
+      <div >
+        <Button className="next-button"
           disabled={disableNext || !ifOrganizamSelected }
           onClick={onClickNext}
         >
@@ -197,70 +198,4 @@ const awsBucket = {
     </div>
   );
 }
-
-// return (
-//   <div className="center-page">
-//     <Row gutter={16}>
-//       <Col span={8}>
-//         <Card classNAme="card" title="Upload a file" bordered={false}>
-//         <div className="upload-file">
-//          <Upload {...awsBucket}
-//         //action={URL.POST_UPLOAD_FILE}
-//           onRemove={() => {
-//             removeUploadFileSelected();
-//           }}
-//           onChange={(e) => uploadFileSelected(e)}>
-//           <h3>
-//             <Button icon={<UploadOutlined />}>Click to Upload</Button>
-//           </h3>
-//         </Upload>
-//       </div>        
-//       </Card>
-//       </Col>
-//       <Col span={8}>
-//         <Card classNAme="card" title="Enter accession number" bordered={false}>
-//         <div className="input-text">
-//          <Input
-//           placeholder="Enter accession number"
-//           onChange={(e) => {
-//             accessionNumberSelected(e);
-//             if(e === '')
-//                setDisableNext(true)
-//             else
-//               setDisableNext(false)
-            
-//           }}
-//         />
-//       </div>
-//         </Card>
-//       </Col>
-//       <Col span={8}>
-//         <Card classNAme="card" title="Select file from the list" bordered={false}>
-//         <div className="select-from-list">
-//          <Select
-//           onChange={(e) => {
-//             selectOrganizamFromList(e);
-//             setDisableNext(false)
-//           }}
-//           placeholder="Select a file"
-//         >
-//           <Option value="Select file">Select file</Option>
-//           {optionExistingFiles()}
-//         </Select>
-//       </div>  
-//             </Card>
-//       </Col>
-//     </Row>
-//     <div className="next-button">
-//          <Button
-//           disabled={disableNext || !ifOrganizamSelected }
-//           onClick={onClickNext}
-//         >
-//           Next
-//         </Button>
-//       </div>
-//   </div>
-// );
-// }
-
 export default OrganizamSelector;
