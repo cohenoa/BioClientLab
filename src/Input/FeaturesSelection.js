@@ -5,6 +5,7 @@ import './input.css';
 import Chip from '@mui/material/Chip';
 import { useDispatch, useSelector } from "react-redux";
 import {setFeaturesListFromServer, submitToServer} from '../store/actions/Input/featuresSelection'
+import { setCurrentPage } from "../store/actions/pagesRoutes";
 
 
 
@@ -12,12 +13,16 @@ function FeaturesSelection (props) {
   const dispatch= useDispatch()
   const featureList = useSelector((state) => state.featuresSelection.featuresList)
   const featureChosenByUser = useSelector((state) => state.featuresSelection.featuresChosenByUser);
+  const ifTabDataSelected = useSelector((state) => state.featureOutput.featuresList);
 
   const [featuresChooseByUser,setFeaturesChooseByUser]=useState([])
   const [featureListToDisplay,setFeatureListToDisplay]=useState({})
   
   useEffect(() => {
     dispatch(setFeaturesListFromServer())
+    if(Object.keys(ifTabDataSelected).length >= 1 )
+       props.setDisableTabsHeader({...props.disableTabsHeader , 3: true, 1:true})
+
    
   }, [])
 
@@ -48,6 +53,8 @@ function FeaturesSelection (props) {
 
 
   const submit=()=>{
+    dispatch(setCurrentPage(['3']))
+
     props.setDisableTabsHeader({...props.disableTabsHeader , 3: false, 1:true})
     props.increaseOrDecreaseNumOfPage(3)
     props.setDisplayInput(false)
@@ -128,6 +135,14 @@ function FeaturesSelection (props) {
 
    }
 
+   const onBack = ()=>{
+    dispatch(setCurrentPage(['1']))
+
+    props.increaseOrDecreaseNumOfPage(1)
+    props.setDisableTabsHeader({...props.disableTabsHeader , 1: false, 3:true})
+
+   }
+
   return (
     <div className='center-page'>
    <div className='cards'> 
@@ -142,7 +157,7 @@ function FeaturesSelection (props) {
           <Button onClick={()=>{submit()}}>Submit</Button>
        </div>
       <div className='back-button'>
-        <Button onClick={()=>{props.increaseOrDecreaseNumOfPage(1)}}>Back</Button>
+        <Button disabled={props.disableTabsHeader[1] && props.disableTabsHeader[3]} onClick={()=>{onBack()}}>Back</Button>
       </div>
 </div>
    </div>

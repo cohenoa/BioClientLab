@@ -11,9 +11,10 @@ const { Header, Content, Footer } = Layout;
 
 function App () {
   const doneUploadFile = useSelector((state) => state.featuresSelection.doneUploadFile)
+  const currentPage = useSelector((state) => state.pagesRoutes.currentPage)
+
   const [numOfPage,setNumOfPage]=useState(1)
 
-  // const [numOfPage,setNumOfPage]=useState(1)
   const [displayInput,setDisplayInput]=useState(true)
   const [displayOutput,setDisplayOutput]=useState(false)
   const[fileMetaData, setFileMetaData] = useState([]);
@@ -22,7 +23,9 @@ function App () {
   const[fileFromServer, setFileFromServer] = useState('');
   const[tabsHeader, setTabsHeader] = useState(['organism selection', 'feature selection', 'data']);
   const[disableTabsHeader, setDisableTabsHeader] = useState({1:false,2:true,3:true});
-  
+
+
+
   const saveDisableTabsHeader=(value)=>{
     setDisableTabsHeader(value)
   }
@@ -53,7 +56,7 @@ function App () {
      <div className="app" >
      <Header className="header">
       <div className="logo" ></div>
-      <Menu theme="dark" className="menuApp" mode="horizontal" defaultSelectedKeys={['1']}>
+      <Menu theme="dark" className="menuApp" selectedKeys={currentPage} mode="horizontal" defaultSelectedKeys={['1']}>
         {tabsHeader.map((tab, index) => {
           const key = index + 1;
           return <Menu.Item key={key} disabled={disableTabsHeader[key]} onClick={()=>clickOnTab(key)}>{tab}</Menu.Item>;

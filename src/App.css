@@ -13,6 +13,18 @@
 .header{
     height: 10%;
 }
+.logo {
+    float: left;
+    width: 10%;
+    height:70%;
+    margin: 16px 24px 16px 0;
+    background-image: url(/public/logo1.png);
+    background-size: 145px;
+    background-color: transparent;
+}
+.ant-menu-item {
+    background: transparent !important;
+}
 
 .card-container{
     margin-top: 3%;

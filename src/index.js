@@ -9,13 +9,15 @@ import thunk from 'redux-thunk';
 import featuresSelection from './store/reducer/Input/featuresSelection'
 import organizamSelector from './store/reducer/Input/OrganizamSelector'
 import featureOutput from './store/reducer/output/featuresOutput'
+import pagesRoutes from './store/reducer/pagesRoutes'
 
 const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
 const rootReducer = combineReducers({
   featuresSelection: featuresSelection,
   organizamSelector: organizamSelector,
-  featureOutput:featureOutput
+  featureOutput:featureOutput,
+  pagesRoutes :pagesRoutes
 });
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));

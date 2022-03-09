@@ -5,6 +5,8 @@ import { UploadOutlined } from "@ant-design/icons";
 import { Card, Col, Row } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
 import { setExistingFilesListFromServer,downloadAccessionNumber } from "../store/actions/Input/OrganizamSelector";
+import { setCurrentPage } from "../store/actions/pagesRoutes";
+
 import AWS from "aws-sdk";
 import * as URL from '../store/actions/url'
 import axios from 'axios'
@@ -129,7 +131,8 @@ const awsBucket = {
   };
 
   const onClickNext= () =>{
-    props.setDisableTabsHeader({...props.disableTabsHeader , 2: false})
+    props.setDisableTabsHeader({...props.disableTabsHeader ,1:false, 2: false })
+    dispatch(setCurrentPage(['2']))
     props.increaseOrDecreaseNumOfPage(2);
     if(props.accessionNumber != '')
       dispatch(downloadAccessionNumber(props.accessionNumber))
