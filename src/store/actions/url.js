@@ -1,4 +1,4 @@
-const URL = 'http://10.8.6.223:8080/'
+const URL = 'https://bioserverlab.herokuapp.com/'
 // NEW PATH'https://bioserverlab.herokuapp.com/'
 // OLD PATHhttps://bioinformaticswebsite.herokuapp.com/
 // http://192.168.1.45:8080
