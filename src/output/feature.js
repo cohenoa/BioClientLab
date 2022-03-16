@@ -16,7 +16,7 @@ function Feature (props) {
     const componentByTab=(tabName)=>{
         switch (tabName) {
             case 'Genome':
-                return  <Genome fileTabClickByTheUser={props.fileTabClickByTheUser} featureListResultFromServer={props.featureListResultFromServer[props.fileTabClickByTheUser][tabName]}></Genome>        
+                return  <Genome featureChosenByUser={props.featureChosenByUser} fileTabClickByTheUser={props.fileTabClickByTheUser} featureListResultFromServer={props.featureListResultFromServer[props.fileTabClickByTheUser][tabName]}></Genome>        
             case 'Gene':
                 return <Gene featureChosenByUser={props.featureChosenByUser} featureListResultFromServer={props.featureListResultFromServer[props.fileTabClickByTheUser][tabName]}></Gene>
             case "Protein":
@@ -28,7 +28,7 @@ function Feature (props) {
         }
     }
     const displayFeatureChosenByUserTabs=()=>{ 
-        // console.log(props.featureListResultFromServer[props.fileTabClickByTheUser]);       
+        // console.log(props.featureListResultFromServer,props.fileTabClickByTheUser);       
         return Object.keys(props.featureListResultFromServer[props.fileTabClickByTheUser]).map(tabName=>{
             return <TabPane tab={tabName} key={tabName} >
                    {componentByTab(tabName)}

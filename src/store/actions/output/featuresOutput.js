@@ -21,17 +21,20 @@ export const  setFeaturesOutput=(featureList, fileList)=>{
       };
 }
 
-export const  setDataGcContent=(fileName)=>{
+export const  setDataHist=(fileName,featureList)=>{
+    console.log(featureList);
     const params = {
         fileName:fileName,
+        featureList:featureList
     }
     const headers = {
         'Access-Control-Allow-Origin':"*"
     }
     return async function(dispatch) {
-        return axios.get(URL.GET_DATA_GC_CONTENT,{params,headers})
-          .then(({ data }) => {
-          dispatch(setDataGcContentFromServer(data))
+        return axios.get(URL.GET_FEATURES_DATA_HIST,{params,headers})
+          .then(({data} ) => {
+              console.log(typeof data);
+          dispatch(setDataHistFromServer(data))
         });
       };
 }
@@ -47,10 +50,10 @@ export const setFeaturesListOutput=(data, feature_type, nameFile)=>{
     );
 }
 
-export const setDataGcContentFromServer=(data)=>{
+export const setDataHistFromServer=(data)=>{
     return(
         {
-            type: CONST.SET_DATA_GC_CONTENT,
+            type: CONST.SET_DATA_HIST,
             data,
 
         }

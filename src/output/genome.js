@@ -5,13 +5,13 @@ import Histogram from 'react-chart-histogram';
 import {Bar} from 'react-chartjs-2';
 import Chart from 'chart.js/auto'
 import Plot from 'react-plotly.js';
-import {setDataGcContent } from '../store/actions/output/featuresOutput'
+import {setDataHist } from '../store/actions/output/featuresOutput'
 
 
 
 function Genome (props) {
   const dispatch= useDispatch()
-  const gcContent = useSelector((state) => state.featureOutput.dataGcContent);
+  const dataHist = useSelector((state) => state.featureOutput.dataHist);
   const [data,setData]=useState([])
   const [labels,setLabels]=useState([])
   const [dataToHistogram,setDataToHistogram]=useState()
@@ -19,23 +19,23 @@ function Genome (props) {
 
 
   useEffect(() => {
-    setData(gcContent)
+    setData(dataHist)
     let arrayLabels=[]
     let index =0
-    while(index <= gcContent.length)
+    while(index <= dataHist.length)
     {
       arrayLabels.push(index)
       index += 100
     }
     setLabels(arrayLabels)
-  }, [gcContent])
+  }, [dataHist])
 
   useEffect(() => {
-    dispatch(setDataGcContent(props.fileTabClickByTheUser))
+    dispatch(setDataHist(props.fileTabClickByTheUser,props.featureChosenByUser))
   }, [props.fileTabClickByTheUser])
     
   useEffect(() => {
-    console.log(data);
+    // console.log(data);
     if(data)
     {
         const dataToDisplay = {
@@ -63,6 +63,28 @@ function Genome (props) {
           </Col>
         })
     }
+const dynamicFeatureHist=()=>{
+  console.log("Object.keys(dataHist)",Object.keys(dataHist));
+  return Object.keys(dataHist).map(featureName=>{
+    return <Plot
+        data={[
+          {
+            x: dataHist[featureName],
+            type: 'histogram',
+            mode: 'none',
+          },
+          {type: 'histogram', x: dataHist[featureName], name: featureName, visible:false},
+          
+        ] }
+        layout={  {title: featureName +' Histogram'}} 
+      
+      />
+  })
+}
+
+
+
+
   return (
 <div>
     <Row className="genome-row" gutter={[16, 24]}>
@@ -70,19 +92,7 @@ function Genome (props) {
     </Row>
     <Row className="genome-row" gutter={[16, 24]}>
     <Col span={12} >
-          <Plot
-        data={[
-          {
-            x: data,
-            type: 'histogram',
-            mode: 'none',
-          },
-          {type: 'histogram', x: data, name: 'gc', visible:false},
-          
-        ] }
-        layout={  {title: 'GC CONTENT Histogram'}} 
-      
-      />
+   { dynamicFeatureHist()}
     {/* <Histogram
           xLabels={data}
           yValues={labels}

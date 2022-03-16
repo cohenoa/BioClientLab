@@ -21,7 +21,7 @@ function App () {
   const[isLoading, setIsLoading] = useState(false);
   const[accessionNumber, setAccessionNumber] = useState('');
   const[fileFromServer, setFileFromServer] = useState('');
-  const[tabsHeader, setTabsHeader] = useState(['organism selection', 'feature selection', 'data']);
+  const[tabsHeader, setTabsHeader] = useState(['Organism Selection', 'Feature Selection', 'Data']);
   const[disableTabsHeader, setDisableTabsHeader] = useState({1:false,2:true,3:true});
 
 
