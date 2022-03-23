@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Card, Col, Row, Checkbox , Button} from 'antd';
-import axios from  'axios';
+import { Card, Col, Row, Checkbox , Button, Popover } from 'antd';
+import {InfoCircleOutlined} from '@ant-design/icons'
 import './input.css';
 import Chip from '@mui/material/Chip';
 import { useDispatch, useSelector } from "react-redux";
-import {setFeaturesListFromServer, submitToServer} from '../store/actions/Input/featuresSelection'
+import {setFeaturesListFromServer, submitToServer, setCheckedSelectAll, getFeatureDescription} from '../store/actions/Input/featuresSelection'
 import { setCurrentPage } from "../store/actions/pagesRoutes";
 
 
@@ -14,17 +14,22 @@ function FeaturesSelection (props) {
   const featureList = useSelector((state) => state.featuresSelection.featuresList)
   const featureChosenByUser = useSelector((state) => state.featuresSelection.featuresChosenByUser);
   const ifTabDataSelected = useSelector((state) => state.featureOutput.featuresList);
+  const checkedCard = useSelector((state) => state.featuresSelection.checkedSelectAll);
+  const descriptions = useSelector((state) => state.featuresSelection.featuresDescription);
 
   const [featuresChooseByUser,setFeaturesChooseByUser]=useState([])
   const [featureListToDisplay,setFeatureListToDisplay]=useState({})
+  // const [checkedCard,setCheckedCard]=useState({})
   
   useEffect(() => {
+    dispatch(getFeatureDescription())
     dispatch(setFeaturesListFromServer())
     if(Object.keys(ifTabDataSelected).length >= 1 )
        props.setDisableTabsHeader({...props.disableTabsHeader , 3: true, 1:true})
-
-   
+    
   }, [])
+
+ 
 
 
   
@@ -32,12 +37,15 @@ function FeaturesSelection (props) {
     if(featureList)
     {
       let checkboxFeature={};
+      // let checkCardSelectAll ={}
       Object.keys(featureList).map(type=>{
+        // heckCardSelectAll[type] = type !== 'Genome_Features'? false: true
         checkboxFeature[type] = []
         featureList[type].map(nameFeature=>{
           checkboxFeature[type].push({name:nameFeature, checked:  featureChosenByUser.includes(nameFeature) ? true: type !== 'Genome_Features'? false: true })
         })
       })
+      // dispatch(setCheckedSelectAll(checkCardSelectAll))
       setFeatureListToDisplay(checkboxFeature)
       if(featureChosenByUser.length !== 0)
         setFeaturesChooseByUser([...featureList['Genome_Features'],...featureChosenByUser])
@@ -65,15 +73,26 @@ function FeaturesSelection (props) {
    const onChangeCheckbox=(e, nameType)=>{
      let featureListToDisplayTemp =featureListToDisplay
 
-       if(e.target.checked)
+      if(e.target.checked)
         {  
+          let flag = featureListToDisplayTemp[nameType].map(feature=>{
+            if(feature.checked)
+              return true
+            return false
+          }).filter(feature=> feature === false).length
+          if(flag === 1)
+          {
+            let checkedCardTemp = checkedCard
+            checkedCard[nameType]=true
+             dispatch(setCheckedSelectAll(checkedCardTemp))
+          }
           featureListToDisplayTemp[nameType].map(feature=>{
             if(feature.name === e.target.name)
-            feature.checked = true
+              feature.checked = true
           })
           let tempArray = [...featuresChooseByUser, e.target.name]
             setFeaturesChooseByUser(tempArray)}
-        else{
+      else{
           featureListToDisplayTemp[nameType].map(feature=>{
             if(feature.name === e.target.name)
             feature.checked = false
@@ -83,21 +102,58 @@ function FeaturesSelection (props) {
             if (index > -1) 
                 tempArray.splice(index, 1);
             setFeaturesChooseByUser(tempArray)
+            let checkedCardTemp = checkedCard
+            checkedCard[nameType]=false
+            dispatch(setCheckedSelectAll(checkedCardTemp))
         }
         setFeatureListToDisplay(featureListToDisplayTemp)
+        
+   }
+
+   const onChangeCheckboxSelectAll=(e, cardName)=>{
+     const featureListToDisplayTemp = featureListToDisplay
+     featureListToDisplayTemp[cardName].map(feature=>{
+      feature.checked = e.target.checked
+     })
+     let nameFeature = Object.keys(featureListToDisplay[cardName]).map(feature => {return featureListToDisplay[cardName][feature].name })
+     let tempArray
+     if(e.target.checked){
+        nameFeature = nameFeature.filter(feature => !featuresChooseByUser.includes(feature))
+        tempArray = [...featuresChooseByUser,...nameFeature]
+     }
+     else{
+      tempArray = [...featuresChooseByUser]
+      nameFeature.map(name=>{
+            const index = tempArray.indexOf(name);
+            if (index > -1) 
+                tempArray.splice(index, 1);
+      })
+     }
+     setFeaturesChooseByUser(tempArray)
+     setFeatureListToDisplay(featureListToDisplayTemp)
+     let checkedCardTemp = checkedCard
+     checkedCard[cardName]=e.target.checked
+     dispatch(setCheckedSelectAll(checkedCardTemp))
    }
 
    const featuresCards=()=>{
     return Object.keys(featureListToDisplay).map((key, index)=> {
       return (
       <Col span={8}  key={key} className="col-features-checkbox">
-      <Card title={key.replace('_',' ')} bordered={true}  className='card'>
-      <Row gutter={[8, 8]}>
-      <Col span={10}>
+      <Card title={key.replace('_',' ') } bordered={true}  className='card' extra={<Checkbox checked={checkedCard[key]} onChange={(e)=>{onChangeCheckboxSelectAll(e,key)}}>Select All</Checkbox>}>
       {featureListToDisplay[key].map(oneFeature=>{
-        return  <Checkbox  checked={oneFeature.checked} key={oneFeature.name} className='features-checkbox' name={oneFeature.name} onChange={(e)=>{onChangeCheckbox(e,key)}}>{oneFeature.name}</Checkbox>})} 
-       </Col>
-      </Row>
+        return  <Row> 
+          <Col >
+          <Checkbox  checked={oneFeature.checked} key={oneFeature.name} className='features-checkbox' name={oneFeature.name} onChange={(e)=>{onChangeCheckbox(e,key)}}>
+          {oneFeature.name}</Checkbox>
+          </Col>
+          <Col >
+          <Popover placement="rightTop" title={oneFeature.name}  content={descriptions[oneFeature.name]} trigger="click">
+          <InfoCircleOutlined />
+      </Popover>
+      </Col></Row>})} 
+       
+      
       </Card>
       </Col>
       )

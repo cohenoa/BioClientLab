@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Table,  Space  } from 'antd';
+import { Table,  Space, Button  } from 'antd';
 import { CSVLink } from "react-csv";
 import { DownloadOutlined } from '@ant-design/icons';
 
@@ -34,16 +34,20 @@ function General (props) {
    
   return (
     <div>
-        <div  className="download-bottom">
-         <CSVLink
+        <div  className="csv-bottom">
+         <CSVLink 
               filename={"General data.csv"}
               data={data}
             >
-              Download to csv
-              <DownloadOutlined />
+              <Button
+                className='download-bottom'
+            >
+                Download to csv
+                <DownloadOutlined />
+            </Button>
             </CSVLink>
             </div>
-   <Table columns={columns}  dataSource={data} scroll={{ X: 240 }} />
+   <Table tableLayout='column.ellipsis' columns={columns}  dataSource={data} scroll={{ X: 240 }} />
   </div>
   );
 }

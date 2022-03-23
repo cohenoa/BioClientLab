@@ -18,6 +18,18 @@ import { logDOM } from "@testing-library/dom";
 function MenuFiles (props) {
     const { SubMenu } = Menu;
     const [collapsed,setCollapsed]=useState(false)
+    const [allFilesAndCompereFiles,setAllFilesAndCompereFiles]=useState({})
+
+    useEffect(() => {
+      let object ={}
+      for(const file of props.unionAllFiles){
+        object[file] ='file'
+      }
+      if(props.unionAllFiles.length > 1)
+          object[props.unionAllFiles.join(' VS ')]='compere'
+      setAllFilesAndCompereFiles(object)
+      
+    }, [])
 
 
   const toggleCollapsed = () => {
@@ -25,25 +37,26 @@ function MenuFiles (props) {
   };
 
    const filesMetaDataMenuItem=()=>{
-       return props.unionAllFiles.map(fileName=>{
+       return Object.keys(allFilesAndCompereFiles).map(fileName=>{
             return <Menu.Item key={fileName} icon={<FileTextOutlined/>}>
                 {fileName}
            </Menu.Item>
        })
    }
   return (
-    <div style={{ width: 256 }}>
+    <div className='menu-div'>
         <Button type="primary" onClick={toggleCollapsed} style={{ marginBottom: 16 }}>
           {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}
         </Button>
         <Menu
+          className="menu-files"
           defaultSelectedKeys={[props.unionAllFiles[0]]}
           defaultOpenKeys={[props.unionAllFiles[0]]}
           mode="inline"
           inlineCollapsed={collapsed}
-          onClick={(key)=>props.setFileTabClickByTheUser(key.key)}
+          onClick={(key)=>props.setFileTabClickByTheUser(key.key,allFilesAndCompereFiles[key.key] )}
         >
-          {filesMetaDataMenuItem()}
+          {allFilesAndCompereFiles && filesMetaDataMenuItem()}
         </Menu>
       </div>
   );

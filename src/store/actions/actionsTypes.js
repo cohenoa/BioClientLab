@@ -1,6 +1,8 @@
 export const SET_FEATURES_LIST = 'setFeaturesList'
 export const SET_FEATURES_CHOSEN_BY_USER = 'featuresChosenByUser'
 export const SET_DONE_UPLOAD_FILE = 'setDoneUploadFile'
+export const SET_CHECKED_SELECT_ALL = 'setCheckedSelectAll'
+export const SET_FEATURE_DESCRIPTION = 'setFeatureDescription'
 
 export const SET_EXISTING_FILES_LIST = 'setExistingFilesList'
 export const SET_FEATURES_LIST_OUTPUT = 'setFeatureListOutput'

@@ -154,7 +154,7 @@ const awsBucket = {
         </Upload>
       </div>
       <div className="input-text">
-        <h3 className="element">Enter accession number:</h3>
+        <h3 className="element">Enter accession number (complete genome):</h3>
         <Input 
           className="input-field element-button"
           placeholder="Enter accession number"

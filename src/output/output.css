@@ -20,6 +20,10 @@
   margin-top: 10%;
   margin-left: 40%;
 }
+.csv-bottom{
+ 
+  width: 16ch;
+}
 
 .download-bottom{
   background-color:white;
@@ -27,14 +31,34 @@
   margin-bottom:1%;
   border-radius: 5ch;
   width: 16ch;
+  height: 5ch;
 }
 .download-bottom:hover{
   background-color:rgb(68, 90, 131);
 
 }
 
+.plots-div{
+  display: grid; 
+  grid-gap: 20px; 
+}
+
+/* Screen larger than 600px? 2 column */
+@media (min-width: 600px) {
+  .plots-div { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Screen larger than 900px? 3 columns */
+@media (min-width: 2400px) {
+  .plots-div { grid-template-columns: repeat(3, 1fr); }}
+
 
 
 .genome-row{
   margin-bottom: 1%;
 }
+
+.menu-div{
+  width: 100%;
+}
+

@@ -13,6 +13,15 @@ export const  setFeaturesListFromServer=()=>{
       };
 }
 
+export const  getFeatureDescription=()=>{
+    return async function(dispatch) {
+        return axios.get(URL.GET_FEATURE_DESCRIPTION, {headers :{'Access-Control-Allow-Origin': '*'}})
+          .then(({ data }) => {
+          dispatch(setFeatureDescription(data));
+        });
+      };
+}
+
 export const  submitToServer=(fileMetaData, accessionNumber, featuresChooseByUser)=>{
     return async function(dispatch) {
         //console.log(fileMetaData);
@@ -61,6 +70,24 @@ export const setDoneUploadFile=(value)=>{
         {
             type: CONST.SET_DONE_UPLOAD_FILE,
             value
+        }
+    );
+}
+
+export const setFeatureDescription=(data)=>{
+    return(
+        {
+            type: CONST.SET_FEATURE_DESCRIPTION,
+            data
+        }
+    );
+}
+
+export const setCheckedSelectAll=(data)=>{
+    return(
+        {
+            type: CONST.SET_CHECKED_SELECT_ALL,
+            data
         }
     );
 }

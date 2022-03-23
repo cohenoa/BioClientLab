@@ -4,9 +4,12 @@ import './output.css';
 import {setFeaturesOutput } from '../store/actions/output/featuresOutput'
 import MenuFiles from './menu'
 import Feature from './feature'
+import Compare from './Compare'
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-
+import { CSVLink } from "react-csv";
+import { Menu, Button } from 'antd';
+import { DownloadOutlined } from '@ant-design/icons';
 
 function Output (props) {
   const dispatch= useDispatch()
@@ -19,7 +22,7 @@ function Output (props) {
   const[isLoading, setIsLoading] = useState(false);
   const [accessionNumberList, setAccessionNumberList] = useState([]);
   const [unionAllFiles,setUnionAllFiles]=useState([])
-
+  const [typeFileClicked,setTypeFileClicked]=useState('file')
 
   useEffect(() => {
     props.setDisableTabsHeader({...props.disableTabsHeader , 1: true})
@@ -57,10 +60,12 @@ function Output (props) {
     
   }, [featureListResult])
 
-  const setFileTabClickByTheUserFunction=(file)=>{
+  const setFileTabClickByTheUserFunction=(file, type)=>{
+    console.log("type", type);
     setFileTabClickByTheUser(file)
+    setTypeFileClicked(type)
   }
-
+  
 
   return (
     <div className="outputScreen">
@@ -70,9 +75,13 @@ function Output (props) {
       <div className="menu">
       <MenuFiles unionAllFiles={unionAllFiles} setFileTabClickByTheUser={setFileTabClickByTheUserFunction}></MenuFiles>
       </div>  
+      
      <div className="featureComponent">
-     <Feature featureChosenByUser={featureChosenByUser} featureListResultFromServer={featureListResultFromServer} fileTabClickByTheUser={fileTabClickByTheUser} ></Feature>
-     </div></div>}
+     {typeFileClicked === 'file' ?<Feature  featureChosenByUser={featureChosenByUser} featureListResultFromServer={featureListResultFromServer} fileTabClickByTheUser={fileTabClickByTheUser} ></Feature>
+     :
+     <Compare></Compare>}
+     </div>
+     </div>}
     </div>
   );
 }

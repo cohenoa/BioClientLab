@@ -64,21 +64,21 @@ function Genome (props) {
         })
     }
 const dynamicFeatureHist=()=>{
-  console.log("Object.keys(dataHist)",Object.keys(dataHist));
   return Object.keys(dataHist).map(featureName=>{
-    return <Plot
+    return (    <Plot key={featureName} className='plot'
         data={[
           {
             x: dataHist[featureName],
             type: 'histogram',
             mode: 'none',
           },
-          {type: 'histogram', x: dataHist[featureName], name: featureName, visible:false},
-          
         ] }
-        layout={  {title: featureName +' Histogram'}} 
+        layout={  { width: 500, height: 400,title: featureName +' Histogram'}} 
       
-      />
+      />)
+    
+    
+    
   })
 }
 
@@ -90,30 +90,11 @@ const dynamicFeatureHist=()=>{
     <Row className="genome-row" gutter={[16, 24]}>
          {cardByFeatures()}
     </Row>
-    <Row className="genome-row" gutter={[16, 24]}>
-    <Col span={12} >
+    <Row className="genome-row" >
+    <Col >
+      <div className='plots-div'>
    { dynamicFeatureHist()}
-    {/* <Histogram
-          xLabels={data}
-          yValues={labels}
-          width='400'
-          height='200'
-      /> */}
-        {/* {data.length && <Bar
-          data={dataToHistogram}
-          options={{
-            title:{
-              display:true,
-              text:'Average Rainfall per month',
-              fontSize:20
-            },
-            legend:{
-              display:true,
-              position:'right'
-            }
-          }}
-        />} */}
-        {/* </Card> */}
+   </div>
         </Col>
     </Row>
 

@@ -13,13 +13,20 @@
 .header{
     height: 10%;
 }
+
+.ant-menu-title-content {
+    font-size: 20px; 
+}
+.ant-menu-overflow {
+padding-top: 1%;
+}
 .logo {
     float: left;
     width: 10%;
-    height:70%;
+    height:50%;
     margin: 16px 24px 16px 0;
     background-image: url(/public/logo1.png);
-    background-size: 145px;
+    background-size: 100%;
     background-color: transparent;
 }
 .ant-menu-item {

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Table,  Space } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 import { CSVLink } from "react-csv";
+import { Menu, Button } from 'antd';
 
 
 function Gene (props) {
@@ -25,23 +26,28 @@ function Gene (props) {
             columns.push({title:feature, key:feature, dataIndex:feature})})
         setColumns(columns)
         setData(props.featureListResultFromServer)
-       
+        // props.saveDataToCsv(props.featureListResultFromServer)
       }, [props.featureListResultFromServer])
 
     
    
   return (
     <div>
-         <div  className="download-bottom">
+         <div  className="csv-bottom">
          <CSVLink
               filename={"Gene data.csv"}
               data={data}
             >
-              Download to csv
-              <DownloadOutlined />
+              <Button
+                className='download-bottom'
+            >
+                Download to csv
+                <DownloadOutlined />
+            </Button>
+              
             </CSVLink>
             </div>
-   <Table columns={columns}  dataSource={data} scroll={{ X: 240 }} />
+   <Table  tableLayout='column.ellipsis' columns={columns}  dataSource={data} scroll={{ X: 240 }} />
   </div>
   );
 }
