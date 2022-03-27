@@ -4,7 +4,7 @@ import "./input.css";
 import { UploadOutlined } from "@ant-design/icons";
 import { Card, Col, Row } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
-import { setExistingFilesListFromServer,downloadAccessionNumber } from "../store/actions/Input/OrganizamSelector";
+import { setExistingFilesListFromServer,downloadAccessionNumber, setDoneUploadFile } from "../store/actions/Input/OrganizamSelector";
 import { setCurrentPage } from "../store/actions/pagesRoutes";
 
 import AWS from "aws-sdk";
@@ -38,6 +38,8 @@ function OrganizamSelector(props) {
     if (e.fileList.length) {
       props.saveFileMetaData(e.fileList);
       setIfOrganizamSelected(true);
+      dispatch(setDoneUploadFile(true))
+
     }
   };
 
@@ -175,6 +177,7 @@ const awsBucket = {
           onChange={(e) => {
             selectOrganizamFromList(e);
             setDisableNext(false)
+            dispatch(setDoneUploadFile(true))
           }}
           placeholder="Select a file"
         >

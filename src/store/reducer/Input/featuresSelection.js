@@ -4,7 +4,7 @@ import * as ACTION_TYPE from '../../actions/actionsTypes'
 const initialState = {
 	featuresList:[],
 	featuresChosenByUser: [],
-	doneUploadFile:'',
+	doneUploadFile:false,
 	checkedSelectAll:{
 		Gene_Features:false,
 		General_Features:false,
@@ -24,7 +24,7 @@ const featuresChosenByUser=(state, action)=>{
 }
 
 const setDoneUploadFile=(state, action)=>{
-	return {...state, doneUploadFile:action.value}
+	return {...state, doneUploadFile:action.data}
 }
 const setCheckedSelectAll=(state, action)=>{
 	return {...state, checkedSelectAll: action.data}

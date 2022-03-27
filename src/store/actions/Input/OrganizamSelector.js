@@ -7,12 +7,14 @@ import * as URL from '../url'
 export const  downloadAccessionNumber = ( accessionNumber)=>{
     return async function(dispatch) {
         console.log(accessionNumber);
-       
-        
         return axios
             
             .post(URL.POST_UPLOAD_FILE,{accessionNumber:accessionNumber}, {'Content-Type': 'application/json'})
-            .then(res => console.log(res))
+            .then(res => {
+                if(res.status === 200)
+                    dispatch(setDoneUploadFile(true))
+                
+                })
             .catch(err => console.warn(err));
         
 
@@ -33,6 +35,15 @@ export const setExistingFilesList=(data)=>{
     return(
         {
             type: CONST.SET_EXISTING_FILES_LIST,
+            data
+        }
+    );
+}
+
+export const setDoneUploadFile=(data)=>{
+    return(
+        {
+            type: CONST.SET_DONE_UPLOAD_FILE,
             data
         }
     );

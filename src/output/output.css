@@ -52,6 +52,9 @@
 @media (min-width: 2400px) {
   .plots-div { grid-template-columns: repeat(3, 1fr); }}
 
+.plot{
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
 
 
 .genome-row{

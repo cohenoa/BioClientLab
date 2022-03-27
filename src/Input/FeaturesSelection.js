@@ -3,6 +3,8 @@ import { Card, Col, Row, Checkbox , Button, Popover } from 'antd';
 import {InfoCircleOutlined} from '@ant-design/icons'
 import './input.css';
 import Chip from '@mui/material/Chip';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from "react-redux";
 import {setFeaturesListFromServer, submitToServer, setCheckedSelectAll, getFeatureDescription} from '../store/actions/Input/featuresSelection'
 import { setCurrentPage } from "../store/actions/pagesRoutes";
@@ -16,6 +18,7 @@ function FeaturesSelection (props) {
   const ifTabDataSelected = useSelector((state) => state.featureOutput.featuresList);
   const checkedCard = useSelector((state) => state.featuresSelection.checkedSelectAll);
   const descriptions = useSelector((state) => state.featuresSelection.featuresDescription);
+  const doneUploadFile = useSelector((state) => state.featuresSelection.doneUploadFile);
 
   const [featuresChooseByUser,setFeaturesChooseByUser]=useState([])
   const [featureListToDisplay,setFeatureListToDisplay]=useState({})
@@ -200,6 +203,7 @@ function FeaturesSelection (props) {
    }
 
   return (
+    !doneUploadFile ?   <div className="loading"><Spin indicator={<LoadingOutlined style={{ fontSize: 100 }} spin />} /></div> :
     <div className='center-page'>
    <div className='cards'> 
    <div className="title">Features Selection</div>
