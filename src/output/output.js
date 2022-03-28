@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import './output.css';
-import {setFeaturesOutput } from '../store/actions/output/featuresOutput'
+import {setFeaturesOutput, setDataHist } from '../store/actions/output/featuresOutput'
 import MenuFiles from './menu'
 import Feature from './feature'
 import Compare from './Compare'
@@ -47,6 +47,8 @@ function Output (props) {
     if (featureChosenByUser.length !==0 && unionAllFiles.length !==0 ){
       setFeatureChosenByUserToChild(featureChosenByUser)
       dispatch(setFeaturesOutput(featureChosenByUser, unionAllFiles))
+      dispatch(setDataHist(unionAllFiles,featureChosenByUser))
+
     }
     
   }, [featureChosenByUser, unionAllFiles])
@@ -61,7 +63,6 @@ function Output (props) {
   }, [featureListResult])
 
   const setFileTabClickByTheUserFunction=(file, type)=>{
-    console.log("type", type);
     setFileTabClickByTheUser(file)
     setTypeFileClicked(type)
   }

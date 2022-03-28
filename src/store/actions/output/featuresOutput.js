@@ -24,7 +24,7 @@ export const  setFeaturesOutput=(featureList, fileList)=>{
 export const  setDataHist=(fileName,featureList)=>{
     console.log(featureList);
     const params = {
-        fileName:fileName,
+        fileList:fileName,
         featureList:featureList
     }
     const headers = {
@@ -33,7 +33,7 @@ export const  setDataHist=(fileName,featureList)=>{
     return async function(dispatch) {
         return axios.get(URL.GET_FEATURES_DATA_HIST,{params,headers})
           .then(({data} ) => {
-              console.log(typeof data);
+              console.log( data);
           dispatch(setDataHistFromServer(data))
         });
       };
