@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Tabs, Radio } from 'antd';
+import { useSelector } from "react-redux";
+import { Tabs } from 'antd';
 import Genome from "./genome";
 import Gene from "./gene";
 import Protein from "./protein";
@@ -24,11 +24,11 @@ function Feature (props) {
             case 'Genome':
                 return  <Genome  featureChosenByUser={props.featureChosenByUser} fileTabClickByTheUser={props.fileTabClickByTheUser} featureListResultFromServer={props.featureListResultFromServer[props.fileTabClickByTheUser][tabName]}></Genome>        
             case 'Gene':
-                return <Gene saveDataToCsv={props.saveDataToCsv} featureChosenByUser={props.featureChosenByUser} featureListResultFromServer={props.featureListResultFromServer[props.fileTabClickByTheUser][tabName]}></Gene>
+                return <Gene saveDataToCsv={props.saveDataToCsv} fileTabClickByTheUser={props.fileTabClickByTheUser} featureChosenByUser={props.featureChosenByUser} featureListResultFromServer={props.featureListResultFromServer[props.fileTabClickByTheUser][tabName]}></Gene>
             case "Protein":
-                return <Protein featureChosenByUser={props.featureChosenByUser} featureListResultFromServer={props.featureListResultFromServer[props.fileTabClickByTheUser][tabName]}></Protein>
+                return <Protein featureChosenByUser={props.featureChosenByUser} fileTabClickByTheUser={props.fileTabClickByTheUser} featureListResultFromServer={props.featureListResultFromServer[props.fileTabClickByTheUser][tabName]}></Protein>
             case "General":
-                return <General featureChosenByUser={props.featureChosenByUser} featureListResultFromServer={props.featureListResultFromServer[props.fileTabClickByTheUser][tabName]}></General>
+                return <General featureChosenByUser={props.featureChosenByUser} fileTabClickByTheUser={props.fileTabClickByTheUser} featureListResultFromServer={props.featureListResultFromServer[props.fileTabClickByTheUser][tabName]}></General>
             default:
                 break;
         }
