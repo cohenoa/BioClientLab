@@ -3,17 +3,19 @@ import {useSelector } from "react-redux";
 import { Table,Button } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 import { CSVLink } from "react-csv";
-
+import getColumnSearchProps from './search'
 
 
 function Protein (props) {
-    const [columns,setColumns]=useState([])
-    const [data,setData]=useState([])
     const featureListProtein = useSelector((state) => state.featuresSelection.featuresList.Protein_Features);
     const featureOutputProtein = useSelector((state) => state.featureOutput.featuresList);
+    const [columns,setColumns]=useState([])
+    const [data,setData]=useState([])
+    const [searchText, setSearchText] = useState("");
+    const [searchedColumn, setSearchedColumn] = useState(0);
     
     useEffect(() => {
-        const columns =[{title:'GENE NAME',key:'GENE NAME',dataIndex:'GENE NAME'}]
+        const columns =[{title:'GENE NAME',key:'GENE NAME',dataIndex:'GENE NAME', ...getColumnSearchProps('GENE NAME',searchText,searchedColumn,saveSetSearchText, saveSetSearchedColumn)}]
         let array=[]
         for (const feature of props.featureChosenByUser)
         {
@@ -33,7 +35,12 @@ function Protein (props) {
       }, [props.featureListResultFromServer])
 
  
-    
+      const saveSetSearchText=(value)=>{
+        setSearchText(value)
+      }
+      const saveSetSearchedColumn=(value)=>{
+        setSearchedColumn(value)
+      }
    
   return (
     <div>

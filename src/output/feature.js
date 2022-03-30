@@ -34,7 +34,6 @@ function Feature (props) {
         }
     }
     const displayFeatureChosenByUserTabs=()=>{ 
-        // console.log(props.featureListResultFromServer,props.fileTabClickByTheUser);       
         return Object.keys(props.featureListResultFromServer[props.fileTabClickByTheUser]).map(tabName=>{
             return <TabPane tab={tabMapName[tabName]} key={tabName} >
                            <div className='tabs'>

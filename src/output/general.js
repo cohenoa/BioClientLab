@@ -3,6 +3,7 @@ import {useSelector} from "react-redux";
 import { Table, Button} from 'antd';
 import { CSVLink } from "react-csv";
 import { DownloadOutlined } from '@ant-design/icons';
+import getColumnSearchProps from './search'
 
 
 
@@ -16,13 +17,14 @@ function General (props) {
                                                 {text:'mRNA',value:'mRNA'},
                                                 {text:'rRNA',value:'rRNA'},
                                                 {text:'regulatory',value:'regulatory'}])
+    const [searchText, setSearchText] = useState("");
+    const [searchedColumn, setSearchedColumn] = useState(0);
     
 
 
 
     useEffect(() => {
-        // const columns =[{title:'Gene ID', key:'Gene ID'}]
-        const columns =[{title:'GENE NAME',key:'GENE NAME',dataIndex:'GENE NAME'}]
+        const columns =[{title:'GENE NAME',key:'GENE NAME',dataIndex:'GENE NAME', ...getColumnSearchProps('GENE NAME',searchText,searchedColumn,saveSetSearchText, saveSetSearchedColumn)}]
         let array=[]
         for (const feature of props.featureChosenByUser)
         {
@@ -49,7 +51,13 @@ function General (props) {
       }, [props.featureListResultFromServer])
 
     
-   
+      const saveSetSearchText=(value)=>{
+        setSearchText(value)
+      }
+      const saveSetSearchedColumn=(value)=>{
+        setSearchedColumn(value)
+      }
+
   return (
     <div>
         <div  className="csv-bottom">

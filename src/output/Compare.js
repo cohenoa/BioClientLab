@@ -20,7 +20,6 @@ function Compare (props) {
   }
 
     const displayFeatureChosenByUserTabs=()=>{ 
-      // console.log(props.featureListResultFromServer,props.fileTabClickByTheUser);       
       return tabsName.map(tabName=>{
           return <TabPane tab={tabName} key={tabName} >
                          <div className='tabs'>

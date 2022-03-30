@@ -40,32 +40,34 @@ function FeaturesSelection (props) {
     if(featureList)
     {
       let checkboxFeature={};
-      // let checkCardSelectAll ={}
       Object.keys(featureList).map(type=>{
-        // heckCardSelectAll[type] = type !== 'Genome_Features'? false: true
         checkboxFeature[type] = []
         featureList[type].map(nameFeature=>{
           checkboxFeature[type].push({name:nameFeature, checked:  featureChosenByUser.includes(nameFeature) ? true: type !== 'Genome_Features'? false: true })
         })
       })
-      // dispatch(setCheckedSelectAll(checkCardSelectAll))
       setFeatureListToDisplay(checkboxFeature)
       if(featureChosenByUser.length !== 0)
-        setFeaturesChooseByUser([...featureList['Genome_Features'],...featureChosenByUser])
-    else        
-    setFeaturesChooseByUser(featureList['Genome_Features'])
-
+      {
+        if(featureChosenByUser.includes(featureList['Genome_Features'][0],featureList['Genome_Features'][1]))
+            setFeaturesChooseByUser([...featureChosenByUser])
+        else
+          setFeaturesChooseByUser([...featureList['Genome_Features'],...featureChosenByUser])
+      }
+     else        
+        setFeaturesChooseByUser(featureList['Genome_Features'])
       }
 
   }, [featureList])
 
+
+ 
  
 
 
 
   const submit=()=>{
     dispatch(setCurrentPage(['3']))
-
     props.setDisableTabsHeader({...props.disableTabsHeader , 3: false, 1:true})
     props.increaseOrDecreaseNumOfPage(3)
     props.setDisplayInput(false)
@@ -143,15 +145,15 @@ function FeaturesSelection (props) {
     return Object.keys(featureListToDisplay).map((key, index)=> {
       return (
       <Col span={8}  key={key} className="col-features-checkbox">
-      <Card title={key.replace('_',' ') } bordered={true}  className='card' extra={<Checkbox checked={checkedCard[key]} onChange={(e)=>{onChangeCheckboxSelectAll(e,key)}}>Select All</Checkbox>}>
+      <Card key={key} title={key.replace('_',' ') } bordered={true}  className='card' extra={<Checkbox checked={checkedCard[key]} onChange={(e)=>{onChangeCheckboxSelectAll(e,key)}}>Select All</Checkbox>}>
       {featureListToDisplay[key].map(oneFeature=>{
-        return  <Row> 
+        return  <Row key={oneFeature.name}> 
           <Col >
           <Checkbox  checked={oneFeature.checked} key={oneFeature.name} className='features-checkbox' name={oneFeature.name} onChange={(e)=>{onChangeCheckbox(e,key)}}>
           {oneFeature.name}</Checkbox>
           </Col>
           <Col >
-          <Popover placement="rightTop" title={oneFeature.name}  content={descriptions[oneFeature.name]} trigger="click">
+          <Popover key={oneFeature} placement="rightTop" title={oneFeature.name}  content={descriptions[oneFeature.name]} trigger="click">
           <InfoCircleOutlined />
       </Popover>
       </Col></Row>})} 
@@ -176,7 +178,7 @@ function FeaturesSelection (props) {
     setFeaturesChooseByUser((chips) => chips.filter((chip) => chip !== chipToDelete));
   };
 
-   const buildChipsOnfeaturesDelected=()=>{
+   const buildChipsOnFeaturesSelected=()=>{
     return featuresChooseByUser.map((oneFeature, index)=>{
       return (
         <div key={index} className = "chip-feature">
@@ -186,7 +188,6 @@ function FeaturesSelection (props) {
             onDelete={handleDelete(oneFeature)}
             color="primary"
             variant="outlined"
-
           />
           </div>
     );}
@@ -196,7 +197,6 @@ function FeaturesSelection (props) {
 
    const onBack = ()=>{
     dispatch(setCurrentPage(['1']))
-
     props.increaseOrDecreaseNumOfPage(1)
     props.setDisableTabsHeader({...props.disableTabsHeader , 1: false, 3:true})
 
@@ -207,7 +207,7 @@ function FeaturesSelection (props) {
     <div className='center-page'>
    <div className='cards'> 
    <div className="title">Features Selection</div>
-    {featuresChooseByUser && buildChipsOnfeaturesDelected()}
+    {featuresChooseByUser && buildChipsOnFeaturesSelected()}
     <Row gutter={16} type='flex'>
     {featuresCards()}
     </Row>

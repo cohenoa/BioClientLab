@@ -12,47 +12,20 @@ import {setDataHist } from '../store/actions/output/featuresOutput'
 function Genome (props) {
   const dispatch= useDispatch()
   const dataHist = useSelector((state) => state.featureOutput.dataHist);
-  // const [data,setData]=useState([])
-  // const [labels,setLabels]=useState([])
-  // const [dataToHistogram,setDataToHistogram]=useState()
+  const genomeObj = useSelector((state) => state.featureOutput.featuresList);
+  const [pieObject,setPieObject]=useState({})
 
-
-
-  // useEffect(() => {
-  //   setData(dataHist)
-  //   let arrayLabels=[]
-  //   let index =0
-  //   while(index <= dataHist.length)
-  //   {
-  //     arrayLabels.push(index)
-  //     index += 100
-  //   }
-  //   setLabels(arrayLabels)
-  // }, [dataHist])
-
-  // useEffect(() => {
-  //   dispatch(setDataHist(props.fileTabClickByTheUser,props.featureChosenByUser))
-  // }, [props.fileTabClickByTheUser])
-    
-  // useEffect(() => {
-  //   // console.log(data);
-  //   if(data)
-  //   {
-  //       const dataToDisplay = {
-  //         labels: ['0','10%','20%','30%','40%','50%','60%','70%','80%','90%','100%'],
-  //         datasets: [
-  //           {
-  //             label: 'Rainfall',
-  //             backgroundColor: 'rgba(75,192,192,1)',
-  //             borderColor: 'rgba(0,0,0,1)',
-  //             borderWidth: 2,
-  //             data: data
-  //           }
-  //         ]
-  //       }
-  //       setDataToHistogram(dataToDisplay)
-  //     }
-  // }, [data])
+ 
+  useEffect(() => {
+    let nameTypes = Object.keys(genomeObj[props.fileTabClickByTheUser].Genome).filter(key => key.includes("Number of"))
+    let nameTypesObject ={}
+    nameTypes = nameTypes.map(key=> {
+      let tempKey = key
+      return nameTypesObject[ key.split(' ')[2]]= genomeObj[props.fileTabClickByTheUser].Genome[tempKey]} )
+      setPieObject(nameTypesObject);
+      
+  }, [props.fileTabClickByTheUser])
+  
 
     const cardByFeatures=()=>{
         return Object.keys(props.featureListResultFromServer).map(feature=>{
@@ -93,6 +66,18 @@ const dynamicFeatureHist=()=>{
     <Row className="genome-row" >
     <Col >
       <div className='plots-div'>
+      <Plot key={'pie'} className='plot'
+        data={[
+          {
+            values: Object.values(pieObject),
+            labels:Object.keys(pieObject),
+            type: 'pie',
+           
+          },
+        ] }
+        layout={  { width: 500, height: 400,title: 'Types Of Genome' }} 
+      
+      />
    { dynamicFeatureHist()}
    </div>
         </Col>

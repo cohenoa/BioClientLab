@@ -24,24 +24,11 @@ export const  getFeatureDescription=()=>{
 
 export const  submitToServer=(fileMetaData, accessionNumber, featuresChooseByUser)=>{
     return async function(dispatch) {
-        //console.log(fileMetaData);
-        // dispatch(setDoneUploadFile(false))
+     
         if(fileMetaData !== undefined){
-            console.log(featuresChooseByUser);
             dispatch(setFeaturesChosenByUser(featuresChooseByUser))
         }
-         
-        // if(accessionNumber !== '')
-        // {
-        //     console.log("before axios")
-        // return axios
-            
-        //     .post(URL.POST_UPLOAD_FILE,{accessionNumber:accessionNumber}, {'Content-Type': 'application/json'})
-        //     .then(res => console.log(res))
-        //     .catch(err => console.warn(err));
-        // }
-
-        
+      
     };
 }
 

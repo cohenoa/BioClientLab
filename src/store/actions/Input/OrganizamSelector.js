@@ -6,7 +6,6 @@ import * as URL from '../url'
 
 export const  downloadAccessionNumber = ( accessionNumber)=>{
     return async function(dispatch) {
-        console.log(accessionNumber);
         return axios
             
             .post(URL.POST_UPLOAD_FILE,{accessionNumber:accessionNumber}, {'Content-Type': 'application/json'})
@@ -15,10 +14,7 @@ export const  downloadAccessionNumber = ( accessionNumber)=>{
                     dispatch(setDoneUploadFile(true))
                 
                 })
-            .catch(err => console.warn(err));
-        
-
-        
+            .catch(err => console.warn(err));  
     };
 }
 

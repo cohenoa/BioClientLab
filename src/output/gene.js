@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Table } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
+import { Button} from "antd";
 import { CSVLink } from "react-csv";
-import { Button } from 'antd';
+import getColumnSearchProps from './search'
 
 
 function Gene (props) {
@@ -11,11 +12,13 @@ function Gene (props) {
     const [data,setData]=useState([])
     const featureListGene = useSelector((state) => state.featuresSelection.featuresList.Gene_Features);
     const featureOutputGene = useSelector((state) => state.featureOutput.featuresList);
-
+    
+    const [searchText, setSearchText] = useState("");
+    const [searchedColumn, setSearchedColumn] = useState(0);
 
 
     useEffect(() => {
-        const columns =[{title:'GENE NAME',key:'GENE NAME',dataIndex:'GENE NAME',...this.getColumnSearchProps('GENE NAME'),
+        const columns =[{title:'GENE NAME',key:'GENE NAME',dataIndex:'GENE NAME',...getColumnSearchProps('GENE NAME',searchText,searchedColumn,saveSetSearchText, saveSetSearchedColumn),
       }]
         let array=[]
         for (const feature of props.featureChosenByUser)
@@ -39,6 +42,12 @@ function Gene (props) {
         // props.saveDataToCsv(props.featureListResultFromServer)
       }, [props.featureListResultFromServer])
 
+      const saveSetSearchText=(value)=>{
+        setSearchText(value)
+      }
+      const saveSetSearchedColumn=(value)=>{
+        setSearchedColumn(value)
+      }
     
    
   return (
