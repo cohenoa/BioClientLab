@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Input, Button, Upload, Select, Checkbox } from "antd";
+import { Input, Button, Upload, Select } from "antd";
 import "./input.css";
 import { UploadOutlined } from "@ant-design/icons";
-import { Card, Col, Row } from 'antd';
+//import { Card, Col, Row } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
 import { setExistingFilesListFromServer,downloadAccessionNumber, setDoneUploadFile } from "../store/actions/Input/OrganizamSelector";
 import { setCurrentPage } from "../store/actions/pagesRoutes";
@@ -19,6 +19,7 @@ function OrganizamSelector(props) {
   const [existingFileList, setExistingFileList] = useState([]);
   const [ifOrganizamSelected, setIfOrganizamSelected] = useState(false);
   const [disableNext, setDisableNext] = useState(true);
+
 
 
   useEffect(() => {
@@ -39,7 +40,6 @@ function OrganizamSelector(props) {
       props.saveFileMetaData(e.fileList);
       setIfOrganizamSelected(true);
       dispatch(setDoneUploadFile(true))
-
     }
   };
 
@@ -81,6 +81,7 @@ const awsBucket = {
       .send(function(err, data) {
         if (err) {
           onError();
+          alert("Error Uploading file ,please try again")
           console.log("Something went wrong");
           console.log(err.code);
           console.log(err.message);
@@ -96,15 +97,17 @@ const awsBucket = {
            setDisableNext(false)
           }
           )
+          .catch(res =>{
+            alert("Somthing went wrong Please try again")
+            window.location.reload();// TODO:Change it to like enter first web
+
+          })
         }
       });
   }
 };
 //POST_UPLOAD_BUCKET_FILE
 // END bucket for upload files
-
-
-
 
   const accessionNumberSelected = (e) => {
     props.saveAccessionNumber(e.target.value);
@@ -136,7 +139,7 @@ const awsBucket = {
     props.setDisableTabsHeader({...props.disableTabsHeader ,1:false, 2: false })
     dispatch(setCurrentPage(['2']))
     props.increaseOrDecreaseNumOfPage(2);
-    if(props.accessionNumber != '')
+    if(props.accessionNumber !== '')
       dispatch(downloadAccessionNumber(props.accessionNumber))
 
   }
@@ -144,9 +147,11 @@ const awsBucket = {
     <div className="center-page">
       <div className="title">Organism Selection</div>
       <h2>Choose one option:</h2>
+      <h3>Note: in order to perform comparison between two species, please upload two files</h3>
       <div className="upload-file">
       <h3  className="element" >Upload a file:</h3>
-        <Upload {...awsBucket}
+        <Upload {...awsBucket}כ
+          accept=".gb"
         //action={URL.POST_UPLOAD_FILE}
           onRemove={() => {
             removeUploadFileSelected();
@@ -156,7 +161,7 @@ const awsBucket = {
         </Upload>
       </div>
       <div className="input-text">
-        <h3 className="element">Enter accession number (complete genome):</h3>
+        <h3 className="element">Enter GenBank accession number (complete genome):</h3>
         <Input 
           className="input-field element-button"
           placeholder="Enter accession number"

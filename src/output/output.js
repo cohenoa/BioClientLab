@@ -71,7 +71,7 @@ function Output (props) {
   return (
     <div className="outputScreen">
       {!isLoading ? 
-      <div className="loading"><Spin indicator={<LoadingOutlined style={{ fontSize: 100 }} spin />} /></div> :
+      <div className="loading"><Spin tip="Loading" indicator={<LoadingOutlined style={{ fontSize: 100 }} spin />} /></div> :
       <div>
       <div className="menu">
       <MenuFiles unionAllFiles={unionAllFiles} setFileTabClickByTheUser={setFileTabClickByTheUserFunction}></MenuFiles>

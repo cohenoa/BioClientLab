@@ -66,7 +66,7 @@ function App () {
     <Content >
 
       <Input numOfPage={numOfPage} increaseOrDecreaseNumOfPage={increaseOrDecreaseNumOfPage} setDisableTabsHeader={saveDisableTabsHeader} disableTabsHeader={disableTabsHeader} fileMetaData={fileMetaData} accessionNumber ={accessionNumber} saveAccessionNumber = {saveAccessionNumber} setFileMetaData={setFileMetaData} fileFromServer = {fileFromServer} saveFileFromServer ={saveFileFromServer} displayInput={displayInput} setDisplayInput={setDisplayInput} setDisplayOutput={setDisplayOutput}></Input>
-      {isLoading && <Spin indicator={<LoadingOutlined style={{ fontSize: 100 }} spin />} /> }
+      {isLoading && <Spin tip="Loading" indicator={<LoadingOutlined style={{ fontSize: 100 }} spin />} /> }
       {!isLoading && numOfPage === 3 && <Output accessionNumber ={accessionNumber} setIsLoading={setIsLoading} setDisableTabsHeader={saveDisableTabsHeader} disableTabsHeader={disableTabsHeader} filesMetaData={fileMetaData} fileFromServer = {fileFromServer} saveFileFromServer ={saveFileFromServer} displayOutput={displayOutput}></Output>}
       </Content>
       <Footer className= "footer" style={{ textAlign: 'center' }}>Bioinformatics Web ©2022 Created by Adi Leibovich & Dor Iuran</Footer>

@@ -203,7 +203,7 @@ function FeaturesSelection (props) {
    }
 
   return (
-    !doneUploadFile ?   <div className="loading"><Spin indicator={<LoadingOutlined style={{ fontSize: 100 }} spin />} /></div> :
+    !doneUploadFile ?   <div className="loading"><Spin  tip="Loading" indicator={<LoadingOutlined style={{ fontSize: 100 }} spin />} /></div> :
     <div className='center-page'>
    <div className='cards'> 
    <div className="title">Features Selection</div>

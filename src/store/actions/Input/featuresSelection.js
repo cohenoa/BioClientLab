@@ -9,6 +9,11 @@ export const  setFeaturesListFromServer=()=>{
         return axios.get(URL.GET_LIST_FEATURES, {headers :{'Access-Control-Allow-Origin': '*'}})
           .then(({ data }) => {
           dispatch(setFeaturesList(data));
+        })
+        .catch(err =>{
+            console.log(err);
+            alert("Coudnt load feature, Retrying");
+            //need to add what to do 
         });
       };
 }
@@ -18,6 +23,11 @@ export const  getFeatureDescription=()=>{
         return axios.get(URL.GET_FEATURE_DESCRIPTION, {headers :{'Access-Control-Allow-Origin': '*'}})
           .then(({ data }) => {
           dispatch(setFeatureDescription(data));
+        })
+        .catch(err =>{
+            console.log(err);
+            alert("Coudnt load feature descripition, Retrying");
+            //need to add what to do 
         });
       };
 }

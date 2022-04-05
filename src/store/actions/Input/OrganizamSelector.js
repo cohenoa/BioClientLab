@@ -12,9 +12,13 @@ export const  downloadAccessionNumber = ( accessionNumber)=>{
             .then(res => {
                 if(res.status === 200)
                     dispatch(setDoneUploadFile(true))
-                
                 })
-            .catch(err => console.warn(err));  
+            .catch(err => {
+                console.warn(err);
+                alert("Coudnlt Download file from GenBank By the accession Number enterd");
+                window.location.reload();// TODO:Change it to like enter first web
+
+            });  
     };
 }
 
@@ -23,7 +27,13 @@ export const  setExistingFilesListFromServer=()=>{
         return axios.get(URL.GET_EXISTING_FILES_LIST, {headers :{'Access-Control-Allow-Origin': '*'}})
           .then(({ data }) => {
           dispatch(setExistingFilesList(data));
-        });
+        })
+        .catch(err =>{
+            console.log("err in :", err);
+            alert("Coudnlt set files list from server")
+            window.location.reload();// TODO:Change it to like enter first web
+
+          });
       };
 }
 
