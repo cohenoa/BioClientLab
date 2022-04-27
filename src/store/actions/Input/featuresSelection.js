@@ -13,6 +13,7 @@ export const  setFeaturesListFromServer=()=>{
         .catch(err =>{
             console.log(err);
             alert("Coudnt load feature, Retrying");
+            window.location.reload();
             //need to add what to do 
         });
       };
@@ -26,7 +27,8 @@ export const  getFeatureDescription=()=>{
         })
         .catch(err =>{
             console.log(err);
-            alert("Coudnt load feature descripition, Retrying");
+            alert("Coudn't load feature descripition");
+            window.location.reload();
             //need to add what to do 
         });
       };

@@ -21,6 +21,7 @@ export const  setFeaturesOutput=(featureList, fileList)=>{
         .catch(err => {
             console.log(err);
             alert("Coudnt load Feature resualt");
+            window.location.reload();
             // need to decide what to do - how to get back to last page ?
         });
       };
@@ -42,6 +43,7 @@ export const  setDataHist=(fileName,featureList)=>{
         .catch(err => {
             console.log(err);
             alert("Coudnt load Histograma data resualt");
+            window.location.reload();
             // need to decide what to do - how to get back to last page ?
         });
       };
