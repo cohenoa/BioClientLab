@@ -98,7 +98,7 @@ const awsBucket = {
           }
           )
           .catch(res =>{
-            alert("Somthing went wrong Please try again")
+            alert("Something went wrong Please try again")
             window.location.reload();// TODO:Change it to like enter first web
 
           })
