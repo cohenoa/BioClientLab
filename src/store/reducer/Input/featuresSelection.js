@@ -10,7 +10,8 @@ const initialState = {
 		General_Features:false,
 		Genome_Features:true,
 		Protein_Features:false},
-	featuresDescription:{}
+	featuresDescription:{},
+	featuresTitleDescription:{}
 };
 
 const setFeaturesList=(state, action)=>{
@@ -32,6 +33,9 @@ const setCheckedSelectAll=(state, action)=>{
 const setFeatureDescription=(state, action)=>{
 	return {...state, featuresDescription: action.data}
 }
+const setTitleFeatureDescription=(state, action)=>{
+	return {...state, featuresTitleDescription: action.data}
+}
 
 
 
@@ -47,6 +51,8 @@ const reducer = (state = initialState, action) => {
 			return setCheckedSelectAll(state, action)
 		case ACTION_TYPE.SET_FEATURE_DESCRIPTION:
 			return setFeatureDescription(state, action)
+		case ACTION_TYPE.SET_TITLE_FEATURE_DESCRIPTION:
+			return setTitleFeatureDescription(state, action)
 		default:
 			return state;
 	}

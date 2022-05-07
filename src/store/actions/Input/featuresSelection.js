@@ -33,6 +33,20 @@ export const  getFeatureDescription=()=>{
         });
       };
 }
+export const  getTitleFeatureDescription=()=>{
+    return async function(dispatch) {
+        return axios.get(URL.GET_TITLE_FEATURE_DESCRIPTION, {headers :{'Access-Control-Allow-Origin': '*'}})
+          .then(({ data }) => {
+          dispatch(setTitleFeatureDescription(data));
+        })
+        .catch(err =>{
+            console.log(err);
+            alert("Coudn't load feature descripition");
+            window.location.reload();
+            //need to add what to do 
+        });
+      };
+}
 
 export const  submitToServer=(fileMetaData, accessionNumber, featuresChooseByUser)=>{
     return async function(dispatch) {
@@ -77,6 +91,14 @@ export const setFeatureDescription=(data)=>{
     return(
         {
             type: CONST.SET_FEATURE_DESCRIPTION,
+            data
+        }
+    );
+}
+export const setTitleFeatureDescription=(data)=>{
+    return(
+        {
+            type: CONST.SET_TITLE_FEATURE_DESCRIPTION,
             data
         }
     );

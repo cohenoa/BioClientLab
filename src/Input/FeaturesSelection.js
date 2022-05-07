@@ -6,7 +6,7 @@ import Chip from '@mui/material/Chip';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from "react-redux";
-import {setFeaturesListFromServer, submitToServer, setCheckedSelectAll, getFeatureDescription} from '../store/actions/Input/featuresSelection'
+import {setFeaturesListFromServer, submitToServer, setCheckedSelectAll, getFeatureDescription, getTitleFeatureDescription} from '../store/actions/Input/featuresSelection'
 import { setCurrentPage } from "../store/actions/pagesRoutes";
 
 
@@ -18,14 +18,16 @@ function FeaturesSelection (props) {
   const ifTabDataSelected = useSelector((state) => state.featureOutput.featuresList);
   const checkedCard = useSelector((state) => state.featuresSelection.checkedSelectAll);
   const descriptions = useSelector((state) => state.featuresSelection.featuresDescription);
+  const featureDescriptionsTitle = useSelector((state) => state.featuresSelection.featuresTitleDescription);
   const doneUploadFile = useSelector((state) => state.featuresSelection.doneUploadFile);
 
-  const [featuresChooseByUser,setFeaturesChooseByUser]=useState([])
+  const [featuresChooseByUser,setFeaturesChooseByUser]=useState([]) //TODO: Maybe need to initlize with Gene_Features?
   const [featureListToDisplay,setFeatureListToDisplay]=useState({})
   // const [checkedCard,setCheckedCard]=useState({})
   
   useEffect(() => {
     dispatch(getFeatureDescription())
+    dispatch(getTitleFeatureDescription())
     dispatch(setFeaturesListFromServer())
     if(Object.keys(ifTabDataSelected).length >= 1 )
        props.setDisableTabsHeader({...props.disableTabsHeader , 3: true, 1:true})
@@ -76,8 +78,7 @@ function FeaturesSelection (props) {
   }
 
    const onChangeCheckbox=(e, nameType)=>{
-     let featureListToDisplayTemp =featureListToDisplay
-
+     let featureListToDisplayTemp = featureListToDisplay
       if(e.target.checked)
         {  
           let flag = featureListToDisplayTemp[nameType].map(feature=>{
@@ -137,16 +138,27 @@ function FeaturesSelection (props) {
      setFeaturesChooseByUser(tempArray)
      setFeatureListToDisplay(featureListToDisplayTemp)
      let checkedCardTemp = checkedCard
-     checkedCard[cardName]=e.target.checked
+     checkedCard[cardName]= e.target.checked
      dispatch(setCheckedSelectAll(checkedCardTemp))
    }
 
    const featuresCards=()=>{
-    return Object.keys(featureListToDisplay).map((key, index)=> {
+    let fixedFeatureListToDisplay = []
+          // ADDED for the chagned noa requested
+          let fixedfeatureListResultFromServer=[];
+          Object.keys(featureListToDisplay).forEach(function(key) {
+            if (!key.includes("Genome_Features")){
+              fixedFeatureListToDisplay[key] = featureListToDisplay[key];
+            }
+        });
+    //     end of changed from featureListToDisplay -- > fixedFeatureListToDisplay
+
+    //     need to fill each title descprtion its reday in -->featureDescriptionsTitle (also in redux)
+    return Object.keys(fixedFeatureListToDisplay).map((key, index)=> {
       return (
       <Col span={8}  key={key} className="col-features-checkbox">
       <Card key={key} title={key.replace('_',' ') } bordered={true}  className='card' extra={<Checkbox checked={checkedCard[key]} onChange={(e)=>{onChangeCheckboxSelectAll(e,key)}}>Select All</Checkbox>}>
-      {featureListToDisplay[key].map(oneFeature=>{
+      {fixedFeatureListToDisplay[key].map(oneFeature=>{
         return  <Row key={oneFeature.name}> 
           <Col >
           <Checkbox  checked={oneFeature.checked} key={oneFeature.name} className='features-checkbox' name={oneFeature.name} onChange={(e)=>{onChangeCheckbox(e,key)}}>
@@ -157,8 +169,6 @@ function FeaturesSelection (props) {
           <InfoCircleOutlined />
       </Popover>
       </Col></Row>})} 
-       
-      
       </Card>
       </Col>
       )

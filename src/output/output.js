@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import './output.css';
-import {setFeaturesOutput, setDataHist } from '../store/actions/output/featuresOutput'
+import {setFeaturesOutput, setDataHist, setMissingNamesByType } from '../store/actions/output/featuresOutput'
 import MenuFiles from './menu'
 import Feature from './feature'
 import Compare from './Compare'
@@ -48,7 +48,7 @@ function Output (props) {
       setFeatureChosenByUserToChild(featureChosenByUser)
       dispatch(setFeaturesOutput(featureChosenByUser, unionAllFiles))
       dispatch(setDataHist(unionAllFiles,featureChosenByUser))
-
+      dispatch(setMissingNamesByType(unionAllFiles))
     }
     
   }, [featureChosenByUser, unionAllFiles])

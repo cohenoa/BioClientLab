@@ -15,6 +15,8 @@ function Genome (props) {
   const genomeObj = useSelector((state) => state.featureOutput.featuresList);
   const [pieObject,setPieObject]=useState({})
 
+
+
  
   useEffect(() => {
     let nameTypes = Object.keys(genomeObj[props.fileTabClickByTheUser].Genome).filter(key => key.includes("Number of"))
@@ -23,15 +25,22 @@ function Genome (props) {
       let tempKey = key
       return nameTypesObject[ key.split(' ')[2]]= genomeObj[props.fileTabClickByTheUser].Genome[tempKey]} )
       setPieObject(nameTypesObject);
-      
   }, [props.fileTabClickByTheUser])
   
 
     const cardByFeatures=()=>{
-        return Object.keys(props.featureListResultFromServer).map(feature=>{
+      // ADDED for the chagned noa requested
+        let fixedfeatureListResultFromServer=[];
+        Object.keys(props.featureListResultFromServer).forEach(function(key) {
+          if (!key.includes("Number of ") && !key.includes("GC_CONTENT") ){
+              fixedfeatureListResultFromServer[key] = props.featureListResultFromServer[key];
+          }
+      });
+      // end of changed down changed from props.featureListResultFromServer[feature] --> fixedfeatureListResultFromServer[feature]
+        return Object.keys(fixedfeatureListResultFromServer).map(feature=>{
             return <Col span={6} key={feature}>
                 <Card >
-            <Statistic title={feature} value={props.featureListResultFromServer[feature]} />
+            <Statistic title={feature} value={fixedfeatureListResultFromServer[feature]} /> 
             </Card>
           </Col>
         })
@@ -47,7 +56,6 @@ const dynamicFeatureHist=()=>{
           },
         ] }
         layout={  { width: 500, height: 400,title: featureName +' Histogram' }} 
-      
       />)
     
     
@@ -57,7 +65,12 @@ const dynamicFeatureHist=()=>{
 
 
 
-
+  let tempLabels = [] ;
+  Object.keys(pieObject).forEach(function(key) {
+    tempLabels.push(key+" (" +pieObject[key]+")")
+})
+  console.log(tempLabels)
+  
   return (
 <div>
     <Row className="genome-row" gutter={[16, 24]}>
@@ -70,9 +83,9 @@ const dynamicFeatureHist=()=>{
         data={[
           {
             values: Object.values(pieObject),
-            labels:Object.keys(pieObject),
+            labels: tempLabels, 
+            //labels: Object.keys(pieObject),
             type: 'pie',
-           
           },
         ] }
         layout={  { width: 500, height: 400,title: 'Types Of Genome' }} 
