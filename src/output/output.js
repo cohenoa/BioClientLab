@@ -31,7 +31,7 @@ function Output (props) {
    accNumberAfterSplit = accNumberAfterSplit.map(name => name +".gb").filter(name=> name !== '.gb');
    setAccessionNumberList (accNumberAfterSplit);
    let extractNameFromFileMetaData = props.filesMetaData.map(file =>  file.name)
-   let unionFiles = [...extractNameFromFileMetaData, ...accNumberAfterSplit, ...[props.fileFromServer]].filter(element => element !== '' )
+   let unionFiles = [...extractNameFromFileMetaData, ...accNumberAfterSplit, ...props.fileFromServer].filter(element => element !== '' )
    setUnionAllFiles(unionFiles)
   }, [])
 

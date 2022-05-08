@@ -9,6 +9,8 @@ import getColumnSearchProps from './search'
 function Protein (props) {
     const featureListProtein = useSelector((state) => state.featuresSelection.featuresList.Protein_Features);
     const featureOutputProtein = useSelector((state) => state.featureOutput.featuresList);
+    const missingNamesByType = useSelector((state) => state.featureOutput.missingNamesByType);
+
     const [columns,setColumns]=useState([])
     const [data,setData]=useState([])
     const [searchText, setSearchText] = useState("");
@@ -41,6 +43,10 @@ function Protein (props) {
       const saveSetSearchedColumn=(value)=>{
         setSearchedColumn(value)
       }
+      const missingNamesByTypeFunction =()=>{
+        return Object.keys(missingNamesByType[props.fileTabClickByTheUser]).map(type=>{return<h1 key={type}>{type}: {missingNamesByType[props.fileTabClickByTheUser][type]}</h1>}) 
+      }
+    
    
   return (
     <div>
@@ -57,6 +63,8 @@ function Protein (props) {
             </Button>
             </CSVLink>
             </div>
+            <h1>Gene name that missing from the data:</h1>
+          {missingNamesByTypeFunction()}   
    <Table tableLayout='column.ellipsis' columns={columns}  dataSource={data} scroll={{ x: 240 }} />
   </div>
   );

@@ -8,13 +8,16 @@ import getColumnSearchProps from './search'
 
 
 function Gene (props) {
-    const [columns,setColumns]=useState([])
-    const [data,setData]=useState([])
     const featureListGene = useSelector((state) => state.featuresSelection.featuresList.Gene_Features);
     const featureOutputGene = useSelector((state) => state.featureOutput.featuresList);
+    const missingNamesByType = useSelector((state) => state.featureOutput.missingNamesByType);
+
     
+    const [columns,setColumns]=useState([])
+    const [data,setData]=useState([])
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState(0);
+    const [countChangeData,setCountChangeData]=useState(false)
 
 
     useEffect(() => {
@@ -39,14 +42,28 @@ function Gene (props) {
             })
         setColumns(columns)
         setData(props.featureListResultFromServer)
-        // props.saveDataToCsv(props.featureListResultFromServer)
       }, [props.featureListResultFromServer])
+
+
+    useEffect(() => {
+      if(data.length && !countChangeData)
+      {
+        let copyData = [...data]
+        copyData.forEach(dict=>{dict['GC CONTENT'] = dict['GC CONTENT'].toFixed(2) + "%"})
+        setData(copyData)
+        setCountChangeData(true)
+      }
+    }, [data, countChangeData])
 
       const saveSetSearchText=(value)=>{
         setSearchText(value)
       }
       const saveSetSearchedColumn=(value)=>{
         setSearchedColumn(value)
+      }
+
+      const missingNamesByTypeFunction =()=>{
+        return Object.keys(missingNamesByType[props.fileTabClickByTheUser]).map(type=>{return<h1 key={type}>{type}: {missingNamesByType[props.fileTabClickByTheUser][type]}</h1>}) 
       }
     
    
@@ -66,7 +83,9 @@ function Gene (props) {
               
             </CSVLink>
             </div>
-   <Table  tableLayout='column.ellipsis' columns={columns}  dataSource={data} scroll={{ X: 240 }}/>
+            <h1>Gene name that missing from the data:</h1>
+          {missingNamesByTypeFunction()}   
+<Table  tableLayout='column.ellipsis' columns={columns}  dataSource={data} scroll={{ X: 240 }}/>
   </div>
   );
 }

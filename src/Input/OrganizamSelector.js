@@ -178,6 +178,7 @@ const awsBucket = {
       <div className="select-from-list">
         <h3 className="element">Select file from the list</h3>
         <Select 
+              mode="multiple"
         className="select-field element"
           onChange={(e) => {
             selectOrganizamFromList(e);

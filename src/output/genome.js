@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Statistic, Row, Col,Card, Button, Layout } from 'antd';
+import { Statistic, Row, Col,Card, Popover, Layout } from 'antd';
+import {InfoCircleOutlined} from '@ant-design/icons'
+
 import Histogram from 'react-chart-histogram';
 import {Bar} from 'react-chartjs-2';
 import Chart from 'chart.js/auto'
@@ -40,7 +42,9 @@ function Genome (props) {
         return Object.keys(fixedfeatureListResultFromServer).map(feature=>{
             return <Col span={6} key={feature}>
                 <Card >
-            <Statistic title={feature} value={fixedfeatureListResultFromServer[feature]} /> 
+            <Statistic title={<div>{feature}<Popover key={feature} placement="rightTop" title={feature + " Description"}  content={""} trigger="click">
+          <InfoCircleOutlined />
+      </Popover></div> } value={fixedfeatureListResultFromServer[feature]} /> 
             </Card>
           </Col>
         })

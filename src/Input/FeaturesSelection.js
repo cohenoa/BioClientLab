@@ -45,19 +45,21 @@ function FeaturesSelection (props) {
       Object.keys(featureList).map(type=>{
         checkboxFeature[type] = []
         featureList[type].map(nameFeature=>{
-          checkboxFeature[type].push({name:nameFeature, checked:  featureChosenByUser.includes(nameFeature) ? true: type !== 'Genome_Features'? false: true })
+          checkboxFeature[type].push({name:nameFeature, checked:  featureChosenByUser.includes(nameFeature) ? true:false })
+          // checkboxFeature[type].push({name:nameFeature, checked:  featureChosenByUser.includes(nameFeature) ? true: type !== 'Genome_Features'? false: true })
         })
       })
       setFeatureListToDisplay(checkboxFeature)
       if(featureChosenByUser.length !== 0)
       {
-        if(featureChosenByUser.includes(featureList['Genome_Features'][0],featureList['Genome_Features'][1]))
-            setFeaturesChooseByUser([...featureChosenByUser])
-        else
-          setFeaturesChooseByUser([...featureList['Genome_Features'],...featureChosenByUser])
+        setFeaturesChooseByUser([...featureChosenByUser])
+        // if(featureChosenByUser.includes(featureList['Genome_Features'][0],featureList['Genome_Features'][1]))
+        //     setFeaturesChooseByUser([...featureChosenByUser])
+        // else
+        //   setFeaturesChooseByUser([...featureList['Genome_Features'],...featureChosenByUser])
       }
-     else        
-        setFeaturesChooseByUser(featureList['Genome_Features'])
+    //  else        
+    //     setFeaturesChooseByUser(featureList['Genome_Features'])
       }
 
   }, [featureList])
@@ -157,7 +159,9 @@ function FeaturesSelection (props) {
     return Object.keys(fixedFeatureListToDisplay).map((key, index)=> {
       return (
       <Col span={8}  key={key} className="col-features-checkbox">
-      <Card key={key} title={key.replace('_',' ') } bordered={true}  className='card' extra={<Checkbox checked={checkedCard[key]} onChange={(e)=>{onChangeCheckboxSelectAll(e,key)}}>Select All</Checkbox>}>
+      <Card key={key} title={<div>{key.replace('_',' ')}<Popover key={key} placement="rightTop" title={key.replace('_',' ')}  content={featureDescriptionsTitle[key]} trigger="click">
+          <InfoCircleOutlined />
+      </Popover></div> } bordered={true}  className='card' extra={<Checkbox checked={checkedCard[key]} onChange={(e)=>{onChangeCheckboxSelectAll(e,key)}}>Select All</Checkbox>}>
       {fixedFeatureListToDisplay[key].map(oneFeature=>{
         return  <Row key={oneFeature.name}> 
           <Col >

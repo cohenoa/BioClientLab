@@ -10,6 +10,8 @@ import getColumnSearchProps from './search'
 function General (props) {
     const featureListGene = useSelector((state) => state.featuresSelection.featuresList.General_Features);
     const featureOutputGeneral = useSelector((state) => state.featureOutput.featuresList);
+    const missingNamesByType = useSelector((state) => state.featureOutput.missingNamesByType);
+
     const [columns,setColumns]=useState([])
     const [data,setData]=useState([])
     const [filterObj, setFilterObj]=useState([{text:'CDS',value:'CDS'},
@@ -57,6 +59,10 @@ function General (props) {
       const saveSetSearchedColumn=(value)=>{
         setSearchedColumn(value)
       }
+      const missingNamesByTypeFunction =()=>{
+        return Object.keys(missingNamesByType[props.fileTabClickByTheUser]).map(type=>{return<h1 key={type}>{type}: {missingNamesByType[props.fileTabClickByTheUser][type]}</h1>}) 
+      }
+    
 
   return (
     <div>
@@ -73,6 +79,8 @@ function General (props) {
             </Button>
             </CSVLink>
             </div>
+            <h1>Gene name that missing from the data:</h1>
+          {missingNamesByTypeFunction()}   
    <Table tableLayout='column.ellipsis' columns={columns}  dataSource={data} scroll={{ X: 240 }} />
   </div>
   );
