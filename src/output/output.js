@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import './output.css';
-import {setFeaturesOutput, setDataHist, setMissingNamesByType } from '../store/actions/output/featuresOutput'
+import {setFeaturesOutput, setDataHist, setMissingNamesByType , getNumericFeatureTitleXY} from '../store/actions/output/featuresOutput'
 import MenuFiles from './menu'
 import Feature from './feature'
 import Compare from './Compare'
@@ -25,6 +25,7 @@ function Output (props) {
   const [typeFileClicked,setTypeFileClicked]=useState('file')
 
   useEffect(() => {
+    dispatch(getNumericFeatureTitleXY())
     props.setDisableTabsHeader({...props.disableTabsHeader , 1: true})
 
    let accNumberAfterSplit = props.accessionNumber.split(',');
@@ -48,7 +49,6 @@ function Output (props) {
       setFeatureChosenByUserToChild(featureChosenByUser)
       dispatch(setFeaturesOutput(featureChosenByUser, unionAllFiles))
       dispatch(setDataHist(unionAllFiles,featureChosenByUser))
-      dispatch(setMissingNamesByType(unionAllFiles))
     }
     
   }, [featureChosenByUser, unionAllFiles])

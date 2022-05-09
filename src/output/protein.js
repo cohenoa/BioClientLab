@@ -44,7 +44,7 @@ function Protein (props) {
         setSearchedColumn(value)
       }
       const missingNamesByTypeFunction =()=>{
-        return Object.keys(missingNamesByType[props.fileTabClickByTheUser]).map(type=>{return<h1 key={type}>{type}: {missingNamesByType[props.fileTabClickByTheUser][type]}</h1>}) 
+        return missingNamesByType && Object.keys(missingNamesByType[props.fileTabClickByTheUser]).map(type=>{return<h1 key={type}>{type}: {missingNamesByType[props.fileTabClickByTheUser][type]}</h1>}) 
       }
     
    

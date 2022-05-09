@@ -15,6 +15,8 @@ function Genome (props) {
   const dispatch= useDispatch()
   const dataHist = useSelector((state) => state.featureOutput.dataHist);
   const genomeObj = useSelector((state) => state.featureOutput.featuresList);
+  const title_X_Y = useSelector((state) => state.featureOutput.numericFeatureTitleXY);
+
   const [pieObject,setPieObject]=useState({})
 
 
@@ -59,7 +61,26 @@ const dynamicFeatureHist=()=>{
             mode: 'none',
           },
         ] }
-        layout={  { width: 500, height: 400,title: featureName +' Histogram' }} 
+        layout={  { width: 500, height: 400,title: featureName +' Histogram' , xaxis: {
+          title: {
+            text: title_X_Y[featureName]["x"],
+            font: {
+              family: 'Courier New, monospace',
+              size: 18,
+              color: '#7f7f7f'
+            }
+          },
+        },
+        yaxis: {
+          title: {
+            text:  title_X_Y[featureName]["y"],
+            font: {
+              family: 'Courier New, monospace',
+              size: 18,
+              color: '#7f7f7f'
+            }
+          }
+        }}} 
       />)
     
     
@@ -92,7 +113,7 @@ const dynamicFeatureHist=()=>{
             type: 'pie',
           },
         ] }
-        layout={  { width: 500, height: 400,title: 'Types Of Genome' }} 
+        layout={  { width: 500, height: 400,title: 'Types Of Genome',  }} 
       
       />
    { dynamicFeatureHist()}

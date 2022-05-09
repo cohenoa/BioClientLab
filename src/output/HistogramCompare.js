@@ -9,6 +9,7 @@ import Plot from 'react-plotly.js';
 function HistogramCompare (props) {
     const { TabPane } = Tabs;
     const dataHist = useSelector((state) => state.featureOutput.dataHist);
+    const title_X_Y = useSelector((state) => state.featureOutput.numericFeatureTitleXY);
 
     
     const buildData = (fileList, featureName)=>{
@@ -31,7 +32,26 @@ function HistogramCompare (props) {
         return Object.keys(dataHist[Object.keys(dataHist)[0]]).map(featureName=>{
           return (    <Plot key={featureName} className='plot'
               data={buildData(Object.keys(dataHist), featureName)}
-              layout={  { width: 550, height: 500,title: featureName +' Histogram' }} 
+              layout={  { width: 550, height: 500,title: featureName +' Histogram', xaxis: {
+                title: {
+                  text: title_X_Y[featureName]["x"],
+                  font: {
+                    family: 'Courier New, monospace',
+                    size: 18,
+                    color: '#7f7f7f'
+                  }
+                },
+              },
+              yaxis: {
+                title: {
+                  text:  title_X_Y[featureName]["y"],
+                  font: {
+                    family: 'Courier New, monospace',
+                    size: 18,
+                    color: '#7f7f7f'
+                  }
+                }
+              } }} 
             
             />)
         

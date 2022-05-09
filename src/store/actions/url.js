@@ -1,4 +1,4 @@
-const URL = 'http://192.168.1.46:8080/'
+const URL = ' http://172.20.10.2:8080/'
 // NEW PATH'https://bioserverlab.herokuapp.com/'
 // http://192.168.1.45:8080
 // LOCAL DEV http://127.0.0.1:5000/
@@ -14,3 +14,4 @@ export const GET_FEATURES_DATA_HIST = `${URL}api/featuresHist`
 export const GET_FEATURE_DESCRIPTION = `${URL}api/getFeaturesDescription`
 export const GET_TITLE_FEATURE_DESCRIPTION = `${URL}api/getTitleFeaturesDescription`
 export const GET_MISSING_NAMES_BY_TYPE = `${URL}/api/missingNames`
+export const GET_NUMERIC_FEATURE_TITLE_X_Y = `${URL}/api/getNumericFeatureTitleXY`

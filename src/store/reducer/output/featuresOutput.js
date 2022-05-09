@@ -3,7 +3,8 @@ import * as ACTION_TYPE from '../../actions/actionsTypes'
 const initialState = {
 	featuresList:{},
 	dataHist:{},
-	missingNamesByType:{}
+	missingNamesByType:{},
+	numericFeatureTitleXY:{}
 };
 
 const setFeatureListOutput=(state, action)=>{
@@ -18,6 +19,10 @@ const setMissingNamesByType=(state, action)=>{
 	return {...state, missingNamesByType: action.data}
 }
 
+const setNumericFeatureTitleXY=(state, action)=>{
+	return {...state, numericFeatureTitleXY: action.data}
+}
+
 
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
@@ -27,6 +32,8 @@ const reducer = (state = initialState, action) => {
 			return setDataHist(state, action)
 		case ACTION_TYPE.SET_MISSING_NAMES_BY_TYPE:
 			return setMissingNamesByType(state, action)
+		case ACTION_TYPE.SET_NUMERIC_FEATURE_TITLE_X_Y:
+			return setNumericFeatureTitleXY(state, action)
 
 		default:
 			return state;

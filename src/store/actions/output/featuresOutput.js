@@ -17,6 +17,7 @@ export const  setFeaturesOutput=(featureList, fileList)=>{
         return axios.get(URL.GET_FEATURES_RESULT,{params,headers})
           .then(({ data }) => {
           dispatch(setFeaturesListOutput(data))
+          dispatch(setMissingNamesByType(fileList))
         })
         .catch(err => {
             console.log(err);
@@ -69,6 +70,23 @@ export const  setMissingNamesByType=(fileName)=>{
       };
 }
 
+export const  getNumericFeatureTitleXY=()=>{
+
+    const headers = {
+        'Access-Control-Allow-Origin':"*"
+    }
+    return async function(dispatch) {
+        return axios.get(URL.GET_NUMERIC_FEATURE_TITLE_X_Y,{headers})
+          .then(({data} ) => {
+          dispatch(setNumericFeatureTitleXY(data))
+        })
+        .catch(err => {
+            console.log(err);
+        });
+      };
+}
+
+
 
 export const setFeaturesListOutput=(data, feature_type, nameFile)=>{
     return(
@@ -100,6 +118,19 @@ export const setMissingNamesByTypeFromServer=(data)=>{
         }
     );
 }
+
+
+export const setNumericFeatureTitleXY=(data)=>{
+    return(
+        {
+            type: CONST.SET_NUMERIC_FEATURE_TITLE_X_Y,
+            data,
+
+        }
+    );
+}
+
+
 
 
 
