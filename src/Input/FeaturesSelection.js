@@ -65,11 +65,6 @@ function FeaturesSelection (props) {
   }, [featureList])
 
 
- 
- 
-
-
-
   const submit=()=>{
     dispatch(setCurrentPage(['3']))
     props.setDisableTabsHeader({...props.disableTabsHeader , 3: false, 1:true})

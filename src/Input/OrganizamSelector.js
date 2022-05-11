@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Input, Button, Upload, Select } from "antd";
+import { Input, Button, Upload, Select, Modal,InputNumber , Card} from "antd";
 import "./input.css";
-import { UploadOutlined } from "@ant-design/icons";
+import { UploadOutlined, SendOutlined ,CheckCircleOutlined} from "@ant-design/icons";
 //import { Card, Col, Row } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
 import { setExistingFilesListFromServer,downloadAccessionNumber, setDoneUploadFile } from "../store/actions/Input/OrganizamSelector";
@@ -10,6 +10,7 @@ import { setCurrentPage } from "../store/actions/pagesRoutes";
 import AWS from "aws-sdk";
 import * as URL from '../store/actions/url'
 import axios from 'axios'
+import index from "react-highlight-words";
 
 function OrganizamSelector(props) {
   const dispatch = useDispatch();
@@ -19,8 +20,16 @@ function OrganizamSelector(props) {
   const [existingFileList, setExistingFileList] = useState([]);
   const [ifOrganizamSelected, setIfOrganizamSelected] = useState(false);
   const [disableNext, setDisableNext] = useState(true);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [numberOfComperingOrganism, setNumberOfComperingOrganism] = useState(1);
+  const [disableNumberOfComperingOrganism, setDisableNumberOfComperingOrganism] = useState(false);
+  const [displayDropDown, setDisplayDropDown] = useState(false);
+  // const [listOfCombinedFiles, setListOfCombinedFiles] = useState([]);
+  const [disableDropDown, setDisableDropDown] = useState({});
+  const [filesNameObj, setFilesNameObj] = useState({});
 
 
+  
 
   useEffect(() => {
     dispatch(setExistingFilesListFromServer());
@@ -41,6 +50,21 @@ function OrganizamSelector(props) {
       setIfOrganizamSelected(true);
       dispatch(setDoneUploadFile(true))
     }
+  };
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+
+
+  const handleCancel = () => {
+    setNumberOfComperingOrganism(1)
+    setDisableNumberOfComperingOrganism(false)
+    setDisplayDropDown(false)
+    setDisableDropDown({})
+    setFilesNameObj({})
+    setIsModalVisible(false);
   };
 
 // bucket for upload files
@@ -125,8 +149,8 @@ const awsBucket = {
 
     
   };
-  const optionExistingFiles = () => {
-    return existingFileListFromServer.map((file) => {
+  const optionExistingFiles = (list) => {
+    return list.map((file) => {
       return (
         <Option key={file} value={file}>
           {file}
@@ -134,15 +158,74 @@ const awsBucket = {
       );
     });
   };
+  const onClickButtonApproved=(index)=>{
+    if(filesNameObj[index].length > 1)
+    {
+      let name =filesNameObj[index].map(name=>name.split('.gb')[0]).join('_combined_')+'.gb'
+      props.setListOfCombinedFiles([...props.listOfCombinedFiles, name])
+    }
+      else
+      props.setListOfCombinedFiles([...props.listOfCombinedFiles,filesNameObj[index]][0])
+    setDisableDropDown({...disableDropDown, [index]:true})
+      
+      
+  }
+
+  const numberOfCompering =(value)=>{
+    setNumberOfComperingOrganism(value)
+
+  }
+
+  const insertNumberOfDropDown=()=>{
+    setDisableNumberOfComperingOrganism(true)
+    setDisplayDropDown(true)
+  }
+
+  const unionFilesForDisplayDropDown =()=>{
+    let accNumberAfterSplit = props.accessionNumber.split(',');
+   
+   accNumberAfterSplit = accNumberAfterSplit.map(name => name +".gb").filter(name=> name !== '.gb');
+   let extractNameFromFileMetaData = props.fileMetaData.map(file =>  file.name)
+   let unionFiles = [...extractNameFromFileMetaData, ...accNumberAfterSplit, ...props.fileFromServer].filter(element => element !== '' )
+    return unionFiles
+  }
+
+
+  const dynamicDropDown=()=>{
+    const arrayFilesToDropDown = unionFilesForDisplayDropDown()
+    const arrayNumber =Array.apply(null, {length: numberOfComperingOrganism})
+    return arrayNumber.map((number, index)=>{
+      return  <Card title={"Organism " + (index+1)} key={index+1}><Select 
+      key={index+1}
+      disabled={disableDropDown[index+1]}
+      mode="multiple"
+      className="select-field element"
+      onChange={(e) => {
+        setFilesNameObj({...filesNameObj, [index+1]:e})
+      }}
+      placeholder="Select a file"
+      >
+        {optionExistingFiles(arrayFilesToDropDown)}
+      </Select>
+      <Button  onClick={()=>onClickButtonApproved(index+1)}>
+        Approved <CheckCircleOutlined /></Button>
+
+      </Card>
+    })
+
+
+    
+  }
 
   const onClickNext= () =>{
+    setIsModalVisible(false);
     props.setDisableTabsHeader({...props.disableTabsHeader ,1:false, 2: false })
     dispatch(setCurrentPage(['2']))
     props.increaseOrDecreaseNumOfPage(2);
     if(props.accessionNumber !== '')
       dispatch(downloadAccessionNumber(props.accessionNumber))
-
   }
+
   return (
     <div className="center-page">
       <div className="title">Organism Selection</div>
@@ -187,8 +270,7 @@ const awsBucket = {
           }}
           placeholder="Select a file"
         >
-          <Option value="Select file">Select file</Option>
-          {optionExistingFiles()}
+          {optionExistingFiles(existingFileListFromServer)}
         </Select>
       </div>
       {/* <div className="checkbox-override">
@@ -202,11 +284,19 @@ const awsBucket = {
       <div >
         <Button className="next-button"
           disabled={disableNext || !ifOrganizamSelected }
-          onClick={onClickNext}
+          // onClick={onClickNext}
+          onClick={showModal}
         >
           Next
         </Button>
       </div>
+
+      <Modal title="Basic Modal" visible={isModalVisible} onOk={onClickNext} onCancel={handleCancel}>
+      <p>How many organisms you want to compere? </p>
+      <InputNumber disabled={disableNumberOfComperingOrganism}  value={numberOfComperingOrganism} min={1} max={10} defaultValue={numberOfComperingOrganism} onChange={numberOfCompering}/>
+      <Button onClick={insertNumberOfDropDown}>Insert<SendOutlined /></Button>
+      {displayDropDown && dynamicDropDown()}
+      </Modal>
     </div>
   );
 }

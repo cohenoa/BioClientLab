@@ -28,12 +28,12 @@ function Output (props) {
     dispatch(getNumericFeatureTitleXY())
     props.setDisableTabsHeader({...props.disableTabsHeader , 1: true})
 
-   let accNumberAfterSplit = props.accessionNumber.split(',');
-   accNumberAfterSplit = accNumberAfterSplit.map(name => name +".gb").filter(name=> name !== '.gb');
-   setAccessionNumberList (accNumberAfterSplit);
-   let extractNameFromFileMetaData = props.filesMetaData.map(file =>  file.name)
-   let unionFiles = [...extractNameFromFileMetaData, ...accNumberAfterSplit, ...props.fileFromServer].filter(element => element !== '' )
-   setUnionAllFiles(unionFiles)
+  //  let accNumberAfterSplit = props.accessionNumber.split(',');
+  //  accNumberAfterSplit = accNumberAfterSplit.map(name => name +".gb").filter(name=> name !== '.gb');
+  //  setAccessionNumberList (accNumberAfterSplit);
+  //  let extractNameFromFileMetaData = props.filesMetaData.map(file =>  file.name)
+  //  let unionFiles = [...extractNameFromFileMetaData, ...accNumberAfterSplit, ...props.fileFromServer].filter(element => element !== '' )
+     setUnionAllFiles(props.listOfCombinedFiles)
   }, [])
 
   useEffect(() => {
