@@ -82,7 +82,7 @@
 
 .cards {
     padding: 30px;
-    background-color:#fbfbfb		;
+    background-color:#fbfbfb;
   }
 
 .card{
@@ -142,8 +142,63 @@
 .checkbox-popover{
     display:inline-flex;
 }
+.cardDropDown{
+    width: 100%;
+    margin-top: 3%;
+    margin-right: 3%;    
+}
 
-/* .info-button{
-    transform: scale(1.5,1);
-} */
+.buttonDropDownAfterApprove{ 
+    background-color: rgb(187, 250, 201); 
+}
 
+.divOfDynamicDropDown{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-gap: 10px;
+}
+
+.ant-modal-header{
+    background: rgb(238, 226, 204);;
+}
+.ant-modal-footer, .ant-modal-body{
+    text-align: center;
+}
+.buttonInModalCancel:hover{
+    color: rgb(243, 74, 74);
+    border-color:  rgb(243, 74, 74);
+}
+.buttonInModalOK:hover{
+    color: rgb(38, 156, 8);
+    border-color:  rgb(38, 156, 8);
+}
+
+.buttonInModalCancel, .buttonInModalOK, .buttonInModalInsert{
+    margin-right: 3%;
+    width: 10%;
+    border-color: rgb(238, 226, 204);;
+    box-shadow: 0 0 3px #c2c0c0;
+}
+.buttonInModalApprove{
+    margin-right: 3%;
+    border-color: rgb(238, 226, 204);
+    box-shadow: 0 0 3px #c2c0c0;
+}
+
+.buttonInModalApprove:active{
+background-color:rgb(187, 250, 201);
+
+}
+.ant-modal{
+    border-radius: 10%;
+}
+
+.inputNumber{
+    border-radius:2%;
+    box-shadow:0 0 3px #c2c0c0; ;
+    margin-right: 2%;
+}
+
+.inputNumber:hover{
+    border-color: #c2c0c0;
+}

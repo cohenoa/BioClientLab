@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Input, Button, Upload, Select, Modal,InputNumber , Card} from "antd";
+import { Input, Button, Upload, Select, Modal, InputNumber, Card, Popconfirm} from "antd";
 import "./input.css";
 import { UploadOutlined, SendOutlined ,CheckCircleOutlined} from "@ant-design/icons";
 //import { Card, Col, Row } from 'antd';
@@ -27,9 +27,10 @@ function OrganizamSelector(props) {
   // const [listOfCombinedFiles, setListOfCombinedFiles] = useState([]);
   const [disableDropDown, setDisableDropDown] = useState({});
   const [filesNameObj, setFilesNameObj] = useState({});
+  // const [cssButtonApprove, setCssButtonApprove] = useState('buttonInModalApprove');
 
 
-  
+
 
   useEffect(() => {
     dispatch(setExistingFilesListFromServer());
@@ -59,6 +60,7 @@ function OrganizamSelector(props) {
 
 
   const handleCancel = () => {
+    // setCssButtonApprove('buttonInModalApprove')
     setNumberOfComperingOrganism(1)
     setDisableNumberOfComperingOrganism(false)
     setDisplayDropDown(false)
@@ -159,6 +161,7 @@ const awsBucket = {
     });
   };
   const onClickButtonApproved=(index)=>{
+    // setCssButtonApprove("buttonDropDownAfterApprove")
     if(filesNameObj[index].length > 1)
     {
       let name =filesNameObj[index].map(name=>name.split('.gb')[0]).join('_combined_')+'.gb'
@@ -195,7 +198,7 @@ const awsBucket = {
     const arrayFilesToDropDown = unionFilesForDisplayDropDown()
     const arrayNumber =Array.apply(null, {length: numberOfComperingOrganism})
     return arrayNumber.map((number, index)=>{
-      return  <Card title={"Organism " + (index+1)} key={index+1}><Select 
+      return  <Card className="cardDropDown card" title={"Organism " + (index+1)} key={index+1}><Select 
       key={index+1}
       disabled={disableDropDown[index+1]}
       mode="multiple"
@@ -207,7 +210,7 @@ const awsBucket = {
       >
         {optionExistingFiles(arrayFilesToDropDown)}
       </Select>
-      <Button  onClick={()=>onClickButtonApproved(index+1)}>
+      <Button className="buttonInModalApprove" onClick={()=>onClickButtonApproved(index+1)}>
         Approved <CheckCircleOutlined /></Button>
 
       </Card>
@@ -291,11 +294,18 @@ const awsBucket = {
         </Button>
       </div>
 
-      <Modal title="Basic Modal" visible={isModalVisible} onOk={onClickNext} onCancel={handleCancel}>
+      <Modal  width={"90%"} title="Choose your compere files" visible={isModalVisible}  onCancel={handleCancel}
+      footer={[<Popconfirm  title="Are you sure？The chosen will be reset"  okText="No" cancelText="Yes" onCancel={handleCancel}><Button className="buttonInModalCancel" type="ghost">Cancel</Button></Popconfirm>,
+      
+      <Button className="buttonInModalOK"  disabled={Object.keys(disableDropDown).length !== numberOfComperingOrganism} type="ghost" onClick={onClickNext}>OK</Button>
+]}>
       <p>How many organisms you want to compere? </p>
-      <InputNumber disabled={disableNumberOfComperingOrganism}  value={numberOfComperingOrganism} min={1} max={10} defaultValue={numberOfComperingOrganism} onChange={numberOfCompering}/>
-      <Button onClick={insertNumberOfDropDown}>Insert<SendOutlined /></Button>
+      <InputNumber className="inputNumber" disabled={disableNumberOfComperingOrganism}  value={numberOfComperingOrganism} min={1} max={10} defaultValue={numberOfComperingOrganism} onChange={numberOfCompering}/>
+      <Button className="buttonInModalInsert" onClick={insertNumberOfDropDown}>Insert<SendOutlined /></Button>
+      <div className="divOfDynamicDropDown">
       {displayDropDown && dynamicDropDown()}
+      </div>
+      
       </Modal>
     </div>
   );
