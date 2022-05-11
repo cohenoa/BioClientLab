@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { Table } from 'antd';
+import { Table, Card } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 import { Button} from "antd";
 import { CSVLink } from "react-csv";
@@ -22,7 +22,7 @@ function Gene (props) {
 
     useEffect(() => {
         const columns =[{title:'GENE NAME',key:'GENE NAME',dataIndex:'GENE NAME',...getColumnSearchProps('GENE NAME',searchText,searchedColumn,saveSetSearchText, saveSetSearchedColumn),
-      }]
+      }, {title:'PRODUCT DESCRIPTION',key:'PRODUCT DESCRIPTION',dataIndex:'PRODUCT DESCRIPTION'}]
         let array=[]
         for (const feature of props.featureChosenByUser)
         {
@@ -46,7 +46,7 @@ function Gene (props) {
 
 
     useEffect(() => {
-      if(data.length && !countChangeData)
+      if(data.length && !countChangeData && props.fileTabClickByTheUser.includes('GC CONTENT'))
       {
         let copyData = [...data]
         copyData.forEach(dict=>{dict['GC CONTENT'] = dict['GC CONTENT'].toFixed(2) + "%"})
@@ -83,8 +83,9 @@ function Gene (props) {
               
             </CSVLink>
             </div>
-            <h1>Gene name that missing from the data:</h1>
-          {missingNamesByTypeFunction()}   
+            <Card className="card-missing-value" title="Gene name that missing from the data:">
+          {missingNamesByTypeFunction()}  
+          </Card> 
 <Table  tableLayout='column.ellipsis' columns={columns}  dataSource={data} scroll={{ X: 240 }}/>
   </div>
   );

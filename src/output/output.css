@@ -4,18 +4,21 @@
     width: 100%;
     height: 100%;
     margin-bottom: 4%;
+    margin: auto;
 }
 
 .menu{
+  width: 15%;
   margin-top: 2%;
   float:left;
 }
 .featureComponent{
-    width: 70%;
+    width: 81%;
     height: 100%;
-    margin-left: 2%;
+    margin-left: 17%;
+    margin-bottom: 5%;
     margin-top: 2%;
-    float: left;
+    /* float: left; */
 }
 .loading{
   margin-top: 10%;
@@ -67,3 +70,8 @@
   width: 100%;
 }
 
+.card-missing-value{
+  width: 35%;
+  margin-bottom: 2%;
+  margin-top: 1%;
+}

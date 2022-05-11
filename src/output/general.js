@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {useSelector} from "react-redux";
-import { Table, Button} from 'antd';
+import { Table, Button, Card} from 'antd';
 import { CSVLink } from "react-csv";
 import { DownloadOutlined } from '@ant-design/icons';
 import getColumnSearchProps from './search'
@@ -79,8 +79,9 @@ function General (props) {
             </Button>
             </CSVLink>
             </div>
-            <h1>Gene name that missing from the data:</h1>
-          {missingNamesByTypeFunction()}   
+            <Card className="card-missing-value" title="Gene name that missing from the data:">
+          {missingNamesByTypeFunction()}  
+          </Card> 
    <Table tableLayout='column.ellipsis' columns={columns}  dataSource={data} scroll={{ X: 240 }} />
   </div>
   );

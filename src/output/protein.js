@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {useSelector } from "react-redux";
-import { Table,Button } from 'antd';
+import { Table,Button, Card } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 import { CSVLink } from "react-csv";
 import getColumnSearchProps from './search'
@@ -17,7 +17,7 @@ function Protein (props) {
     const [searchedColumn, setSearchedColumn] = useState(0);
     
     useEffect(() => {
-        const columns =[{title:'GENE NAME',key:'GENE NAME',dataIndex:'GENE NAME', ...getColumnSearchProps('GENE NAME',searchText,searchedColumn,saveSetSearchText, saveSetSearchedColumn)}]
+        const columns =[{title:'GENE NAME',key:'GENE NAME',dataIndex:'GENE NAME', ...getColumnSearchProps('GENE NAME',searchText,searchedColumn,saveSetSearchText, saveSetSearchedColumn)},{title:'PRODUCT DESCRIPTION',key:'PRODUCT DESCRIPTION',dataIndex:'PRODUCT DESCRIPTION'}]
         let array=[]
         for (const feature of props.featureChosenByUser)
         {
@@ -44,7 +44,7 @@ function Protein (props) {
         setSearchedColumn(value)
       }
       const missingNamesByTypeFunction =()=>{
-        return missingNamesByType && Object.keys(missingNamesByType[props.fileTabClickByTheUser]).map(type=>{return<h1 key={type}>{type}: {missingNamesByType[props.fileTabClickByTheUser][type]}</h1>}) 
+        return missingNamesByType && Object.keys(missingNamesByType[props.fileTabClickByTheUser]).map(type=>{return<p key={type}>{type}: {missingNamesByType[props.fileTabClickByTheUser][type]}</p>}) 
       }
     
    
@@ -63,8 +63,9 @@ function Protein (props) {
             </Button>
             </CSVLink>
             </div>
-            <h1>Gene name that missing from the data:</h1>
-          {missingNamesByTypeFunction()}   
+            <Card className="card-missing-value" title="Gene name that missing from the data:">
+          {missingNamesByTypeFunction()}  
+          </Card> 
    <Table tableLayout='column.ellipsis' columns={columns}  dataSource={data} scroll={{ x: 240 }} />
   </div>
   );
