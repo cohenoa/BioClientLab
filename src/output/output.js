@@ -45,7 +45,7 @@ function Output (props) {
   }, [featureListResult])
 
   useEffect(() => {
-    if (featureChosenByUser.length !==0 && unionAllFiles.length !==0 ){
+    if (unionAllFiles.length !==0 ){
       setFeatureChosenByUserToChild(featureChosenByUser)
       dispatch(setFeaturesOutput(featureChosenByUser, unionAllFiles))
       dispatch(setDataHist(unionAllFiles,featureChosenByUser))
