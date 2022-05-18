@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Statistic, Row, Col,Card, Popover, Layout } from 'antd';
+import { Statistic, Row, Col,Card, Popover, Layout , Table} from 'antd';
 import {InfoCircleOutlined} from '@ant-design/icons'
 
 import Histogram from 'react-chart-histogram';
@@ -14,14 +14,21 @@ import {setDataHist } from '../store/actions/output/featuresOutput'
 function Genome (props) {
   const dispatch= useDispatch()
   const dataHist = useSelector((state) => state.featureOutput.dataHist);
+  const dataStatisticHist = useSelector((state) => state.featureOutput.statisticHist);
   const genomeObj = useSelector((state) => state.featureOutput.featuresList);
   const title_X_Y = useSelector((state) => state.featureOutput.numericFeatureTitleXY);
 
   const [pieObject,setPieObject]=useState({})
+  const [columnsStatistic,setColumnsStatistic]=useState([{title:'Feature Name',key:'name',dataIndex:'name'},{title:'Mean',key:'mean',dataIndex:'mean'},{title:'Std',key:'std',dataIndex:'std'}])
+  const [data,setData]=useState([])
 
 
+  useEffect(() => {
+   if(!!dataStatisticHist){
+    setData(dataStatisticHist[props.fileTabClickByTheUser])
+   }
+  }, [dataStatisticHist])
 
- 
   useEffect(() => {
     let nameTypes = Object.keys(genomeObj[props.fileTabClickByTheUser].Genome).filter(key => key.includes("Number of"))
     let nameTypesObject ={}
@@ -120,6 +127,7 @@ const dynamicFeatureHist=()=>{
    </div>
         </Col>
     </Row>
+    <Table   tableLayout='column.ellipsis' columns={columnsStatistic}  dataSource={data} scroll={{ X: 240 }} />
 
   </div>
   );

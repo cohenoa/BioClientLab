@@ -26,11 +26,11 @@ function General (props) {
 
 
     useEffect(() => {
-        const columns =[{title:'GENE NAME',key:'GENE NAME',dataIndex:'GENE NAME', ...getColumnSearchProps('GENE NAME',searchText,searchedColumn,saveSetSearchText, saveSetSearchedColumn)}]
+        const columns =[{title:'GENE NAME',key:'GENE NAME',dataIndex:'GENE NAME', ...getColumnSearchProps('GENE NAME',searchText,searchedColumn,saveSetSearchText, saveSetSearchedColumn)},{title:'PRODUCT DESCRIPTION',key:'PRODUCT DESCRIPTION',dataIndex:'PRODUCT DESCRIPTION',...getColumnSearchProps('PRODUCT DESCRIPTION',searchText,searchedColumn,saveSetSearchText, saveSetSearchedColumn)}]
         let array=[]
         for (const feature of props.featureChosenByUser)
         {
-            if(feature !== 'GENE NAME')
+            if(feature !== 'GENE NAME' && feature !== 'PRODUCT DESCRIPTION' )
                 if(featureListGene.includes(feature))
                     array.push(feature)
         }
@@ -60,7 +60,7 @@ function General (props) {
         setSearchedColumn(value)
       }
       const missingNamesByTypeFunction =()=>{
-        return Object.keys(missingNamesByType[props.fileTabClickByTheUser]).map(type=>{return<h1 key={type}>{type}: {missingNamesByType[props.fileTabClickByTheUser][type]}</h1>}) 
+        return Object.keys(missingNamesByType[props.fileTabClickByTheUser]).map(type=>{return<p key={type}>{type}: {missingNamesByType[props.fileTabClickByTheUser][type]}</p>}) 
       }
     
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Tabs, Radio } from 'antd';
+import { Tabs, Radio, Table } from 'antd';
 import { Row, Col } from 'antd';
 import Plot from 'react-plotly.js';
 
@@ -10,8 +10,17 @@ function HistogramCompare (props) {
     const { TabPane } = Tabs;
     const dataHist = useSelector((state) => state.featureOutput.dataHist);
     const title_X_Y = useSelector((state) => state.featureOutput.numericFeatureTitleXY);
+    const dataStatisticHist = useSelector((state) => state.featureOutput.statisticHist);
 
-    
+    const [columnsStatistic,setColumnsStatistic]=useState([{title:'Feature Name',key:'name',dataIndex:'name'},{title:'Mean',key:'mean',dataIndex:'mean'},{title:'Std',key:'std',dataIndex:'std'}])
+    const [data,setData]=useState({})
+
+  useEffect(() => {
+    if(!!dataStatisticHist){
+     setData(dataStatisticHist)
+    }
+   }, [dataStatisticHist])
+
     const buildData = (fileList, featureName)=>{
         let dynamicDataByFeature = []
         for(const file of fileList)
@@ -69,6 +78,14 @@ function HistogramCompare (props) {
    </div>
         </Col>
     </Row>
+    {
+      !!dataStatisticHist && Object.keys(dataStatisticHist).map(fileName=>{return  <div>  <h1>{fileName}</h1> 
+         <Table  key={fileName} tableLayout='column.ellipsis' columns={columnsStatistic}  dataSource={data[fileName]} scroll={{ X: 240 }} />
+
+         </div>
+    })
+
+    }
 
   </div>
   );

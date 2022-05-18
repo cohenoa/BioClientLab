@@ -49,6 +49,28 @@ export const  setDataHist=(fileName,featureList)=>{
         });
       };
 }
+
+export const  setStatisticHist =(fileName,featureList)=>{
+    const params = {
+        fileList:fileName,
+        featureList:featureList
+    }
+    const headers = {
+        'Access-Control-Allow-Origin':"*"
+    }
+    return async function(dispatch) {
+        return axios.get(URL.GET_STATISTIC_FEATURE_HIST,{params,headers})
+          .then(({data} ) => {
+          dispatch(setStatisticFeatureHist(data))
+        })
+        .catch(err => {
+            console.log(err);
+            alert("Coudnt load Histograma data resualt");
+            window.location.reload();
+            // need to decide what to do - how to get back to last page ?
+        });
+      };
+}
 export const  setMissingNamesByType=(fileName)=>{
     const params = {
         fileList:fileName,
@@ -104,7 +126,15 @@ export const setDataHistFromServer=(data)=>{
         {
             type: CONST.SET_DATA_HIST,
             data,
+        }
+    );
+}
 
+export const setStatisticFeatureHist=(data)=>{
+    return(
+        {
+            type: CONST.SET_STATISTIC_FEATURE_HIST,
+            data,
         }
     );
 }

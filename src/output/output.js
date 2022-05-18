@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import './output.css';
-import {setFeaturesOutput, setDataHist, setMissingNamesByType , getNumericFeatureTitleXY} from '../store/actions/output/featuresOutput'
+import {setFeaturesOutput, setDataHist, setMissingNamesByType , getNumericFeatureTitleXY, setStatisticHist} from '../store/actions/output/featuresOutput'
 import MenuFiles from './menu'
 import Feature from './feature'
 import Compare from './Compare'
@@ -15,7 +15,8 @@ function Output (props) {
   const dispatch= useDispatch()
   const featureListResult = useSelector((state) => state.featureOutput.featuresList);
   const featureChosenByUser = useSelector((state) => state.featuresSelection.featuresChosenByUser);
-  
+  const dataHist = useSelector((state) => state.featureOutput.dataHist);
+
   const [featureListResultFromServer,setFeatureListResultFromServer]=useState()
   const [fileTabClickByTheUser,setFileTabClickByTheUser]=useState()
   const [featureChosenByUserToChild,setFeatureChosenByUserToChild]=useState([])
@@ -33,8 +34,20 @@ function Output (props) {
   //  setAccessionNumberList (accNumberAfterSplit);
   //  let extractNameFromFileMetaData = props.filesMetaData.map(file =>  file.name)
   //  let unionFiles = [...extractNameFromFileMetaData, ...accNumberAfterSplit, ...props.fileFromServer].filter(element => element !== '' )
-     setUnionAllFiles(props.listOfCombinedFiles)
+  setUnionAllFiles(props.listOfCombinedFiles)
+  
   }, [])
+
+  useEffect(() => {
+    if(!!dataHist)
+      dispatch(setStatisticHist(unionAllFiles,featureChosenByUser))
+  }, [dataHist])
+
+  useEffect(() => {
+    console.log(unionAllFiles);
+    if(!!unionAllFiles)
+      setFileTabClickByTheUser(unionAllFiles[0])
+  }, [unionAllFiles])
 
   useEffect(() => {
     if(Object.keys(featureListResult).length)

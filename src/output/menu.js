@@ -50,6 +50,7 @@ function MenuFiles (props) {
         </Button>
         <Menu
           className="menu-files"
+          openKeys={[props.unionAllFiles[0]]}
           defaultSelectedKeys={[props.unionAllFiles[0]]}
           defaultOpenKeys={[props.unionAllFiles[0]]}
           mode="inline"

@@ -27,6 +27,8 @@ function OrganizamSelector(props) {
   // const [listOfCombinedFiles, setListOfCombinedFiles] = useState([]);
   const [disableDropDown, setDisableDropDown] = useState({});
   const [filesNameObj, setFilesNameObj] = useState({});
+  const [temp, setTemp] = useState(0);
+
   // const [cssButtonApprove, setCssButtonApprove] = useState('buttonInModalApprove');
 
 
@@ -54,6 +56,7 @@ function OrganizamSelector(props) {
   };
 
   const showModal = () => {
+    setTemp(unionFilesForDisplayDropDown().length)
     setIsModalVisible(true);
   };
 
@@ -161,15 +164,18 @@ const awsBucket = {
     });
   };
   const onClickButtonApproved=(index)=>{
-    // setCssButtonApprove("buttonDropDownAfterApprove")
     if(filesNameObj[index].length > 1)
     {
       let name =filesNameObj[index].map(name=>name.split('.gb')[0]).join('_combined_')+'.gb'
       props.setListOfCombinedFiles([...props.listOfCombinedFiles, name])
     }
       else
-      props.setListOfCombinedFiles([...props.listOfCombinedFiles,filesNameObj[index]][0])
-    setDisableDropDown({...disableDropDown, [index]:true})
+      {
+        console.log("props.listOfCombinedFiles",props.listOfCombinedFiles);
+        console.log("filesNameObj[index]][0]",filesNameObj[index][0]);
+      props.setListOfCombinedFiles([...props.listOfCombinedFiles,filesNameObj[index][0]])
+      }
+      setDisableDropDown({...disableDropDown, [index]:true})
       
       
   }
@@ -198,8 +204,8 @@ const awsBucket = {
     const arrayFilesToDropDown = unionFilesForDisplayDropDown()
     const arrayNumber =Array.apply(null, {length: numberOfComperingOrganism})
     return arrayNumber.map((number, index)=>{
-      return  <Card className="cardDropDown card" title={"Organism " + (index+1)} key={index+1}><Select 
-      key={index+1}
+      return  <Card className="cardDropDown card" title={"Organism " + (index+1)} key={"card"+index+1}><Select 
+      key={"select"+index+1}
       disabled={disableDropDown[index+1]}
       mode="multiple"
       className="select-field element"
@@ -210,7 +216,7 @@ const awsBucket = {
       >
         {optionExistingFiles(arrayFilesToDropDown)}
       </Select>
-      <Button className="buttonInModalApprove" onClick={()=>onClickButtonApproved(index+1)}>
+      <Button key={index+1}  className="buttonInModalApprove" onClick={()=>onClickButtonApproved(index+1)}>
         Approved <CheckCircleOutlined /></Button>
 
       </Card>
@@ -220,13 +226,18 @@ const awsBucket = {
     
   }
 
-  const onClickNext= () =>{
+  const onClickNext= (listOfName=null) =>{
     setIsModalVisible(false);
     props.setDisableTabsHeader({...props.disableTabsHeader ,1:false, 2: false })
     dispatch(setCurrentPage(['2']))
     props.increaseOrDecreaseNumOfPage(2);
     if(props.accessionNumber !== '')
       dispatch(downloadAccessionNumber(props.accessionNumber))
+    if(!!listOfName)
+    {
+      console.log("here", listOfName);
+      props.setListOfCombinedFiles([listOfName[0]])
+    }
   }
 
   return (
@@ -288,21 +299,23 @@ const awsBucket = {
         <Button className="next-button"
           disabled={disableNext || !ifOrganizamSelected }
           // onClick={onClickNext}
-          onClick={showModal}
+          onClick={()=>{let listOfName = unionFilesForDisplayDropDown()
+           listOfName.length === 1 ?  onClickNext(listOfName): showModal()}}
         >
           Next
         </Button>
       </div>
 
-      <Modal  width={"90%"} title="Choose your compere files" visible={isModalVisible}  onCancel={handleCancel}
-      footer={[<Popconfirm  title="Are you sure？The chosen will be reset"  okText="No" cancelText="Yes" onCancel={handleCancel}><Button className="buttonInModalCancel" type="ghost">Cancel</Button></Popconfirm>,
+      <Modal key="modal" width={"90%"} title="Choose your compere files" visible={isModalVisible}  onCancel={handleCancel}
+      footer={[<Popconfirm key="pop" title="Are you sure？The chosen will be reset"  okText="No" cancelText="Yes" onCancel={handleCancel}><Button key="cancel" className="buttonInModalCancel" type="ghost">Cancel</Button></Popconfirm>,
       
-      <Button className="buttonInModalOK"  disabled={Object.keys(disableDropDown).length !== numberOfComperingOrganism} type="ghost" onClick={onClickNext}>OK</Button>
+      <Button key="ok" className="buttonInModalOK"  disabled={Object.keys(disableDropDown).length !== numberOfComperingOrganism} type="ghost" onClick={()=>onClickNext(null)}>OK</Button>
 ]}>
+  
       <p>How many organisms you want to compere? </p>
-      <InputNumber className="inputNumber" disabled={disableNumberOfComperingOrganism}  value={numberOfComperingOrganism} min={1} max={10} defaultValue={numberOfComperingOrganism} onChange={numberOfCompering}/>
-      <Button className="buttonInModalInsert" onClick={insertNumberOfDropDown}>Insert<SendOutlined /></Button>
-      <div className="divOfDynamicDropDown">
+      <InputNumber key="inputNumber" className="inputNumber" disabled={disableNumberOfComperingOrganism}  value={numberOfComperingOrganism} min={1} max={temp} defaultValue={numberOfComperingOrganism} onChange={numberOfCompering}/>
+      <Button key="buttonInsert" className="buttonInModalInsert" onClick={insertNumberOfDropDown}>Insert<SendOutlined /></Button>
+      <div key={"div"} className="divOfDynamicDropDown">
       {displayDropDown && dynamicDropDown()}
       </div>
       
