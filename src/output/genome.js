@@ -68,7 +68,8 @@ const dynamicFeatureHist=()=>{
             mode: 'none',
           },
         ] }
-        layout={  { width: 500, height: 400,title: featureName +' Histogram' , xaxis: {
+        //before dor changed layout={  { width: 500, height: 400,title: featureName +' Histogram', xaxis: {
+        layout={  { width: 500, height: 400,title: featureName +' Histogram',margin:{b:30} , xaxis: {
           title: {
             text: title_X_Y[featureName]["x"],
             font: {
@@ -101,7 +102,7 @@ const dynamicFeatureHist=()=>{
   Object.keys(pieObject).forEach(function(key) {
     tempLabels.push(key+" (" +pieObject[key]+")")
 })
-  console.log(tempLabels)
+  //console.log(tempLabels)
   
   return (
 <div>
@@ -120,8 +121,9 @@ const dynamicFeatureHist=()=>{
             type: 'pie',
           },
         ] }
-        layout={  { width: 500, height: 400,title: 'Types Of Genome',  }} 
-      
+        layout={  { width: 500, height: 400,title: 'Types of gene' ,margin:{b:9} }} 
+        //before dor changed layout={  { width: 500, height: 400,title: 'Types of gene' }} 
+
       />
    { dynamicFeatureHist()}
    </div>

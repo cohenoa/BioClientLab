@@ -44,7 +44,7 @@ function Output (props) {
   }, [dataHist])
 
   useEffect(() => {
-    console.log(unionAllFiles);
+    //console.log(unionAllFiles);
     if(!!unionAllFiles)
       setFileTabClickByTheUser(unionAllFiles[0])
   }, [unionAllFiles])

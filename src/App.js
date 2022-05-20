@@ -10,6 +10,9 @@ import { Layout, Menu, Breadcrumb } from 'antd';
 const { Header, Content, Footer } = Layout;
 
 function App () {
+  useEffect(() => {
+    document.title = "Bioinformatics Web"
+ }, []);
   const doneUploadFile = useSelector((state) => state.featuresSelection.doneUploadFile)
   const currentPage = useSelector((state) => state.pagesRoutes.currentPage)
 
@@ -21,7 +24,7 @@ function App () {
   const[isLoading, setIsLoading] = useState(false);
   const[accessionNumber, setAccessionNumber] = useState('');
   const[fileFromServer, setFileFromServer] = useState('');
-  const[tabsHeader, setTabsHeader] = useState(['Organism Selection', 'Feature Selection', 'Data']);
+  const[tabsHeader, setTabsHeader] = useState(['Organism Selection', 'Feature Selection', 'Analysis']);
   const[disableTabsHeader, setDisableTabsHeader] = useState({1:false,2:true,3:true});
   const [listOfCombinedFiles, setListOfCombinedFiles] = useState([]);
 

@@ -1,4 +1,4 @@
-const URL = ' https://bioserverlab.herokuapp.com/'
+const URL = ' http://127.0.0.1:5000/'
 // NEW PATH'https://bioserverlab.herokuapp.com/'
 // http://192.168.1.45:8080
 // LOCAL DEV http://127.0.0.1:5000/

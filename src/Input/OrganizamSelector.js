@@ -217,7 +217,7 @@ const awsBucket = {
         {optionExistingFiles(arrayFilesToDropDown)}
       </Select>
       <Button key={index+1}  className="buttonInModalApprove" onClick={()=>onClickButtonApproved(index+1)}>
-        Approved <CheckCircleOutlined /></Button>
+        Approve <CheckCircleOutlined /></Button>
 
       </Card>
     })
@@ -239,12 +239,13 @@ const awsBucket = {
       props.setListOfCombinedFiles([listOfName[0]])
     }
   }
-
+  // <h2>Choose one option:</h2>
+  // <h3>Note: in order to perform comparison between two species, please upload two files</h3>
   return (
     <div className="center-page">
       <div className="title">Organism Selection</div>
-      <h2>Choose one option:</h2>
-      <h3>Note: in order to perform comparison between two species, please upload two files</h3>
+      <h3>Please select all relevant organisms using any of the options below:</h3>
+
       <div className="upload-file">
       <h3  className="element" >Upload a file:</h3>
         <Upload {...awsBucket}כ
@@ -273,7 +274,7 @@ const awsBucket = {
         />
       </div>
       <div className="select-from-list">
-        <h3 className="element">Select file from the list</h3>
+        <h3 className="element">Select organism from the list</h3>
         <Select 
               mode="multiple"
         className="select-field element"
@@ -282,7 +283,7 @@ const awsBucket = {
             setDisableNext(false)
             dispatch(setDoneUploadFile(true))
           }}
-          placeholder="Select a file"
+          placeholder="Choose organism"
         >
           {optionExistingFiles(existingFileListFromServer)}
         </Select>
@@ -306,15 +307,15 @@ const awsBucket = {
         </Button>
       </div>
 
-      <Modal key="modal" width={"90%"} title="Choose your compere files" visible={isModalVisible}  onCancel={handleCancel}
+      <Modal key="modal" width={"90%"} title="Please define organisms to compare:" visible={isModalVisible}  onCancel={handleCancel}
       footer={[<Popconfirm key="pop" title="Are you sure？The chosen will be reset"  okText="No" cancelText="Yes" onCancel={handleCancel}><Button key="cancel" className="buttonInModalCancel" type="ghost">Cancel</Button></Popconfirm>,
       
       <Button key="ok" className="buttonInModalOK"  disabled={Object.keys(disableDropDown).length !== numberOfComperingOrganism} type="ghost" onClick={()=>onClickNext(null)}>OK</Button>
 ]}>
   
-      <p>How many organisms you want to compere? </p>
+      <p>Please select the number of organisms (single-species or combined): </p>
       <InputNumber key="inputNumber" className="inputNumber" disabled={disableNumberOfComperingOrganism}  value={numberOfComperingOrganism} min={1} max={temp} defaultValue={numberOfComperingOrganism} onChange={numberOfCompering}/>
-      <Button key="buttonInsert" className="buttonInModalInsert" onClick={insertNumberOfDropDown}>Insert<SendOutlined /></Button>
+      <Button key="buttonInsert" className="buttonInModalInsert" onClick={insertNumberOfDropDown}>Continue<SendOutlined /></Button>
       <div key={"div"} className="divOfDynamicDropDown">
       {displayDropDown && dynamicDropDown()}
       </div>
