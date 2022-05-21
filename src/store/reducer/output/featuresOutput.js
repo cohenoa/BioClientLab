@@ -1,4 +1,3 @@
-
 import * as ACTION_TYPE from '../../actions/actionsTypes'
 const initialState = {
 	featuresList:{},

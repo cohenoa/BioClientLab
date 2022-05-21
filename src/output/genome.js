@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Statistic, Row, Col,Card, Popover, Layout , Table} from 'antd';
+import { Statistic, Row, Col,Card, Popover, Table} from 'antd';
 import {InfoCircleOutlined} from '@ant-design/icons'
-
-import Histogram from 'react-chart-histogram';
-import {Bar} from 'react-chartjs-2';
-import Chart from 'chart.js/auto'
 import Plot from 'react-plotly.js';
-import {setDataHist } from '../store/actions/output/featuresOutput'
+
 
 
 
@@ -19,7 +15,7 @@ function Genome (props) {
   const title_X_Y = useSelector((state) => state.featureOutput.numericFeatureTitleXY);
 
   const [pieObject,setPieObject]=useState({})
-  const [columnsStatistic,setColumnsStatistic]=useState([{title:'Feature Name',key:'name',dataIndex:'name'},{title:'Mean',key:'mean',dataIndex:'mean'},{title:'Std',key:'std',dataIndex:'std'}])
+  const [columnsStatistic,setColumnsStatistic]=useState([{title:'Feature Name',key:'name',dataIndex:'name'},{title:'Mean',key:'mean',dataIndex:'mean'},{title:'Standard deviation',key:'std',dataIndex:'std'}])
   const [data,setData]=useState([])
 
 
@@ -40,14 +36,12 @@ function Genome (props) {
   
 
     const cardByFeatures=()=>{
-      // ADDED for the chagned noa requested
         let fixedfeatureListResultFromServer=[];
         Object.keys(props.featureListResultFromServer).forEach(function(key) {
           if (!key.includes("Number of ") && !key.includes("GC_CONTENT") ){
               fixedfeatureListResultFromServer[key] = props.featureListResultFromServer[key];
           }
       });
-      // end of changed down changed from props.featureListResultFromServer[feature] --> fixedfeatureListResultFromServer[feature]
         return Object.keys(fixedfeatureListResultFromServer).map(feature=>{
             return <Col span={6} key={feature}>
                 <Card >
@@ -101,9 +95,7 @@ const dynamicFeatureHist=()=>{
   let tempLabels = [] ;
   Object.keys(pieObject).forEach(function(key) {
     tempLabels.push(key+" (" +pieObject[key]+")")
-})
-  //console.log(tempLabels)
-  
+})  
   return (
 <div>
     <Row className="genome-row" gutter={[16, 24]}>
@@ -117,7 +109,6 @@ const dynamicFeatureHist=()=>{
           {
             values: Object.values(pieObject),
             labels: tempLabels, 
-            //labels: Object.keys(pieObject),
             type: 'pie',
           },
         ] }

@@ -21,7 +21,18 @@
 .ant-menu-overflow {
 padding-top: 1%;
 }
+  /* upOn noa request */
 .logo {
+    float: left;
+    width: auto;
+    height:50%;
+    margin: 16px 24px 16px 0;
+    background-size: 100%;
+    color: white;
+    font-size: x-large;
+    background-size: 100%;
+}
+/* .logo {
     float: left;
     width: 10%;
     height:50%;
@@ -29,7 +40,7 @@ padding-top: 1%;
     background-image: url(/public/logo1.png);
     background-size: 100%;
     background-color: transparent;
-}
+} */
 .ant-menu-item {
     background: transparent !important;
 }

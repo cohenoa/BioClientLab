@@ -16,7 +16,7 @@ export const  downloadAccessionNumber = ( accessionNumber)=>{
             .catch(err => {
                 console.warn(err);
                 alert("Coudnlt Download file from GenBank By the accession Number enterd");
-                window.location.reload();// TODO:Change it to like enter first web
+                window.location.reload();
 
             });  
     };
@@ -31,7 +31,7 @@ export const  setExistingFilesListFromServer=()=>{
         .catch(err =>{
             console.log("err in :", err);
             alert("Coudnlt set files list from server")
-            window.location.reload();// TODO:Change it to like enter first web
+            window.location.reload();
 
           });
       };

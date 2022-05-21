@@ -14,7 +14,6 @@ export const  setFeaturesListFromServer=()=>{
             console.log(err);
             alert("Coudnt load feature, Retrying");
             window.location.reload();
-            //need to add what to do 
         });
       };
 }
@@ -29,7 +28,6 @@ export const  getFeatureDescription=()=>{
             console.log(err);
             alert("Coudn't load feature descripition");
             window.location.reload();
-            //need to add what to do 
         });
       };
 }
@@ -43,7 +41,6 @@ export const  getTitleFeatureDescription=()=>{
             console.log(err);
             alert("Coudn't load feature descripition");
             window.location.reload();
-            //need to add what to do 
         });
       };
 }

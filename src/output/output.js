@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import './output.css';
-import {setFeaturesOutput, setDataHist, setMissingNamesByType , getNumericFeatureTitleXY, setStatisticHist} from '../store/actions/output/featuresOutput'
+import {setFeaturesOutput, setDataHist, getNumericFeatureTitleXY, setStatisticHist} from '../store/actions/output/featuresOutput'
 import MenuFiles from './menu'
 import Feature from './feature'
 import Compare from './Compare'
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-import { CSVLink } from "react-csv";
-import { Menu, Button } from 'antd';
-import { DownloadOutlined } from '@ant-design/icons';
 
 function Output (props) {
   const dispatch= useDispatch()
@@ -21,19 +18,12 @@ function Output (props) {
   const [fileTabClickByTheUser,setFileTabClickByTheUser]=useState()
   const [featureChosenByUserToChild,setFeatureChosenByUserToChild]=useState([])
   const[isLoading, setIsLoading] = useState(false);
-  const [accessionNumberList, setAccessionNumberList] = useState([]);
   const [unionAllFiles,setUnionAllFiles]=useState([])
   const [typeFileClicked,setTypeFileClicked]=useState('file')
 
   useEffect(() => {
     dispatch(getNumericFeatureTitleXY())
     props.setDisableTabsHeader({...props.disableTabsHeader , 1: true})
-
-  //  let accNumberAfterSplit = props.accessionNumber.split(',');
-  //  accNumberAfterSplit = accNumberAfterSplit.map(name => name +".gb").filter(name=> name !== '.gb');
-  //  setAccessionNumberList (accNumberAfterSplit);
-  //  let extractNameFromFileMetaData = props.filesMetaData.map(file =>  file.name)
-  //  let unionFiles = [...extractNameFromFileMetaData, ...accNumberAfterSplit, ...props.fileFromServer].filter(element => element !== '' )
   setUnionAllFiles(props.listOfCombinedFiles)
   
   }, [])
@@ -44,7 +34,6 @@ function Output (props) {
   }, [dataHist])
 
   useEffect(() => {
-    //console.log(unionAllFiles);
     if(!!unionAllFiles)
       setFileTabClickByTheUser(unionAllFiles[0])
   }, [unionAllFiles])
@@ -69,7 +58,6 @@ function Output (props) {
 
   useEffect(() => {
     setFeatureListResultFromServer(featureListResult)
-    // setFileTabClickByTheUser(Object.keys(featureListResult)[0])
     props.setIsLoading(false)
 
     

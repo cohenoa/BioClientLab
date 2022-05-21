@@ -2,18 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Menu, Button } from 'antd';
 import {
-  AppstoreOutlined,
+  //AppstoreOutlined,
   FileTextOutlined,
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  PieChartOutlined,
+  //PieChartOutlined,
 } from '@ant-design/icons';
-import { logDOM } from "@testing-library/dom";
-
-
-
-
-
 
 function MenuFiles (props) {
     const { SubMenu } = Menu;

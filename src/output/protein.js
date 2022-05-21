@@ -66,7 +66,7 @@ function Protein (props) {
             <Card className="card-missing-value" title="Gene name that missing from the data:">
           {missingNamesByTypeFunction()}  
           </Card> 
-   <Table tableLayout='column.ellipsis' columns={columns}  dataSource={data} scroll={{ x: 240 }} />
+   <Table tableLayout='column.ellipsis' columns={columns} dataSource={data} scroll={{ x: 240 }} />
   </div>
   );
 }

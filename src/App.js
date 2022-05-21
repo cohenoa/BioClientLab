@@ -5,7 +5,7 @@ import Output from './output/output'
 import './App.css';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Menu} from 'antd';
 
 const { Header, Content, Footer } = Layout;
 
@@ -44,21 +44,13 @@ function App () {
   const clickOnTab=(key)=>{
     increaseOrDecreaseNumOfPage(key)
   }
-
-  // const increaseOrDecreaseNumOfPage=(value)=>{
-  //   setNumOfPage(value)
-  // }
-
-// style={{ backgroundImage: "url(/organism3.jpg)",backgroundPosition: 'center', 
-// backgroundSize: 'cover',
-// backgroundRepeat: 'no-repeat', }}
-
   return (
 
     <Layout className="layout">
      <div className="app" >
      <Header className="header">
-      <div className="logo" ></div>
+       {/*<div className="logo" ></div> -> after getting a logo return to this line   */}
+      <div className="logo" >Bioinformatics Web</div> 
       <Menu theme="dark" className="menuApp" selectedKeys={currentPage} mode="horizontal" defaultSelectedKeys={['1']}>
         {tabsHeader.map((tab, index) => {
           const key = index + 1;

@@ -11,8 +11,6 @@ function Gene (props) {
     const featureListGene = useSelector((state) => state.featuresSelection.featuresList.Gene_Features);
     const featureOutputGene = useSelector((state) => state.featureOutput.featuresList);
     const missingNamesByType = useSelector((state) => state.featureOutput.missingNamesByType);
-
-    
     const [columns,setColumns]=useState([])
     const [data,setData]=useState([])
     const [searchText, setSearchText] = useState("");

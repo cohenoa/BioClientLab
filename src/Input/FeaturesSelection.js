@@ -21,9 +21,8 @@ function FeaturesSelection (props) {
   const featureDescriptionsTitle = useSelector((state) => state.featuresSelection.featuresTitleDescription);
   const doneUploadFile = useSelector((state) => state.featuresSelection.doneUploadFile);
 
-  const [featuresChooseByUser,setFeaturesChooseByUser]=useState([]) //TODO: Maybe need to initlize with Gene_Features?
+  const [featuresChooseByUser,setFeaturesChooseByUser]=useState([])
   const [featureListToDisplay,setFeatureListToDisplay]=useState({})
-  // const [checkedCard,setCheckedCard]=useState({})
   
   useEffect(() => {
     dispatch(getFeatureDescription())
@@ -148,9 +147,6 @@ function FeaturesSelection (props) {
               fixedFeatureListToDisplay[key] = featureListToDisplay[key];
             }
         });
-    //     end of changed from featureListToDisplay -- > fixedFeatureListToDisplay
-
-    //     need to fill each title descprtion its reday in -->featureDescriptionsTitle (also in redux)
     return Object.keys(fixedFeatureListToDisplay).map((key, index)=> {
       return (
       <Col span={8}  key={key} className="col-features-checkbox">

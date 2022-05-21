@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
 import './input.css';
-// import {
-//   Button
-// } from 'antd';
-
 import OrganizamSelector from './OrganizamSelector'
 import FeaturesSelection from './FeaturesSelection'
 
@@ -11,14 +7,11 @@ import FeaturesSelection from './FeaturesSelection'
 
 function Input (props) {
  
-  // const [numOfPage,setNumOfPage]=useState(1)
 
   const saveFileMetaData=(filesList)=>{
     props.setFileMetaData(filesList)
   }
-  // const increaseOrDecreaseNumOfPage=(value)=>{
-  //   setNumOfPage(value)
-  // }
+
   return (
 
       <div className='input'>

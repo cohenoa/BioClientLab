@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Tabs, Radio, Table } from 'antd';
+import { useSelector } from "react-redux";
+import { Tabs, Table } from 'antd';
 import { Row, Col } from 'antd';
 import Plot from 'react-plotly.js';
 
@@ -12,7 +12,7 @@ function HistogramCompare (props) {
     const title_X_Y = useSelector((state) => state.featureOutput.numericFeatureTitleXY);
     const dataStatisticHist = useSelector((state) => state.featureOutput.statisticHist);
 
-    const [columnsStatistic,setColumnsStatistic]=useState([{title:'Feature Name',key:'name',dataIndex:'name'},{title:'Mean',key:'mean',dataIndex:'mean'},{title:'Std',key:'std',dataIndex:'std'}])
+    const [columnsStatistic,setColumnsStatistic]=useState([{title:'Feature Name',key:'name',dataIndex:'name'},{title:'Mean',key:'mean',dataIndex:'mean'},{title:'Standard deviation',key:'std',dataIndex:'std'}])
     const [data,setData]=useState({})
 
   useEffect(() => {

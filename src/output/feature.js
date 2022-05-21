@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { useSelector } from "react-redux";
 import { Tabs } from 'antd';
 import Genome from "./genome";
@@ -11,10 +11,14 @@ function Feature (props) {
     const { TabPane } = Tabs;
     const featureListResult = useSelector((state) => state.featureOutput.featuresList);
     const [tabMapName,setTabMapName]=useState({
-        'Genome':'Genome Statistic',
-        'Gene':'Gene Table',
-        'Protein':'Protein Table',
-        'General':'General'
+        // 'Genome':'Genome Statistic',
+        // 'Gene':'Gene Table',
+        // 'Protein':'Protein Table',
+        // 'General':'General'
+        'Genome':'Analysis and Visualization',
+        'Gene':'Gene Features Table',
+        'Protein':'Protein Features Table',
+        'General':'General Features Table'
     })
 
     

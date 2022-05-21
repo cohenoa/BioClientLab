@@ -2,15 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Input, Button, Upload, Select, Modal, InputNumber, Card, Popconfirm} from "antd";
 import "./input.css";
 import { UploadOutlined, SendOutlined ,CheckCircleOutlined} from "@ant-design/icons";
-//import { Card, Col, Row } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
 import { setExistingFilesListFromServer,downloadAccessionNumber, setDoneUploadFile } from "../store/actions/Input/OrganizamSelector";
 import { setCurrentPage } from "../store/actions/pagesRoutes";
-
 import AWS from "aws-sdk";
 import * as URL from '../store/actions/url'
 import axios from 'axios'
-import index from "react-highlight-words";
 
 function OrganizamSelector(props) {
   const dispatch = useDispatch();
@@ -24,12 +21,10 @@ function OrganizamSelector(props) {
   const [numberOfComperingOrganism, setNumberOfComperingOrganism] = useState(1);
   const [disableNumberOfComperingOrganism, setDisableNumberOfComperingOrganism] = useState(false);
   const [displayDropDown, setDisplayDropDown] = useState(false);
-  // const [listOfCombinedFiles, setListOfCombinedFiles] = useState([]);
   const [disableDropDown, setDisableDropDown] = useState({});
   const [filesNameObj, setFilesNameObj] = useState({});
   const [temp, setTemp] = useState(0);
 
-  // const [cssButtonApprove, setCssButtonApprove] = useState('buttonInModalApprove');
 
 
 
@@ -63,7 +58,6 @@ function OrganizamSelector(props) {
 
 
   const handleCancel = () => {
-    // setCssButtonApprove('buttonInModalApprove')
     setNumberOfComperingOrganism(1)
     setDisableNumberOfComperingOrganism(false)
     setDisplayDropDown(false)
@@ -128,7 +122,7 @@ const awsBucket = {
           )
           .catch(res =>{
             alert("Something went wrong Please try again")
-            window.location.reload();// TODO:Change it to like enter first web
+            window.location.reload();
 
           })
         }
@@ -288,14 +282,6 @@ const awsBucket = {
           {optionExistingFiles(existingFileListFromServer)}
         </Select>
       </div>
-      {/* <div className="checkbox-override">
-        <Checkbox className="override-spices">
-          Override species existing{" "}
-        </Checkbox>
-        <Checkbox className="override-features">
-          Override features existing
-        </Checkbox>
-      </div> */}
       <div >
         <Button className="next-button"
           disabled={disableNext || !ifOrganizamSelected }
