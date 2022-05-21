@@ -14,5 +14,6 @@ export const GET_FEATURES_DATA_HIST = `${URL}api/featuresHist`
 export const GET_FEATURE_DESCRIPTION = `${URL}api/getFeaturesDescription`
 export const GET_TITLE_FEATURE_DESCRIPTION = `${URL}api/getTitleFeaturesDescription`
 export const GET_MISSING_NAMES_BY_TYPE = `${URL}/api/missingNames`
+export const GET_NAMES_BY_PRODUCT_TYPE = `${URL}/api/productTypeNames`
 export const GET_NUMERIC_FEATURE_TITLE_X_Y = `${URL}/api/getNumericFeatureTitleXY`
 export const GET_STATISTIC_FEATURE_HIST = `${URL}/api/statisticFeatureHist`

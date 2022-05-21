@@ -1,10 +1,13 @@
 import * as ACTION_TYPE from '../../actions/actionsTypes'
+import { setNamesByProductType } from '../../actions/output/featuresOutput';
 const initialState = {
 	featuresList:{},
 	dataHist:{},
 	statisticHist:{},
 	missingNamesByType:{},
+	NamesByProductType:{},
 	numericFeatureTitleXY:{}
+
 };
 
 const setFeatureListOutput=(state, action)=>{
@@ -26,9 +29,9 @@ const setNumericFeatureTitleXY=(state, action)=>{
 const setStatisticFeatureHist=(state, action)=>{
 	return {...state, statisticHist: action.data}
 }
-
-
-
+const setNameByProductType=(state, action)=>{
+	return {...state, NamesByProductType: action.data}
+}
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case ACTION_TYPE.SET_FEATURES_LIST_OUTPUT:
@@ -41,6 +44,8 @@ const reducer = (state = initialState, action) => {
 			return setNumericFeatureTitleXY(state, action)
 		case ACTION_TYPE.SET_STATISTIC_FEATURE_HIST:
 			return setStatisticFeatureHist(state, action)
+			case ACTION_TYPE.SET_NAMES_BY_PRODUCT_TYPE:
+				return setNameByProductType(state, action)
 		default:
 			return state;
 	}

@@ -63,7 +63,7 @@ function Protein (props) {
             </Button>
             </CSVLink>
             </div>
-            <Card className="card-missing-value" title="Gene name that missing from the data:">
+            <Card className="card-missing-value" title="Note: For some entries, gene names are missing. More specifically, here are the number of missing gene names grouped by gene type.">
           {missingNamesByTypeFunction()}  
           </Card> 
    <Table tableLayout='column.ellipsis' columns={columns} dataSource={data} scroll={{ x: 240 }} />

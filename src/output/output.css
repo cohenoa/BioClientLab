@@ -71,7 +71,8 @@
 }
 
 .card-missing-value{
-  width: 35%;
+  width:auto;
+  /* width: 35%; */
   margin-bottom: 2%;
   margin-top: 1%;
 }

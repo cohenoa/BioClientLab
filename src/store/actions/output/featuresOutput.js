@@ -18,6 +18,7 @@ export const  setFeaturesOutput=(featureList, fileList)=>{
           .then(({ data }) => {
           dispatch(setFeaturesListOutput(data))
           dispatch(setMissingNamesByType(fileList))
+          dispatch(setNamesByProductType(fileList))
         })
         .catch(err => {
             console.log(err);
@@ -91,6 +92,26 @@ export const  setMissingNamesByType=(fileName)=>{
         });
       };
 }
+export const  setNamesByProductType=(fileName)=>{
+    const params = {
+        fileList:fileName,
+    }
+    const headers = {
+        'Access-Control-Allow-Origin':"*"
+    }
+    return async function(dispatch) {
+        return axios.get(URL.GET_NAMES_BY_PRODUCT_TYPE,{params,headers})
+          .then(({data} ) => {
+          dispatch(setNamesByProductTypeFromServer(data))
+        })
+        .catch(err => {
+            console.log(err);
+            alert("Coudnt load Histograma data resualt");
+            window.location.reload();
+            // need to decide what to do - how to get back to last page ?
+        });
+      };
+}
 
 export const  getNumericFeatureTitleXY=()=>{
 
@@ -145,6 +166,14 @@ export const setMissingNamesByTypeFromServer=(data)=>{
             type: CONST.SET_MISSING_NAMES_BY_TYPE,
             data,
 
+        }
+    );
+}
+export const setNamesByProductTypeFromServer=(data)=>{
+    return(
+        {
+            type: CONST.SET_NAMES_BY_PRODUCT_TYPE,
+            data,
         }
     );
 }
