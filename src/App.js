@@ -4,7 +4,7 @@ import Input from './Input/Input'
 import Output from './output/output'
 import './App.css';
 import { Spin } from 'antd';
-import { LoadingOutlined, BellOutlined,YoutubeOutlined } from '@ant-design/icons';
+import { LoadingOutlined, QuestionCircleOutlined,YoutubeOutlined } from '@ant-design/icons';
 import { Layout, Menu,Popover, Tag} from 'antd';
 
 const { Header, Content, Footer } = Layout;
@@ -56,7 +56,7 @@ function App () {
       // visible={visible}
       // onVisibleChange={handleVisibleChange}
     >
-     <BellOutlined className="help" style={{color: "white",  fontSize: '50px'}}/>
+     <QuestionCircleOutlined   className="help" style={{color: "white",  fontSize: '50px'}}/>
      </Popover>
        {/*<div className="logo" ></div> -> after getting a logo return to this line   */}
       <div className="logo" >Bioinformatics Web</div> 
