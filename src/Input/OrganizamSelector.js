@@ -235,7 +235,7 @@ const awsBucket = {
   // <h3>Note: in order to perform comparison between two species, please upload two files</h3>
   return (
     <div className="center-page">
-      <div className="title">Organism Selection</div>
+      <div className="title">Step 1: Organism Selection</div>
       <h3>Please select all relevant organisms using any of the options below:</h3>
 
       <div className="upload-file">

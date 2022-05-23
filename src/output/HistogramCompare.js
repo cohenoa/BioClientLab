@@ -60,7 +60,7 @@ function HistogramCompare (props) {
                     color: '#7f7f7f'
                   }
                 }
-              } }} 
+              },legend: {x: 0.3, y: -0.5} }} 
             
             />)
         

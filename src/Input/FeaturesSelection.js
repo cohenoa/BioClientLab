@@ -211,7 +211,7 @@ function FeaturesSelection (props) {
     !doneUploadFile ?   <div className="loading"><Spin  tip="Loading" indicator={<LoadingOutlined style={{ fontSize: 100 }} spin />} /></div> :
     <div className='center-page'>
    <div className='cards'> 
-   <div className="title">Feature Selection</div>
+   <div className="title">Step 2: Feature Selection</div>
     {featuresChooseByUser && buildChipsOnFeaturesSelected()}
     <Row gutter={16} type='flex'>
     {featuresCards()}

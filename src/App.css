@@ -1,5 +1,6 @@
 .app{
     position:fixed;
+    font-size: larger;
     /* overflow: scroll; */
     overflow-y: scroll;
     width: 100%;
@@ -24,6 +25,21 @@ padding-top: 1%;
   /* upOn noa request */
 .logo {
     float: left;
+    width: auto;
+    height:50%;
+    margin: 16px 24px 16px 0;
+    background-size: 100%;
+    color: white;
+    font-size: x-large;
+    background-size: 100%;
+}
+
+.you-tube{
+    margin-right: 2%;
+}
+
+.help {
+    float: right;
     width: auto;
     height:50%;
     margin: 16px 24px 16px 0;
