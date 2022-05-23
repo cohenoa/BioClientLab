@@ -165,8 +165,6 @@ const awsBucket = {
     }
       else
       {
-        console.log("props.listOfCombinedFiles",props.listOfCombinedFiles);
-        console.log("filesNameObj[index]][0]",filesNameObj[index][0]);
       props.setListOfCombinedFiles([...props.listOfCombinedFiles,filesNameObj[index][0]])
       }
       setDisableDropDown({...disableDropDown, [index]:true})

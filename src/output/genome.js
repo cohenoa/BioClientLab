@@ -43,7 +43,6 @@ function Genome (props) {
           }
       });
         return Object.keys(fixedfeatureListResultFromServer).map((feature,index)=>{
-          console.log("feature", feature);
             return <Col span={6} key={feature+index}>
                 <Card >
             <Statistic title={<div>{feature}<Popover key={feature+index} placement="rightTop" title={feature + " Description"}  content={""} trigger="click">

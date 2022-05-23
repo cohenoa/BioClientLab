@@ -58,9 +58,8 @@ function Output (props) {
     
   }, [featureChosenByUser, unionAllFiles])
   useEffect(() => {
-    if(Object.keys(namesByProductType).length !== 0 && !!fileTabClickByTheUser){
+    if(Object.keys(namesByProductType).length !== 0 && !!fileTabClickByTheUser &&Object.keys(namesByProductType).includes(fileTabClickByTheUser) ){
       NamesByProductTypeFunction()
-
     }
    }, [namesByProductType, fileTabClickByTheUser])
 
@@ -78,6 +77,9 @@ function Output (props) {
 
   const NamesByProductTypeFunction =()=>{
     let temp = []
+    console.log("namesByProductType",namesByProductType);
+    console.log("fileTabClickByTheUser",fileTabClickByTheUser);
+
     Object.keys(namesByProductType[fileTabClickByTheUser]).map(type=>
     temp.push({text:namesByProductType[fileTabClickByTheUser][type],value :namesByProductType[fileTabClickByTheUser][type]}));
     setFilterObj(temp);
