@@ -13,7 +13,9 @@ function Output (props) {
   const featureListResult = useSelector((state) => state.featureOutput.featuresList);
   const featureChosenByUser = useSelector((state) => state.featuresSelection.featuresChosenByUser);
   const dataHist = useSelector((state) => state.featureOutput.dataHist);
+  const namesByProductType = useSelector((state) => state.featureOutput.NamesByProductType);
 
+  const [filterObj, setFilterObj]=useState([])
   const [featureListResultFromServer,setFeatureListResultFromServer]=useState()
   const [fileTabClickByTheUser,setFileTabClickByTheUser]=useState()
   const [featureChosenByUserToChild,setFeatureChosenByUserToChild]=useState([])
@@ -27,6 +29,7 @@ function Output (props) {
   setUnionAllFiles(props.listOfCombinedFiles)
   
   }, [])
+  
 
   useEffect(() => {
     if(!!dataHist)
@@ -47,14 +50,19 @@ function Output (props) {
   }, [featureListResult])
 
   useEffect(() => {
-    if (unionAllFiles.length !==0 ){
+    if (unionAllFiles.length !== 0 ){
       setFeatureChosenByUserToChild(featureChosenByUser)
       dispatch(setFeaturesOutput(featureChosenByUser, unionAllFiles))
       dispatch(setDataHist(unionAllFiles,featureChosenByUser))
     }
     
   }, [featureChosenByUser, unionAllFiles])
+  useEffect(() => {
+    if(Object.keys(namesByProductType).length !== 0 && !!fileTabClickByTheUser){
+      NamesByProductTypeFunction()
 
+    }
+   }, [namesByProductType, fileTabClickByTheUser])
 
   useEffect(() => {
     setFeatureListResultFromServer(featureListResult)
@@ -66,6 +74,13 @@ function Output (props) {
   const setFileTabClickByTheUserFunction=(file, type)=>{
     setFileTabClickByTheUser(file)
     setTypeFileClicked(type)
+  }
+
+  const NamesByProductTypeFunction =()=>{
+    let temp = []
+    Object.keys(namesByProductType[fileTabClickByTheUser]).map(type=>
+    temp.push({text:namesByProductType[fileTabClickByTheUser][type],value :namesByProductType[fileTabClickByTheUser][type]}));
+    setFilterObj(temp);
   }
   
 
@@ -79,7 +94,7 @@ function Output (props) {
       </div>  
       
      <div className="featureComponent">
-     {typeFileClicked === 'file' ?<Feature  featureChosenByUser={featureChosenByUser} featureListResultFromServer={featureListResultFromServer} fileTabClickByTheUser={fileTabClickByTheUser} ></Feature>
+     {typeFileClicked === 'file' ?<Feature  featureChosenByUser={featureChosenByUser} featureListResultFromServer={featureListResultFromServer} fileTabClickByTheUser={fileTabClickByTheUser} filterObj={filterObj}  ></Feature>
      :
      <Compare></Compare>}
      </div>

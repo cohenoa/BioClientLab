@@ -1,5 +1,4 @@
 import * as ACTION_TYPE from '../../actions/actionsTypes'
-import { setNamesByProductType } from '../../actions/output/featuresOutput';
 const initialState = {
 	featuresList:{},
 	dataHist:{},

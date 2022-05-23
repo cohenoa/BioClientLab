@@ -229,7 +229,7 @@ const awsBucket = {
       dispatch(downloadAccessionNumber(props.accessionNumber))
     if(!!listOfName)
     {
-      console.log("here", listOfName);
+      //console.log("here", listOfName);
       props.setListOfCombinedFiles([listOfName[0]])
     }
   }

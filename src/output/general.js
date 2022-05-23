@@ -11,28 +11,24 @@ function General (props) {
     const featureListGene = useSelector((state) => state.featuresSelection.featuresList.General_Features);
     const featureOutputGeneral = useSelector((state) => state.featureOutput.featuresList);
     const missingNamesByType = useSelector((state) => state.featureOutput.missingNamesByType);
-    const namesByProductType = useSelector((state) => state.featureOutput.NamesByProductType);
+    //const namesByProductType = useSelector((state) => state.featureOutput.NamesByProductType);
 
     const [columns,setColumns]=useState([])
     const [data,setData]=useState([])
-    const [filterObj, setFilterObj]=useState([  {text:'CDS',value:'CDS'},
-                                                {text:'tRNA',value:'tRNA'},
-                                                {text:'mRNA',value:'mRNA'},
-                                                {text:'rRNA',value:'rRNA'},
-                                                {text:'misc_RNA',value:'misc_RNA'},
-                                                {text:'regulatory',value:'regulatory'}
-                                              ])
-    //const [filterObj, setFilterObj]=useState([])
+    // const [filterObj, setFilterObj]=useState([  {text:'CDS',value:'CDS'},
+    //                                             {text:'tRNA',value:'tRNA'},
+    //                                             {text:'mRNA',value:'mRNA'},
+    //                                             {text:'rRNA',value:'rRNA'},
+    //                                             {text:'misc_RNA',value:'misc_RNA'},
+    //                                             {text:'regulatory',value:'regulatory'}
+    //                                           ])
+
 
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState(0);
     
 
-    // useEffect(() => {
-    //   if(!!namesByProductType){
-    //     NamesByProductTypeFunction()
-    //   }
-    //  }, [namesByProductType])
+
                                                 
     useEffect(() => {
 
@@ -50,7 +46,7 @@ function General (props) {
             columns.push({title:feature, key:feature, dataIndex:feature,sorter: (a, b) => a[feature] - b[feature]})
           }
           else if (feature === "PRODUCT TYPE"){
-            columns.push({title:feature, key:feature, dataIndex:feature,filters:filterObj, onFilter: (value, record) => record[feature].indexOf(value) === 0,
+            columns.push({title:feature, key:feature, dataIndex:feature,filters:props.filterObj, onFilter: (value, record) => record[feature].indexOf(value) === 0,
             })
           }
           else{
@@ -73,15 +69,7 @@ function General (props) {
         return Object.keys(missingNamesByType[props.fileTabClickByTheUser]).map(type=>{return<p key={type}>{type}: {missingNamesByType[props.fileTabClickByTheUser][type]}</p>}) 
       }
 
-      // const NamesByProductTypeFunction =()=>{
-      //   let temp = []
-      //   console.log("namesByProductType", namesByProductType)
-      //   Object.keys(namesByProductType[props.fileTabClickByTheUser]).map(type=>
-      //   temp.push({text:namesByProductType[props.fileTabClickByTheUser][type],value :namesByProductType[props.fileTabClickByTheUser][type]}));
-      //   console.log("temp",temp);
-      //   setFilterObj(temp);
-      //   console.log("filterObj",filterObj); 
-      // }
+
     
 
   return (
@@ -101,7 +89,6 @@ function General (props) {
             </div>
             <Card className="card-missing-value" title="Note: For some entries, gene names are missing. More specifically, here are the number of missing gene names grouped by gene type.">
           {missingNamesByTypeFunction()}
-            
           </Card> 
    <Table tableLayout='column.ellipsis' columns={columns}  dataSource={data} scroll={{ X: 240 }} />
   </div>
