@@ -2,7 +2,7 @@
     position:fixed;
     font-size: larger;
     /* overflow: scroll; */
-    /* overflow-y: scroll; */
+    overflow-y: scroll;
     width: 100%;
     height: 100%;
     background-color:rgb(226, 235, 243);
@@ -68,6 +68,7 @@ padding-top: 1%;
     height:50%;
     margin: 16px 24px 16px 0;
     background-image: url(/public/logo112233.png);
+    background-repeat: no-repeat;
     background-size: 100%;
     background-color: transparent;
     

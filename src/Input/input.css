@@ -159,9 +159,9 @@
 }
 
 .ant-modal-header{
-    background: rgb(30, 33, 59);;
-    /* font-style : rgba(241, 241, 245, 0.945); */
+    background: rgb(164, 164, 169);
 }
+
 .ant-modal-footer, .ant-modal-body{
     text-align: center;
 }
@@ -202,4 +202,25 @@ background-color:rgb(187, 250, 201);
 
 .inputNumber:hover{
     border-color: #c2c0c0;
+}
+
+.input-gene-filter{
+    width: 60%;
+    margin-right: 2%;
+}
+
+.info-gene-filter{
+    font-weight: bold;
+     display: inline-block;
+}
+
+.modal{
+    margin-top: 3%;
+}
+
+.filter-div{
+    width: 40%;
+    margin-right: 6%;
+    margin-left:2%;
+    float: left;
 }

@@ -12,3 +12,5 @@ export const SET_NAMES_BY_PRODUCT_TYPE = 'setNamesByProductType'
 export const SET_NUMERIC_FEATURE_TITLE_X_Y = 'setNumericFeatureTitleXY'
 export const SET_CURRENT_PAGE = 'setCurrentPage'
 export const SET_STATISTIC_FEATURE_HIST = 'setStatisticFeatureHist'
+export const RESET_FEATURE_LIST = 'resetFeatureListOutput'
+

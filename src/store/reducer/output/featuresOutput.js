@@ -12,6 +12,9 @@ const initialState = {
 const setFeatureListOutput=(state, action)=>{
 	return {...state, featuresList: action.data}
 }
+const resetFeatureListOutput=(state, action)=>{
+	return {...state, featuresList: {}}
+}
 
 const setDataHist=(state, action)=>{
 	return {...state, dataHist: action.data}
@@ -26,7 +29,15 @@ const setNumericFeatureTitleXY=(state, action)=>{
 }
 
 const setStatisticFeatureHist=(state, action)=>{
-	return {...state, statisticHist: action.data}
+	let data = action.data
+	if(typeof action.data === 'string')
+	{
+		console.log(data);
+
+		data = JSON.parse(data)
+	}
+
+	return {...state, statisticHist: data}
 }
 const setNameByProductType=(state, action)=>{
 	return {...state, NamesByProductType: action.data}
@@ -43,8 +54,12 @@ const reducer = (state = initialState, action) => {
 			return setNumericFeatureTitleXY(state, action)
 		case ACTION_TYPE.SET_STATISTIC_FEATURE_HIST:
 			return setStatisticFeatureHist(state, action)
-			case ACTION_TYPE.SET_NAMES_BY_PRODUCT_TYPE:
-				return setNameByProductType(state, action)
+		case ACTION_TYPE.SET_NAMES_BY_PRODUCT_TYPE:
+			return setNameByProductType(state, action)
+		case ACTION_TYPE.RESET_FEATURE_LIST:
+			return resetFeatureListOutput(state, action)
+			
+
 		default:
 			return state;
 	}

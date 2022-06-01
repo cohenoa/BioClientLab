@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Card, Col, Row, Checkbox , Button, Popover } from 'antd';
-import {InfoCircleOutlined} from '@ant-design/icons'
+import { Card, Col, Row, Checkbox , Button, Popover,Input } from 'antd';
+import {InfoCircleOutlined, ReloadOutlined} from '@ant-design/icons'
 import './input.css';
 import Chip from '@mui/material/Chip';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from "react-redux";
+import {resetFeatureListOutput} from '../store/actions/output/featuresOutput'
 import {setFeaturesListFromServer, submitToServer, setCheckedSelectAll, getFeatureDescription, getTitleFeatureDescription} from '../store/actions/Input/featuresSelection'
 import { setCurrentPage } from "../store/actions/pagesRoutes";
 
@@ -23,8 +24,11 @@ function FeaturesSelection (props) {
 
   const [featuresChooseByUser,setFeaturesChooseByUser]=useState([])
   const [featureListToDisplay,setFeatureListToDisplay]=useState({})
+
+
   
   useEffect(() => {
+    dispatch(resetFeatureListOutput())
     dispatch(getFeatureDescription())
     dispatch(getTitleFeatureDescription())
     dispatch(setFeaturesListFromServer())
@@ -216,6 +220,20 @@ function FeaturesSelection (props) {
     <Row gutter={16} type='flex'>
     {featuresCards()}
     </Row>
+   </div>
+   <div className="filter-div">
+     <div><h1 className='info-gene-filter'>Gene Selection</h1>  <Popover className='info-gene-filter' key='gene-filter' placement="rightTop" title='Filter by gene'  content='Write gene name that filter the data (different gene name are comma separated)' trigger="click">
+          <InfoCircleOutlined />
+    </Popover></div>
+   <Input className='input-gene-filter' placeholder="Write gene name" defaultValue={props.geneFilter} value={props.geneFilter} onChange={(e)=>{props.saveGeneFilter(e.target.value)}} />
+   <Button onClick={()=>{props.saveGeneFilter('')}}> <ReloadOutlined />Reset Gene Filter</Button>
+   </div>
+   <div className="filter-div">
+     <div><h1 className='info-gene-filter'>Keyword(s) appearing in product description</h1>  <Popover className='info-gene-filter' key='Keyword(s) product description' placement="rightTop" title='Keyword(s) product description'  content='Keyword(s) appearing in product description (different keyword are comma separated)' trigger="click">
+          <InfoCircleOutlined />
+    </Popover></div>
+   <Input className='input-gene-filter' placeholder="Write Keyword(s)" defaultValue={props.productDescription} value={props.productDescription} onChange={(e)=>{props.saveProductDescription(e.target.value)}} />
+   <Button onClick={()=>{props.saveProductDescription('')}}> <ReloadOutlined />Reset Keyword(s)</Button>
    </div>
    <div className='buttons'>
     <div className='submit-button'>  

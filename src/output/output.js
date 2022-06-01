@@ -24,6 +24,7 @@ function Output (props) {
   const [typeFileClicked,setTypeFileClicked]=useState('file')
 
   useEffect(() => {
+    console.log(props.geneFilter);
     dispatch(getNumericFeatureTitleXY())
     props.setDisableTabsHeader({...props.disableTabsHeader , 1: true})
   setUnionAllFiles(props.listOfCombinedFiles)
@@ -33,7 +34,7 @@ function Output (props) {
 
   useEffect(() => {
     if(!!dataHist)
-      dispatch(setStatisticHist(unionAllFiles,featureChosenByUser))
+      dispatch(setStatisticHist(unionAllFiles,featureChosenByUser, props.geneFilter))
   }, [dataHist])
 
   useEffect(() => {
@@ -52,8 +53,8 @@ function Output (props) {
   useEffect(() => {
     if (unionAllFiles.length !== 0 ){
       setFeatureChosenByUserToChild(featureChosenByUser)
-      dispatch(setFeaturesOutput(featureChosenByUser, unionAllFiles))
-      dispatch(setDataHist(unionAllFiles,featureChosenByUser))
+      dispatch(setFeaturesOutput(featureChosenByUser, unionAllFiles, props.geneFilter))
+      dispatch(setDataHist(unionAllFiles,featureChosenByUser, props.geneFilter))
     }
     
   }, [featureChosenByUser, unionAllFiles])
@@ -77,8 +78,6 @@ function Output (props) {
 
   const NamesByProductTypeFunction =()=>{
     let temp = []
-    console.log("namesByProductType",namesByProductType);
-    console.log("fileTabClickByTheUser",fileTabClickByTheUser);
 
     Object.keys(namesByProductType[fileTabClickByTheUser]).map(type=>
     temp.push({text:namesByProductType[fileTabClickByTheUser][type],value :namesByProductType[fileTabClickByTheUser][type]}));

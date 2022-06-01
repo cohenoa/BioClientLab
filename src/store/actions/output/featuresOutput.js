@@ -4,11 +4,11 @@ import * as CONST from '../actionsTypes'
 import * as URL from '../url'
 
 
-export const  setFeaturesOutput=(featureList, fileList)=>{
-   
+export const  setFeaturesOutput=(featureList, fileList, geneFilter)=>{
     const params = {
         fileList: fileList,
-        featureList:featureList
+        featureList:featureList,
+        geneFilter: geneFilter.split(',')
     }
     const headers = {
         'Access-Control-Allow-Origin':"*"
@@ -17,8 +17,8 @@ export const  setFeaturesOutput=(featureList, fileList)=>{
         return axios.get(URL.GET_FEATURES_RESULT,{params,headers})
           .then(({ data }) => {
           dispatch(setFeaturesListOutput(data))
-          dispatch(setMissingNamesByType(fileList))
-          dispatch(setNamesByProductType(fileList))
+          dispatch(setMissingNamesByType(fileList,  geneFilter.split(',')))
+          dispatch(setNamesByProductType(fileList,  geneFilter.split(',')))
         })
         .catch(err => {
             console.log(err);
@@ -29,10 +29,11 @@ export const  setFeaturesOutput=(featureList, fileList)=>{
       };
 }
 
-export const  setDataHist=(fileName,featureList)=>{
+export const  setDataHist=(fileName,featureList, geneFilter)=>{
     const params = {
         fileList:fileName,
-        featureList:featureList
+        featureList:featureList,
+        geneFilter: geneFilter.split(',')
     }
     const headers = {
         'Access-Control-Allow-Origin':"*"
@@ -51,10 +52,11 @@ export const  setDataHist=(fileName,featureList)=>{
       };
 }
 
-export const  setStatisticHist =(fileName,featureList)=>{
+export const  setStatisticHist =(fileName,featureList, geneFilter)=>{
     const params = {
         fileList:fileName,
-        featureList:featureList
+        featureList:featureList,
+        geneFilter: geneFilter.split(',')
     }
     const headers = {
         'Access-Control-Allow-Origin':"*"
@@ -62,7 +64,7 @@ export const  setStatisticHist =(fileName,featureList)=>{
     return async function(dispatch) {
         return axios.get(URL.GET_STATISTIC_FEATURE_HIST,{params,headers})
           .then(({data} ) => {
-          dispatch(setStatisticFeatureHist(data))
+               dispatch(setStatisticFeatureHist(data))
         })
         .catch(err => {
             console.log(err);
@@ -72,9 +74,10 @@ export const  setStatisticHist =(fileName,featureList)=>{
         });
       };
 }
-export const  setMissingNamesByType=(fileName)=>{
+export const  setMissingNamesByType=(fileName,geneFilter)=>{
     const params = {
         fileList:fileName,
+        geneFilter:geneFilter
     }
     const headers = {
         'Access-Control-Allow-Origin':"*"
@@ -92,9 +95,10 @@ export const  setMissingNamesByType=(fileName)=>{
         });
       };
 }
-export const  setNamesByProductType=(fileName)=>{
+export const  setNamesByProductType=(fileName,geneFilter)=>{
     const params = {
         fileList:fileName,
+        geneFilter:geneFilter
     }
     const headers = {
         'Access-Control-Allow-Origin':"*"
@@ -189,6 +193,14 @@ export const setNumericFeatureTitleXY=(data)=>{
     );
 }
 
+export const resetFeatureListOutput=()=>{
+    return(
+        {
+            type: CONST.RESET_FEATURE_LIST,
+        
+        }
+    );
+}
 
 
 

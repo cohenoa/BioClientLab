@@ -291,7 +291,7 @@ const awsBucket = {
         </Button>
       </div>
 
-      <Modal key="modal" width={"90%"} title="Please define organisms to compare:" visible={isModalVisible}  onCancel={handleCancel}
+      <Modal className="modal" key="modal" width={"90%"}  title="Please define organisms to compare:" visible={isModalVisible}  onCancel={handleCancel}
       footer={[<Popconfirm key="pop" title="Are you sure？The chosen will be reset"  okText="No" cancelText="Yes" onCancel={handleCancel}><Button key="cancel" className="buttonInModalCancel" type="ghost">Cancel</Button></Popconfirm>,
       
       <Button key="ok" className="buttonInModalOK"  disabled={Object.keys(disableDropDown).length !== numberOfComperingOrganism} type="ghost" onClick={()=>onClickNext(null)}>OK</Button>
