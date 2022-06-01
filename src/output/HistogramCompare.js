@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Tabs, Table } from 'antd';
+import { Table } from 'antd';
 import { Row, Col } from 'antd';
 import Plot from 'react-plotly.js';
 
 
 
 function HistogramCompare (props) {
-    const { TabPane } = Tabs;
     const dataHist = useSelector((state) => state.featureOutput.dataHist);
     const title_X_Y = useSelector((state) => state.featureOutput.numericFeatureTitleXY);
     const dataStatisticHist = useSelector((state) => state.featureOutput.statisticHist);

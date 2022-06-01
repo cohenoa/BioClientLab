@@ -4,7 +4,7 @@ import Input from './Input/Input'
 import Output from './output/output'
 import './App.css';
 import { Spin } from 'antd';
-import { LoadingOutlined, QuestionCircleOutlined,YoutubeOutlined } from '@ant-design/icons';
+import { LoadingOutlined, QuestionCircleOutlined,YoutubeOutlined, InfoCircleOutlined} from '@ant-design/icons';
 import { Layout, Menu,Popover, Tag} from 'antd';
 
 const { Header, Content, Footer } = Layout;
@@ -49,6 +49,7 @@ function App () {
     <Layout className="layout">
      <div className="app" >
      <Header className="header">
+
      <Popover
       content={<div> <YoutubeOutlined className="you-tube" style={{fontSize: '50px'}}/><iframe width="420" height="315" src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe></div>}
       title={<h1>Explanation About The Web</h1>}
@@ -58,8 +59,20 @@ function App () {
     >
      <QuestionCircleOutlined   className="help" style={{color: "white",  fontSize: '50px'}}/>
      </Popover>
-       {/*<div className="logo" ></div> -> after getting a logo return to this line   */}
-      <div className="logo" >Bioinformatics Web</div> 
+
+     <Popover
+      content={<div> temp</div>}
+      title={<h1>About The Editors</h1>}
+      trigger="click"
+      // visible={visible}
+      // onVisibleChange={handleVisibleChange}
+    >
+     <InfoCircleOutlined   className="about" style={{color: "white",  fontSize: '50px'}}/>
+     </Popover>
+     
+    
+      <div className="logo" onClick={() => window.location.reload()}></div>
+      {/*<div className="logo" >Bioinformatics Web</div> */}
       <Menu theme="dark" className="menuApp" selectedKeys={currentPage} mode="horizontal" defaultSelectedKeys={['1']}>
         {tabsHeader.map((tab, index) => {
           const key = index + 1;

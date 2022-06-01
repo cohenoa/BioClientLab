@@ -17,7 +17,7 @@ function Protein (props) {
     const [searchedColumn, setSearchedColumn] = useState(0);
     
     useEffect(() => {
-        const columns =[{title:'GENE NAME',key:'GENE NAME',dataIndex:'GENE NAME', ...getColumnSearchProps('GENE NAME',searchText,searchedColumn,saveSetSearchText, saveSetSearchedColumn)},{title:'PRODUCT DESCRIPTION',key:'PRODUCT DESCRIPTION',dataIndex:'PRODUCT DESCRIPTION',...getColumnSearchProps('PRODUCT DESCRIPTION',searchText,searchedColumn,saveSetSearchText, saveSetSearchedColumn)}]
+        const columns =[{title:'GENE NAME', align: 'center', key:'GENE NAME',dataIndex:'GENE NAME', ...getColumnSearchProps('GENE NAME',searchText,searchedColumn,saveSetSearchText, saveSetSearchedColumn)},{title:'PRODUCT DESCRIPTION', align: 'center', key:'PRODUCT DESCRIPTION',dataIndex:'PRODUCT DESCRIPTION',...getColumnSearchProps('PRODUCT DESCRIPTION',searchText,searchedColumn,saveSetSearchText, saveSetSearchedColumn)}]
         let array=[]
         for (const feature of props.featureChosenByUser)
         {
@@ -26,10 +26,10 @@ function Protein (props) {
         }
         array.map(feature=>{
           if(typeof(featureOutputProtein[props.fileTabClickByTheUser]["Protein"][0][feature]) === "number"){
-            columns.push({title:feature, key:feature, dataIndex:feature,sorter: (a, b) => a[feature] - b[feature]})
+            columns.push({title:feature, align: 'center', key:feature, dataIndex:feature,sorter: (a, b) => a[feature] - b[feature]})
           }
           else{
-            columns.push({title:feature, key:feature, dataIndex:feature})
+            columns.push({title:feature, align: 'center', key:feature, dataIndex:feature})
           }
             })
         setColumns(columns)

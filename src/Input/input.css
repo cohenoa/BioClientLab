@@ -159,7 +159,8 @@
 }
 
 .ant-modal-header{
-    background: rgb(238, 226, 204);;
+    background: rgb(30, 33, 59);;
+    /* font-style : rgba(241, 241, 245, 0.945); */
 }
 .ant-modal-footer, .ant-modal-body{
     text-align: center;
