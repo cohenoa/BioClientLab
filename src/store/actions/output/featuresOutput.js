@@ -4,11 +4,13 @@ import * as CONST from '../actionsTypes'
 import * as URL from '../url'
 
 
-export const  setFeaturesOutput=(featureList, fileList, geneFilter)=>{
+export const  setFeaturesOutput=(featureList, fileList, geneFilter, productDescription, excludedProductDescription)=>{
     const params = {
         fileList: fileList,
         featureList:featureList,
-        geneFilter: geneFilter.split(',')
+        geneFilter: geneFilter.split(','),
+        productDescription: productDescription.split(','),
+        excludedProductDescription: excludedProductDescription.split(',')
     }
     const headers = {
         'Access-Control-Allow-Origin':"*"
@@ -17,8 +19,8 @@ export const  setFeaturesOutput=(featureList, fileList, geneFilter)=>{
         return axios.get(URL.GET_FEATURES_RESULT,{params,headers})
           .then(({ data }) => {
           dispatch(setFeaturesListOutput(data))
-          dispatch(setMissingNamesByType(fileList,  geneFilter.split(',')))
-          dispatch(setNamesByProductType(fileList,  geneFilter.split(',')))
+          dispatch(setMissingNamesByType(fileList,  geneFilter.split(','), productDescription.split(','), excludedProductDescription.split(',')))
+          dispatch(setNamesByProductType(fileList,  geneFilter.split(','), productDescription.split(','), excludedProductDescription.split(',')))
         })
         .catch(err => {
             console.log(err);
@@ -29,11 +31,14 @@ export const  setFeaturesOutput=(featureList, fileList, geneFilter)=>{
       };
 }
 
-export const  setDataHist=(fileName,featureList, geneFilter)=>{
+export const  setDataHist=(fileName,featureList, geneFilter,productDescription, excludedProductDescription)=>{
     const params = {
         fileList:fileName,
         featureList:featureList,
-        geneFilter: geneFilter.split(',')
+        geneFilter: geneFilter.split(','),
+        productDescription: productDescription.split(','),
+        excludedProductDescription: excludedProductDescription.split(',')
+
     }
     const headers = {
         'Access-Control-Allow-Origin':"*"
@@ -52,11 +57,14 @@ export const  setDataHist=(fileName,featureList, geneFilter)=>{
       };
 }
 
-export const  setStatisticHist =(fileName,featureList, geneFilter)=>{
+export const  setStatisticHist =(fileName,featureList, geneFilter, productDescription, excludedProductDescription)=>{
     const params = {
         fileList:fileName,
         featureList:featureList,
-        geneFilter: geneFilter.split(',')
+        geneFilter: geneFilter.split(','),
+        productDescription: productDescription.split(','),
+        excludedProductDescription: excludedProductDescription.split(',')
+
     }
     const headers = {
         'Access-Control-Allow-Origin':"*"
@@ -74,10 +82,13 @@ export const  setStatisticHist =(fileName,featureList, geneFilter)=>{
         });
       };
 }
-export const  setMissingNamesByType=(fileName,geneFilter)=>{
+export const  setMissingNamesByType=(fileName,geneFilter, productDescription, excludedProductDescription)=>{
     const params = {
         fileList:fileName,
-        geneFilter:geneFilter
+        geneFilter:geneFilter,
+        productDescription: productDescription,
+        excludedProductDescription: excludedProductDescription
+
     }
     const headers = {
         'Access-Control-Allow-Origin':"*"
@@ -95,10 +106,12 @@ export const  setMissingNamesByType=(fileName,geneFilter)=>{
         });
       };
 }
-export const  setNamesByProductType=(fileName,geneFilter)=>{
+export const  setNamesByProductType=(fileName,geneFilter, productDescription, excludedProductDescription)=>{
     const params = {
         fileList:fileName,
-        geneFilter:geneFilter
+        geneFilter:geneFilter,
+        productDescription:productDescription,
+        excludedProductDescription: excludedProductDescription
     }
     const headers = {
         'Access-Control-Allow-Origin':"*"

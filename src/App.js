@@ -29,7 +29,11 @@ function App () {
   const [listOfCombinedFiles, setListOfCombinedFiles] = useState([]);
   const [geneFilter,setGeneFilter]=useState('')
   const [productDescription,setProductDescription]=useState('')
+  const [excludedProductDescription,setExcludedProductDescription]=useState('')
 
+  const saveExcludedProductDescription=(value)=>{
+    setExcludedProductDescription(value)
+  }
   const saveProductDescription=(value)=>{
     setProductDescription(value)
   }
@@ -89,9 +93,9 @@ function App () {
     </Header>
     <Content >
 
-      <Input geneFilter={geneFilter} productDescription={productDescription} saveProductDescription={saveProductDescription} saveGeneFilter={saveGeneFilter} listOfCombinedFiles={listOfCombinedFiles}  setListOfCombinedFiles={setListOfCombinedFiles} numOfPage={numOfPage} increaseOrDecreaseNumOfPage={increaseOrDecreaseNumOfPage} setDisableTabsHeader={saveDisableTabsHeader} disableTabsHeader={disableTabsHeader} fileMetaData={fileMetaData} accessionNumber ={accessionNumber} saveAccessionNumber = {saveAccessionNumber} setFileMetaData={setFileMetaData} fileFromServer = {fileFromServer} saveFileFromServer ={saveFileFromServer} displayInput={displayInput} setDisplayInput={setDisplayInput} setDisplayOutput={setDisplayOutput}></Input>
+      <Input setExcludedProductDescription={saveExcludedProductDescription} excludedProductDescription={excludedProductDescription} geneFilter={geneFilter} productDescription={productDescription} saveProductDescription={saveProductDescription} saveGeneFilter={saveGeneFilter} listOfCombinedFiles={listOfCombinedFiles}  setListOfCombinedFiles={setListOfCombinedFiles} numOfPage={numOfPage} increaseOrDecreaseNumOfPage={increaseOrDecreaseNumOfPage} setDisableTabsHeader={saveDisableTabsHeader} disableTabsHeader={disableTabsHeader} fileMetaData={fileMetaData} accessionNumber ={accessionNumber} saveAccessionNumber = {saveAccessionNumber} setFileMetaData={setFileMetaData} fileFromServer = {fileFromServer} saveFileFromServer ={saveFileFromServer} displayInput={displayInput} setDisplayInput={setDisplayInput} setDisplayOutput={setDisplayOutput}></Input>
       {isLoading && <Spin tip="Loading" indicator={<LoadingOutlined style={{ fontSize: 100 }} spin />} /> }
-      {!isLoading && numOfPage === 3 && <Output productDescription={productDescription} geneFilter={geneFilter} listOfCombinedFiles={listOfCombinedFiles}  setListOfCombinedFiles={setListOfCombinedFiles} accessionNumber ={accessionNumber} setIsLoading={setIsLoading} setDisableTabsHeader={saveDisableTabsHeader} disableTabsHeader={disableTabsHeader} filesMetaData={fileMetaData} fileFromServer = {fileFromServer} saveFileFromServer ={saveFileFromServer} displayOutput={displayOutput}></Output>}
+      {!isLoading && numOfPage === 3 && <Output excludedProductDescription={excludedProductDescription} productDescription={productDescription} geneFilter={geneFilter} listOfCombinedFiles={listOfCombinedFiles}  setListOfCombinedFiles={setListOfCombinedFiles} accessionNumber ={accessionNumber} setIsLoading={setIsLoading} setDisableTabsHeader={saveDisableTabsHeader} disableTabsHeader={disableTabsHeader} filesMetaData={fileMetaData} fileFromServer = {fileFromServer} saveFileFromServer ={saveFileFromServer} displayOutput={displayOutput}></Output>}
       </Content>
       <Footer className= "footer" style={{ textAlign: 'center' }}>Bioinformatics Web ©2022 Created by Adi Leibovich & Dor Iuran</Footer>
 

@@ -235,6 +235,13 @@ function FeaturesSelection (props) {
    <Input className='input-gene-filter' placeholder="Write Keyword(s)" defaultValue={props.productDescription} value={props.productDescription} onChange={(e)=>{props.saveProductDescription(e.target.value)}} />
    <Button onClick={()=>{props.saveProductDescription('')}}> <ReloadOutlined />Reset Keyword(s)</Button>
    </div>
+   <div className="filter-div">
+     <div><h1 className='info-gene-filter'>Keyword(s) excluded from product description</h1>  <Popover className='info-gene-filter' key='Keyword(s) excluded from product description' placement="rightTop" title='Keyword(s) excluded from product description'  content='Keyword(s) excluded from product description (a comma separated list)' trigger="click">
+          <InfoCircleOutlined />
+    </Popover></div>
+   <Input className='input-gene-filter' placeholder="Write Keyword(s)" defaultValue={props.excludedProductDescription} value={props.excludedProductDescription} onChange={(e)=>{props.setExcludedProductDescription(e.target.value)}} />
+   <Button onClick={()=>{props.setExcludedProductDescription('')}}> <ReloadOutlined />Reset Keyword(s)</Button>
+   </div>
    <div className='buttons'>
     <div className='submit-button'>  
           <Button onClick={()=>{submit()}}>Submit</Button>

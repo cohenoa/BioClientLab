@@ -19,7 +19,7 @@ function Input (props) {
        {props.numOfPage === 2 && 
               <div  className='features-selection'>
 
-        <div className='organizam-page'><FeaturesSelection productDescription={props.productDescription} saveProductDescription={props.saveProductDescription} geneFilter={props.geneFilter} saveGeneFilter={props.saveGeneFilter} disableTabsHeader={props.disableTabsHeader} setDisableTabsHeader={props.setDisableTabsHeader} accessionNumber={props.accessionNumber} increaseOrDecreaseNumOfPage={props.increaseOrDecreaseNumOfPage} fileMetaData={props.fileMetaData} setDisplayInput={props.setDisplayInput} setDisplayOutput={props.setDisplayOutput}></FeaturesSelection>  </div></div>}
+        <div className='organizam-page'><FeaturesSelection  setExcludedProductDescription={props.setExcludedProductDescription} excludedProductDescription={props.excludedProductDescription} productDescription={props.productDescription} saveProductDescription={props.saveProductDescription} geneFilter={props.geneFilter} saveGeneFilter={props.saveGeneFilter} disableTabsHeader={props.disableTabsHeader} setDisableTabsHeader={props.setDisableTabsHeader} accessionNumber={props.accessionNumber} increaseOrDecreaseNumOfPage={props.increaseOrDecreaseNumOfPage} fileMetaData={props.fileMetaData} setDisplayInput={props.setDisplayInput} setDisplayOutput={props.setDisplayOutput}></FeaturesSelection>  </div></div>}
        
       </div>
 

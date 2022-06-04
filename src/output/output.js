@@ -34,7 +34,7 @@ function Output (props) {
 
   useEffect(() => {
     if(!!dataHist)
-      dispatch(setStatisticHist(unionAllFiles,featureChosenByUser, props.geneFilter))
+      dispatch(setStatisticHist(unionAllFiles,featureChosenByUser, props.geneFilter, props.productDescription,  props.excludedProductDescription))
   }, [dataHist])
 
   useEffect(() => {
@@ -53,8 +53,8 @@ function Output (props) {
   useEffect(() => {
     if (unionAllFiles.length !== 0 ){
       setFeatureChosenByUserToChild(featureChosenByUser)
-      dispatch(setFeaturesOutput(featureChosenByUser, unionAllFiles, props.geneFilter))
-      dispatch(setDataHist(unionAllFiles,featureChosenByUser, props.geneFilter))
+      dispatch(setFeaturesOutput(featureChosenByUser, unionAllFiles, props.geneFilter, props.productDescription, props.excludedProductDescription))
+      dispatch(setDataHist(unionAllFiles,featureChosenByUser, props.geneFilter,  props.productDescription, props.excludedProductDescription))
     }
     
   }, [featureChosenByUser, unionAllFiles])
