@@ -45,6 +45,7 @@ function General (props) {
           if(typeof(featureOutputGeneral[props.fileTabClickByTheUser]["General"][0][feature]) === "number"){
             columns.push({title:feature,align: 'center', key:feature, dataIndex:feature,sorter: (a, b) => a[feature] - b[feature]})
           }
+          // on this row there a err when fillter
           else if (feature === "PRODUCT TYPE"){
             columns.push({title:feature, key:feature,align: 'center', dataIndex:feature,filters:props.filterObj, onFilter: (value, record) => record[feature].indexOf(value) === 0,
             })
