@@ -32,8 +32,13 @@ function Output (props) {
   }, [])
   
 
+  // useEffect(() => {
+  //   if(!!dataHist)
+  //     dispatch(setStatisticHist(unionAllFiles,featureChosenByUser, props.geneFilter, props.productDescription,  props.excludedProductDescription))
+  // }, [dataHist])
+
   useEffect(() => {
-    if(!!dataHist)
+    if(Object.getOwnPropertyNames(dataHist).length !== 0)
       dispatch(setStatisticHist(unionAllFiles,featureChosenByUser, props.geneFilter, props.productDescription,  props.excludedProductDescription))
   }, [dataHist])
 

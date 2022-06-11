@@ -53,6 +53,8 @@ function Genome (props) {
         })
     }
 const dynamicFeatureHist=()=>{
+  console.log("dataHist".dataHist);
+  console.log("props.fileTabClickByTheUser", props.fileTabClickByTheUser);
   return Object.keys(dataHist[props.fileTabClickByTheUser]).map(featureName=>{
     return (    <Plot key={featureName} className='plot'
         data={[
@@ -116,7 +118,8 @@ const dynamicFeatureHist=()=>{
         //before dor changed layout={  { width: 500, height: 400,title: 'Types of gene' }} 
 
       />
-   { dynamicFeatureHist()}
+   {Object.getOwnPropertyNames(dataHist).length !== 0 && dynamicFeatureHist()
+    }
    </div>
         </Col>
     </Row>
