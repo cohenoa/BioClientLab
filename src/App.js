@@ -11,7 +11,7 @@ const { Header, Content, Footer } = Layout;
 
 function App () {
   useEffect(() => {
-    document.title = "Bioinformatics Web"
+    document.title = "Genome Sight"
  }, []);
   const doneUploadFile = useSelector((state) => state.featuresSelection.doneUploadFile)
   const currentPage = useSelector((state) => state.pagesRoutes.currentPage)

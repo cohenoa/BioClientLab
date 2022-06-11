@@ -1,4 +1,4 @@
-const URL = "http://127.0.0.1:5000/"
+const URL = "http://62.90.89.16:80/"
 //const URL = 'https://bioserverlab.herokuapp.com/'
 // NEW PATH'https://bioserverlab.herokuapp.com/'
 // Windoes 'http://62.90.89.16:443/'
