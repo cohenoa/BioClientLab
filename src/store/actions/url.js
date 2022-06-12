@@ -1,9 +1,9 @@
-const URL = "/api"
+const URL = "https://bioserverlab.herokuapp.com/"
 //const URL = 'https://bioserverlab.herokuapp.com/'
 // NEW PATH'https://bioserverlab.herokuapp.com/'
 // Windoes 'http://62.90.89.16:80/'
 // linux  '/api'
-// http://192.168.1.45:8080g
+// http://192.168.1.45:8080
 // LOCAL DEV http://127.0.0.1:5000/
 //http://192.168.1.46:8080/
 //export const POST_FILE_FROM_SERVER = `${URL}api/chooseFileFromServer`

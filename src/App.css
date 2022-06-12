@@ -70,7 +70,8 @@ padding-top: 1%;
     background-image: url(/public/GenomeSightCrop2.png);
     background-repeat: no-repeat;
     background-size: 80%;
-    background-color: transparent;
+    /* background-color: transparent; */
+    background-blend-mode:color-dodge;
     
 }
 .logo:hover{
