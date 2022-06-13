@@ -66,7 +66,9 @@ padding-top: 1%;
     float: left;
     width: 10%;
     height: 100%;
-    margin: 16px 24px 16px 0;
+    margin: 8px 24px 16px 0;
+    /* margin: 16px 24px 16px 0; */
+
     background-image: url(/public/GenomeSightCrop2.png);
     background-repeat: no-repeat;
     background-size: 80%;
