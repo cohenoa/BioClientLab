@@ -73,7 +73,10 @@ function App () {
      </Popover>
 
      <Popover
-      content={<div> temp</div>}
+      content={<div> This tool was developed in the computational biology lab of Dr. Noa Cohen (https://www.jce.ac.il/dr-noa-cohen/)
+         by Adi Leibovich, Dor Yuran and Sarah Gingichashvili.
+      Site template was take from: https://ant.design
+      Contact us at: noace@jce.ac.il </div>}
       title={<h1>About The Editors</h1>}
       trigger="click"
       // visible={visible}
