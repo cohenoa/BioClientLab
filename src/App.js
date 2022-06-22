@@ -4,7 +4,7 @@ import Input from './Input/Input'
 import Output from './output/output'
 import './App.css';
 import { Spin } from 'antd';
-import { LoadingOutlined, QuestionCircleOutlined,YoutubeOutlined, InfoCircleOutlined} from '@ant-design/icons';
+import { LoadingOutlined, QuestionCircleOutlined,YoutubeOutlined, InfoCircleOutlined, MailOutlined} from '@ant-design/icons';
 import { Layout, Menu,Popover, Tag} from 'antd';
 
 const { Header, Content, Footer } = Layout;
@@ -73,10 +73,11 @@ function App () {
      </Popover>
 
      <Popover
-      content={<div> This tool was developed in the computational biology lab of Dr. Noa Cohen (https://www.jce.ac.il/dr-noa-cohen/)
-         by Adi Leibovich, Dor Yuran and Sarah Gingichashvili.
-      Site template was take from: https://ant.design
-      Contact us at: noace@jce.ac.il </div>}
+      content={<div><h1> This tool was developed in the computational biology lab of  <a href="https://www.jce.ac.il/dr-noa-cohen/" target="_blank">Dr. Noa Cohen</a></h1> 
+      
+      <h1>By Adi Leibovich, Dor Yuran and Sarah Gingichashvili.</h1>
+      <h1>Site template was take from <a href="https://ant.design"  target="_blank">Ant Design</a> website</h1>
+      <h1><MailOutlined /> Contact us at <a href = "mailto: noace@jce.ac.il">noace@jce.ac.il</a></h1> </div>}
       title={<h1>About The Editors</h1>}
       trigger="click"
       // visible={visible}
