@@ -1,4 +1,4 @@
-const URL = "https://bioserverlab.herokuapp.com/"
+const URL = "/api"
 //const URL = 'https://bioserverlab.herokuapp.com/'
 // NEW PATH'https://bioserverlab.herokuapp.com/'
 // Windoes 'http://62.90.89.16:80/'
