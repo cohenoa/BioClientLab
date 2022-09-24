@@ -11,14 +11,12 @@ function Feature (props) {
     const { TabPane } = Tabs;
     const featureListResult = useSelector((state) => state.featureOutput.featuresList);
     const [tabMapName,setTabMapName]=useState({
-        // 'Genome':'Genome Statistic',
-        // 'Gene':'Gene Table',
-        // 'Protein':'Protein Table',
-        // 'General':'General'
         'Genome':'Analysis and Visualization',
         'Gene':'Gene Features Table',
         'Protein':'Protein Features Table',
-        'General':'General Features Table'
+        //TODO: 'GENE MOTIF' and 'Protein motif'
+        // removed by union the gene and general
+        //'General':'General Features Table'
     })
 
     
@@ -31,8 +29,8 @@ function Feature (props) {
                 return <Gene saveDataToCsv={props.saveDataToCsv} fileTabClickByTheUser={props.fileTabClickByTheUser} featureChosenByUser={props.featureChosenByUser} featureListResultFromServer={props.featureListResultFromServer[props.fileTabClickByTheUser][tabName]}></Gene>
             case "Protein":
                 return <Protein featureChosenByUser={props.featureChosenByUser} fileTabClickByTheUser={props.fileTabClickByTheUser} featureListResultFromServer={props.featureListResultFromServer[props.fileTabClickByTheUser][tabName]}></Protein>
-            case "General":
-                return <General featureChosenByUser={props.featureChosenByUser}filterObj ={props.filterObj} fileTabClickByTheUser={props.fileTabClickByTheUser} featureListResultFromServer={props.featureListResultFromServer[props.fileTabClickByTheUser][tabName]}></General>
+            // case "General":
+            //     return <General featureChosenByUser={props.featureChosenByUser}filterObj ={props.filterObj} fileTabClickByTheUser={props.fileTabClickByTheUser} featureListResultFromServer={props.featureListResultFromServer[props.fileTabClickByTheUser][tabName]}></General>
             default:
                 break;
         }
