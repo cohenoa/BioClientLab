@@ -39,7 +39,7 @@ export const  getTitleFeatureDescription=()=>{
         })
         .catch(err =>{
             console.log(err);
-            alert("Coudn't load feature descripition");
+            alert("Could not load feature description");
             window.location.reload();
         });
       };
