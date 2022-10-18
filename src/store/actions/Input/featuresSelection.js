@@ -12,7 +12,7 @@ export const  setFeaturesListFromServer=()=>{
         })
         .catch(err =>{
             console.log(err);
-            alert("Coudnt load feature, Retrying");
+            alert("Could not load feature, Retrying");
             window.location.reload();
         });
       };
