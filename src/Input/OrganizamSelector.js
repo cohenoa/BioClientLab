@@ -218,7 +218,7 @@ const awsBucket = {
     
   }
 
-  const onClickNext= (listOfName=null) =>{
+  const onClickNext= (listOfName=null) =>{ // this seams to answer the quistion if it downloads everything together. seams like it is combining all the options to one.
     setIsModalVisible(false);
     props.setDisableTabsHeader({...props.disableTabsHeader ,1:false, 2: false })
     dispatch(setCurrentPage(['2']))
@@ -256,7 +256,7 @@ const awsBucket = {
           className="input-field element-button"
           placeholder="Enter accession number"
           onChange={(e) => {
-            accessionNumberSelected(e);
+            accessionNumberSelected(e); //TODO add a check for if the value is a correct accession number. 
             if(e === '')
                setDisableNext(true)
             else
