@@ -131,11 +131,19 @@ const awsBucket = {
 };
 //POST_UPLOAD_BUCKET_FILE
 // END bucket for upload files
+  const valid_accession_number = (accession_number) =>{
+    // Check if the accession number adheres to the specified format
+    const regex = /^[A-Z]{2}\d{6}\.\d$/;
+    return regex.test(accession_number);
+  }
 
   const accessionNumberSelected = (e) => {
-    props.saveAccessionNumber(e.target.value);
-    if (!e.target.value) setIfOrganizamSelected(false);
-    else setIfOrganizamSelected(true);
+    if(valid_accession_number(e.target.value)){
+      props.saveAccessionNumber(e.target.value);
+      if (!e.target.value) setIfOrganizamSelected(false);
+      else setIfOrganizamSelected(true);
+    }
+    
   };
 
   const selectOrganizamFromList = (value) => {

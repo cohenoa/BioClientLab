@@ -4,7 +4,7 @@ FROM node as builder
 WORKDIR /usr/src/app
 
 # Install app dependencies
-COPY package*.json ./
+COPY ./package*.json ./
 
 RUN npm install --legacy-peer-deps
 

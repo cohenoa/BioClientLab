@@ -10,6 +10,7 @@ import featuresSelection from './store/reducer/Input/featuresSelection'
 import organizamSelector from './store/reducer/Input/OrganizamSelector'
 import featureOutput from './store/reducer/output/featuresOutput'
 import pagesRoutes from './store/reducer/pagesRoutes'
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
@@ -20,7 +21,7 @@ const rootReducer = combineReducers({
   pagesRoutes :pagesRoutes
 });
 
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
 
 
 const app = (
