@@ -8,7 +8,7 @@ import getColumnSearchProps from './search'
 
 
 function General (props) {
-    const featureListGene = useSelector((state) => state.featuresSelection.featuresList.General_Features);
+    const featureListGene = useSelector((state) => state.featuresSelection.featuresList.Gene_Features);
     const featureOutputGeneral = useSelector((state) => state.featureOutput.featuresList);
     const missingNamesByType = useSelector((state) => state.featureOutput.missingNamesByType);
     //const namesByProductType = useSelector((state) => state.featureOutput.NamesByProductType);
@@ -36,9 +36,12 @@ function General (props) {
         let array=[]
         for (const feature of props.featureChosenByUser)
         {
-            if(feature !== 'GENE NAME' && feature !== 'PRODUCT DESCRIPTION' )
-                if(featureListGene.includes(feature))
-                    array.push(feature)
+            if(feature !== 'GENE NAME' && feature !== 'PRODUCT DESCRIPTION' ){
+              if(featureListGene.includes(feature)){
+                array.push(feature)
+              }
+            }
+              
         }
 
         array.map(feature=>{
