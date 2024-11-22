@@ -8,9 +8,6 @@ function Compare (props) {
     const { TabPane } = Tabs;
     // const [tabsName,setTabsName]=useState(['Histogram comparison'])
     const [tabsName,setTabsName]=useState(['Comparison analysis results'])
-
-
-
     const componentByTab=(tabName)=>{
       switch (tabName) {
           //case 'Histogram comparison':

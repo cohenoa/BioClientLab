@@ -8,7 +8,9 @@ import { setCurrentPage } from "../store/actions/pagesRoutes";
 import AWS from "aws-sdk";
 import * as URL from '../store/actions/url'
 import axios from 'axios'
+import env from "react-dotenv";
 
+const { Client } = require('minio');
 function OrganizamSelector(props) {
   const dispatch = useDispatch();
   const { Option } = Select;
@@ -45,6 +47,8 @@ function OrganizamSelector(props) {
   const uploadFileSelected = (e) => {
     if (e.fileList.length) {
       props.saveFileMetaData(e.fileList);
+      console.log(e.fileList)
+      // props.saveFilePath(e.fileList[0]);
       setIfOrganizamSelected(true);
       dispatch(setDoneUploadFile(true))
     }
@@ -79,55 +83,104 @@ const awsBucket = {
     onSuccess,
     withCredentials
   }) {
-    AWS.config.update({
-      accessKeyId: "AKIARDVFNR2ZY5JRSV7Z",
-      secretAccessKey: "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",
-      sessionToken: ""
+    
+    const minioClient = new Client({
+      endPoint: env.MINIO_API_URL,    // MinIO server address
+      accessKey: env.MINIO_ACCESS_ID,  // MinIO access key
+      secretKey: env.MINIO_ACCESS_PASS, // MinIO secret key
     });
-    const S3 = new AWS.S3();
     const objParams = {
       Bucket: "bio-upload-files",
       Key:file.name,
       Body: file,
       ContentType: file.type // TODO: You should set content-type because AWS SDK will not automatically set file MIME
     };
-
-    S3.putObject(objParams)
-      .on("httpUploadProgress", function({ loaded, total }) {
-        onProgress(
-          {
-            percent: Math.round((loaded / total) * 100)
-          },
-          file
-        );
-      })
-      .send(function(err, data) {
-        if (err) {
-          onError();
-          alert("Error Uploading file ,please try again")
-          console.log("Something went wrong");
-          console.log(err.code);
-          console.log(err.message);
-        } else {
-          onSuccess(data.response, file);
-          console.log("SEND FINISHED");
-          console.log(data);
-          axios.post(URL.POST_UPLOAD_BUCKET_FILE,{
-            fileName:file.name
-          })
-          .then(res => {
-           if(res.status  === 200)
-           setDisableNext(false)
-          }
-          )
-          .catch(res =>{
-            alert("Something went wrong Please try again")
-            window.location.reload();
-
-          })
+    console.log(file);
+    const reader = new FileReader();
+    console.log("entered buffer read\n");
+    reader.readAsArrayBuffer(file);
+    reader.onloadend = () => {
+      const buffer = Buffer.from(reader.result);
+           // Create a readable stream from the buffer
+      minioClient.putObject(objParams.Bucket, objParams.Key, buffer, (error) => {
+        if (error) {
+          return console.log('Error occurred:', error);
         }
-      });
-  }
+        console.log(`Successfully uploaded ${objParams.Key} to ${objParams.Bucket}`);
+        onSuccess(data.response, file);
+        axios.post(URL.POST_UPLOAD_BUCKET_FILE,{
+          fileName:file.name
+        })
+        .then(res => {
+               if(res.status  === 200)
+               setDisableNext(false)
+              })
+
+      })
+       // Track progress manually since MinIO doesn't provide native progress events
+       let uploadedBytes = 0;
+       const chunkSize = 1024 * 1024; // Define chunk size for upload simulation
+ 
+       // Simulate upload progress
+       const simulateUploadProgress = setInterval(() => {
+         uploadedBytes += chunkSize;
+         const progress = Math.min(Math.round((uploadedBytes / buffer.length) * 100), 100);
+        //  setUploadProgress(progress);
+         onProgress({ percent: progress }, file);
+ 
+         if (uploadedBytes >= buffer.length) {
+           clearInterval(simulateUploadProgress);
+         }
+       }, 200); // Simulate progress every 200ms
+     
+   };
+  //  reader.readAsArrayBuffer(file); // Convert file to buffer
+
+    }
+    
+    // minioClient.fPutObject(objParams.Bucket, objParams.Key, objParams.Body, (error) => {
+    //   if (error) {
+    //     return console.log('Error occurred:', error);
+    //   }
+    //   console.log(`Successfully downloaded ${objParams.Key} to ${objParams.Body}`);
+    // });
+    // // minioClient.fputObject(objParams.Bucket, objParams.Key, objParams.Body, objParams.ContentType)
+    // S3.putObject(objParams)
+      // .on("httpUploadProgress", function({ loaded, total }) {
+      //   onProgress(
+      //     {
+      //       percent: Math.round((loaded / total) * 100)
+      //     },
+      //     file
+      //   );
+      // })
+      // .send(function(err, data) {
+      //   if (err) {
+      //     onError();
+      //     alert("Error Uploading file ,please try again")
+      //     console.log("Something went wrong");
+      //     console.log(err.code);
+      //     console.log(err.message);
+      //   } else {
+          // onSuccess(data.response, file);
+      //     console.log("SEND FINISHED");
+      //     console.log(data);
+      //     axios.post(URL.POST_UPLOAD_BUCKET_FILE,{
+      //       fileName:file.name
+      //     })
+      //     .then(res => {
+      //      if(res.status  === 200)
+      //      setDisableNext(false)
+      //     }
+      //     )
+      //     .catch(res =>{
+      //       alert("Something went wrong Please try again")
+      //       window.location.reload();
+
+      //     })
+      //   }
+      // });
+  // }
 };
 //POST_UPLOAD_BUCKET_FILE
 // END bucket for upload files
@@ -248,7 +301,7 @@ const awsBucket = {
 
       <div className="upload-file">
       <h3  className="element" >Upload a file:</h3>
-        <Upload {...awsBucket}כ
+        <Upload {...awsBucket}
           accept=".gb"
         //action={URL.POST_UPLOAD_FILE}
           onRemove={() => {
